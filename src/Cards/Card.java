@@ -1,27 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cards ;
 
-/**
- *
- * @author Gumó
- */
+import Common.Types;
+
 public class Card {
-    private enum Power{POWERUP,POWERDOWN};
-    private enum Row{FRONT,BACK};
+   
     
     private String name;
     private int strength;
     private int baseStregth;
     private String pictureLoc;
-    private Row row;
-    private Power power;
+    private Types.RowLoc row;
+    private int power;
     private int powerState;
     
-    public Card(String name, int strength, String pictureLoc, Power power, Row row){
+    public Card(String name, int strength, String pictureLoc, int power, Types.RowLoc row){
         this.name = name;
         this.baseStregth = strength;
         this.strength = strength;
@@ -42,21 +34,16 @@ public class Card {
         return this.pictureLoc;
     };
     
-    public Power getPower(){
+    public int getPower(){
         return  this.power;
     };
     
-    public void SetPowerState(int powerState){
-        this.powerState = powerState;
-        if (this.powerState > 0){
-            this.strength = this.baseStregth * 2;
-        }else
-        if (this.powerState < 0){
-            this.strength = this.baseStregth / 2;
-        }else
-        {
-            this.strength = this.baseStregth;
-        }
+    public void SetPowerState(int power){
+        this.strength = this.baseStregth + power - this.power;
+    }
+    
+    public Types.RowLoc getRow(){
+        return this.row;
     }
         
 }
