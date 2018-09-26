@@ -1,33 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Player;
 
 import Cards.Card;
+import Table.Table;
 import java.util.List;
 
-/**
- *
- * @author Gumó
- */
 public abstract class Player {
-    private String name;
-    private int frontPoits;
-    private int backPoints;
-    private int points;
-    private List<Card> Deck;
-    private List<Card> Hand;
+    protected String name;
+    protected int frontPoits;
+    protected int backPoints;
+    protected int points;
+    protected List<Card> deck;
+    protected List<Card> hand;
+    protected Table table;
     
-    public Player(String name){
+    public Player(String name, List<Card> deck){
+        this.table = new Table();
+        this.name = name;
+        this.deck = deck;
+        this.hand = deck;
+    }
+    
+    protected void drawToHand(int num){
         
     }
     
-    private void drawToHand(int num){
-        
+    abstract public Card getCard();
+    
+    abstract public void addToTable(Card card,int player);
+    
+    public int getPlayerOnePoints(){
+        return this.table.getPlayerOnePoints();
     }
     
-    public Card getCard;
-    
+     public int getPlayerTwoPoints(){
+        return this.table.getPlayerTwoPoints();
+    }
 }
