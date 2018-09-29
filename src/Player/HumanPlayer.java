@@ -12,6 +12,7 @@ public class HumanPlayer extends Player{
     
     public Card getCard(){
         if ( super.hand.size() == 0){
+            System.out.println("OUT OF CARDS");
             return null;
         }
         Random rand = new Random();

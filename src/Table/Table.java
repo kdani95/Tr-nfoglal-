@@ -23,7 +23,7 @@ public class Table {
     
     public void addCard(Card card, int player){
         if(player == 1){
-            if(card.getRow() == Types.RowLoc.FRONT){
+            if(card.getRow() == 0){
                 rows[0].addCard(card);
             }else
             {
@@ -31,7 +31,7 @@ public class Table {
             }
         }else
         if(player == 2){
-            if(card.getRow() == Types.RowLoc.FRONT){
+            if(card.getRow() == 0){
                 rows[2].addCard(card);
             }else
             {

@@ -7,16 +7,36 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class User {
+    private static int playerNo = 0;
     private String name;
     private Socket s;
     private Scanner sc;
     private PrintWriter pw;
+    private boolean notDone = true;
+    private boolean LOG = true;
+    
+    private void LOG(String log){
+        if(LOG){
+            System.out.println("SERVER LOG: " + log);
+        } 
+    }
     
     public User(ServerSocket ss){
     try {
+            LOG("Accepting client");
             this.s = ss.accept();
             this.sc = new Scanner(s.getInputStream());
             this.pw = new PrintWriter(s.getOutputStream());
+            
+            if(sc.hasNextLine()){
+                this.name = sc.nextLine();
+            }
+            else{
+                ++playerNo;
+                this.name = "User"+playerNo;
+            }
+            
+            LOG(this.name + " has connected");
             
         } catch (IOException ex) {
             System.err.println("Error at client connecting: " + ex.toString());
@@ -29,7 +49,7 @@ public class User {
                 pw.println(msg);
                 pw.flush();
             } catch (Exception e) {
-                System.err.println("Error at sending statusChange: " + e.toString());
+                System.err.println("Error at sending: " + e.toString());
             }  
         }
     }
@@ -38,7 +58,7 @@ public class User {
         if(!s.isClosed()){
             try {
                 String answer = sc.nextLine();
-                System.out.println(" --> answer : " + answer);
+                //LOG(" --> answer : " + answer);
                 return answer;
             } catch (Exception e) {
                 try {
@@ -51,4 +71,17 @@ public class User {
         }
         return "";
     }
+
+    boolean notDone() {
+        return notDone;
+    }
+
+    boolean isConnected() {
+        return s.isConnected();
+    }
+
+    void isDone() {
+        this.notDone = false;
+    }
+
 }

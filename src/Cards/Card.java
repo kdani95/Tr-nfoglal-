@@ -10,7 +10,7 @@ public class Card {
     private int id;
     private int baseStregth;
     private String pictureLoc;
-    private Types.RowLoc row;
+    private int row;
     private int power;
     private int powerState;
     
@@ -24,7 +24,7 @@ public class Card {
        this.row = card.row;
     }
     
-    public Card(int id ,String name, int strength, String pictureLoc, int power, Types.RowLoc row){
+    public Card(int id ,String name, int strength, String pictureLoc, int power, int row){
         this.id = id;
         this.name = name;
         this.baseStregth = strength;
@@ -54,7 +54,7 @@ public class Card {
         this.strength = this.baseStregth + power - this.power;
     }
     
-    public Types.RowLoc getRow(){
+    public int getRow(){
         return this.row;
     }
     

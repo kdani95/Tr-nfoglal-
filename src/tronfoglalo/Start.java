@@ -2,11 +2,15 @@ package tronfoglalo;
 
 import Cards.Card;
 import Cards.Cards;
+import Client.Client;
 import Common.Types;
 import Player.HumanPlayer;
 import Player.Player;
+import Server.Server;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Start {
 
@@ -14,32 +18,38 @@ public class Start {
         List<Card> deck = new ArrayList<Card>();
         List<Card> deck2 = new ArrayList<Card>();
         
-        Card card1 = new Card(1,"asd1", 5, "pic1", 0, Types.RowLoc.FRONT);
-        Card card2 = new Card(2,"asd2", 10, "pic1", 0, Types.RowLoc.BACK);
-        Card card3 = new Card(3,"asd3", 1, "pic1", 0, Types.RowLoc.FRONT);
-        Cards.addCard(card1);
-        Cards.addCard(card2);
-        Cards.addCard(card3);
+        Cards.init();
         
         deck.add(Cards.getCard(0));
         deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(1));
         
         deck2.add(Cards.getCard(0));
         deck2.add(Cards.getCard(1));
         deck2.add(Cards.getCard(2));
+        deck2.add(Cards.getCard(0));
+        deck2.add(Cards.getCard(1));
+        deck2.add(Cards.getCard(2));
         
-        Player player = new HumanPlayer("p1",deck);
-        Player player2 = new HumanPlayer("p2",deck2);
+        String addr = "localhost";
+        int PORT = 12345;
+        Thread c1 = new Thread(new Client(addr, PORT,"Danika","HUMAN",deck));  
+        Thread c2 = new Thread(new Client(addr, PORT,"Natika","HUMAN",deck2));
+        Thread server = new Thread(new Server(PORT));
         
-        player.addToTable(player.getCard(), 1);
-        player.addToTable(player.getCard(), 1);
+        GUI.Tronfoglalo.main(args);
         
-        player.addToTable(player2.getCard(), 2);
-        player.addToTable(player2.getCard(), 2);
+        server.start();
         
-        System.out.println(player.getPlayerOnePoints());
-        System.out.println(player.getPlayerTwoPoints());
+        try {
+            Thread.sleep((long) 1000.0);
+            c1.start();
+            Thread.sleep((long) 1000.0);
+            c2.start();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
