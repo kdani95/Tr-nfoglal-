@@ -40,7 +40,7 @@ public class Table {
         }
     }
     
-    public Row[] getCards(){
-        return this.rows;
+    public Row getRow(int r){
+        return this.rows[r];
     }
 }

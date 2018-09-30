@@ -11,26 +11,29 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
-/*
-class Mybutton{
+
+class Mybutton extends JToggleButton{
     Card card;
-    JToggleButton button;
     
-    public Mybutton(JToggleButton b, Card c){
+    public void setCard(Card card){
         this.card = card;
-        this.button = b;
+    }
+    
+    public Card getCard(){
+        return this.card;
     }
 }
-*/
+
 public class RowGui extends javax.swing.JPanel {
     
-    private List<Card> cards = new ArrayList<Card>();
-    private List<JToggleButton> buttons = new ArrayList<JToggleButton>();
+    //private List<Card> cards = new ArrayList<Card>();
+    //private List<JToggleButton> buttons = new ArrayList<JToggleButton>();
     
-    //private List<Mybutton> buttons = new ArrayList<Mybutton>();
+    private List<Mybutton> buttons = new ArrayList<Mybutton>();
 
     private javax.swing.ButtonGroup cardDisplay;    
     
@@ -51,23 +54,43 @@ public class RowGui extends javax.swing.JPanel {
 }
     
     public void addCard(Card card){
-        this.cards.add(card);
+        //this.cards.add(card);
         ImageIcon image = new ImageIcon(card.getPictureLoc());
         Image resized = getScaledImage(image.getImage(), 75, 120);
         
-        JToggleButton button = new JToggleButton();
+        Mybutton button = new Mybutton();
+        button.setCard(card);
         button.setText(card.getName());
         button.setMaximumSize(new Dimension(200, 300));
         button.setPreferredSize(new Dimension(90, 120));
         button.setBackground(new Color(210, 210, 210) );
 
-        JLabel inner = new JLabel(new ImageIcon(resized),JLabel.CENTER);
+        //JLabel inner = new JLabel(new ImageIcon(resized),JLabel.CENTER);
+        JLabel inner = new JLabel();
+        inner.setText(""+card.getStrength());
         button.add(inner);
-        
+
         this.buttons.add(button);
         cardDisplay.add(button);
         this.add(button);
        
+        this.revalidate();
+        this.repaint();
+        this.doLayout();
+    }
+    
+    public void refresh(List<Card> cards){
+        for(Mybutton mb :  buttons){
+            cardDisplay.remove(mb);
+            this.remove(mb);
+        }
+        buttons.clear();
+        
+        for(Card c : cards){
+            this.addCard(c);
+            System.out.println("name : " + c.getName() );
+        }
+        
         this.revalidate();
         this.repaint();
         this.doLayout();
@@ -90,11 +113,16 @@ public class RowGui extends javax.swing.JPanel {
 
         this.setLayout(new GridBagLayout());
     }                    
-/*
+
     public Card getSelected(){
-        cardDisplay.getSelection();
-        return 
+        Mybutton selected = null;
+        for(Mybutton mb : buttons){
+            if(mb.isSelected()){
+                selected = mb;
+            }
+        }
+        cardDisplay.clearSelection();
+        return selected.getCard();
     }
-                 
-     */          
+                          
 }

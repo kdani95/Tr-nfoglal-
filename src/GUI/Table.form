@@ -32,16 +32,25 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="enemyBackRow" pref="1079" max="32767" attributes="0"/>
+                  <Component id="enemyBackRow" max="32767" attributes="0"/>
                   <Component id="enemyFrontRow" max="32767" attributes="0"/>
-                  <Component id="myFrontRow" alignment="0" max="32767" attributes="0"/>
-                  <Component id="myBackRow" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="handRow" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="passButton" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="placeButton" min="-2" pref="73" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="myBackPoint" pref="73" max="32767" attributes="0"/>
+                          <Component id="myFrontPoint" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="myFrontRow" alignment="1" max="32767" attributes="0"/>
+                          <Component id="myBackRow" alignment="1" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,11 +64,17 @@
               <Component id="enemyBackRow" linkSize="1" min="-2" pref="130" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="enemyFrontRow" linkSize="1" min="-2" pref="130" max="-2" attributes="0"/>
-              <EmptySpace pref="7" max="32767" attributes="0"/>
-              <Component id="myFrontRow" linkSize="1" min="-2" pref="130" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="myBackRow" linkSize="1" min="-2" pref="130" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="myFrontRow" linkSize="1" pref="130" max="32767" attributes="0"/>
+                  <Component id="myFrontPoint" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="myBackRow" linkSize="1" pref="130" max="32767" attributes="0"/>
+                  <Component id="myBackPoint" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="handRow" linkSize="1" max="32767" attributes="0"/>
                   <Component id="passButton" alignment="0" max="32767" attributes="0"/>
@@ -104,6 +119,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="myBackPoint">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="myFrontPoint">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

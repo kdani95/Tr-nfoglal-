@@ -1,6 +1,7 @@
 package Player;
 
 import Cards.Card;
+import Table.Row;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,14 @@ public class HumanPlayer extends Player{
         System.out.println("Hand size: " + super.hand.size());
         System.out.println("Card name: " + selected.getName());
         return selected;
+    }
+    
+    public List<Card> getHand(){
+        return this.hand;
+    }
+    
+    public Row getRow(int r){
+        return this.table.getRow(r);
     }
     
     public void addToTable(Card card,int player){

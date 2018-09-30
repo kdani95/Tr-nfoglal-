@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class Start {
 
     public static void main(String[] args) {
+        /*
         List<Card> deck = new ArrayList<Card>();
         List<Card> deck2 = new ArrayList<Card>();
         
@@ -50,6 +51,10 @@ public class Start {
         } catch (InterruptedException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+        
+        Controller controller = new Controller();
+        controller.start();
     }
     
 }

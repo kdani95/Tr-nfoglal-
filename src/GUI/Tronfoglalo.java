@@ -7,6 +7,7 @@ package GUI;
 
 import Cards.Card;
 import Cards.Cards;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Nati
  */
-public class Tronfoglalo extends javax.swing.JFrame {
+public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
     /**
      * Creates new form Tronfoglalo
@@ -22,8 +23,6 @@ public class Tronfoglalo extends javax.swing.JFrame {
     public Tronfoglalo() {
         initComponents();
         Cards.init();
-        addCard(Cards.getCard(1),0);
-        addCard(Cards.getCard(0),0);
     }
 
     /**
@@ -62,50 +61,34 @@ public class Tronfoglalo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tronfoglalo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tronfoglalo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tronfoglalo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tronfoglalo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tronfoglalo().setVisible(true);
-                
-            }
-        });
+    
+    public void refreshHandRow(){
+        this.table1.refreshHandRow();
+        
+        this.revalidate();
+        this.repaint();
+        this.doLayout();
         
     }
     
-    public void addCard(Card card,int row){
-        this.table1.addCard(card,row);
-        revalidate();
-        repaint();
+    public void refreshRow(List<Card> cards,int row, int points){
+        this.table1.refreshRow(cards,row,points);
+        
+        this.revalidate();
+        this.repaint();
+        this.doLayout();
     }
+    
+   /* public void addCard(Card){
+        
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private GUI.Table table1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        new Tronfoglalo().setVisible(true);
+    }
 }

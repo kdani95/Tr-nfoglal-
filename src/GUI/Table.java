@@ -7,8 +7,11 @@ package GUI;
 
 import Cards.Card;
 import Cards.Cards;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tronfoglalo.Controller;
 
 /**
  *
@@ -48,6 +51,8 @@ public class Table extends javax.swing.JPanel {
         handRow = new GUI.RowGui();
         placeButton = new javax.swing.JButton();
         passButton = new javax.swing.JButton();
+        myBackPoint = new javax.swing.JButton();
+        myFrontPoint = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(230, 115, 0));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -67,6 +72,10 @@ public class Table extends javax.swing.JPanel {
             }
         });
 
+        myBackPoint.setText("0");
+
+        myFrontPoint.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,16 +83,22 @@ public class Table extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enemyBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, 1079, Short.MAX_VALUE)
+                    .addComponent(enemyBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(enemyFrontRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(myFrontRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(myBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(handRow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(passButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(placeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(placeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(myBackPoint, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(myFrontPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(myFrontRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(myBackRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -93,10 +108,14 @@ public class Table extends javax.swing.JPanel {
                 .addComponent(enemyBackRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(enemyFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(myFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(myFrontRow, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(myFrontPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(myBackRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(myBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(myBackPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(handRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -110,16 +129,25 @@ public class Table extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
-        //handRow.
-        Card card = Cards.getCard(2);
+        Card card = handRow.getSelected();
         int p = 0;
-        addCard(card,  card.getRow() + (2*p) + 1);
+        Controller.addCard(card, 1);
+        Controller.removeCard(card);
+        refreshHandRow();
+        for(int i = 0; i < 4 ; i++){
+            refreshRow(Controller.getRow(i).getCards(), i, Controller.getRow(i).getPoints());
+        }
     }//GEN-LAST:event_placeButtonActionPerformed
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed
-        Card card = Cards.getCard(1);
-        int p = 1;
-        addCard(card,  card.getRow() + (2*p) + 1);
+
+        Controller.refreshHandRow();
+        
+        //Controller.refreshHandRow();
+        
+        this.revalidate();
+        this.repaint();
+        this.doLayout();
     }//GEN-LAST:event_passButtonActionPerformed
 
 
@@ -127,27 +155,35 @@ public class Table extends javax.swing.JPanel {
     private GUI.RowGui enemyBackRow;
     private GUI.RowGui enemyFrontRow;
     private GUI.RowGui handRow;
+    private javax.swing.JButton myBackPoint;
     private GUI.RowGui myBackRow;
+    private javax.swing.JButton myFrontPoint;
     private GUI.RowGui myFrontRow;
     private javax.swing.JButton passButton;
     private javax.swing.JButton placeButton;
     // End of variables declaration//GEN-END:variables
 
-    void addCard(Card card, int row) {
+    public void refreshHandRow() {
+        handRow.refresh(Controller.getHand());
+    }
+    
+    public void refreshRow(List<Card> cards, int row, int points) {
         
         switch(row){
-            case 0: handRow.addCard(card); break;
+            case 0: myFrontRow.refresh(cards); myFrontPoint.setText(""+points); break;
             
-            case 1: myFrontRow.addCard(card); break;
+            case 1: myBackRow.refresh(cards); myBackPoint.setText(""+points); break;
             
-            case 2: myBackRow.addCard(card); break;
+            case 2: enemyFrontRow.refresh(cards); break;
             
-            case 3: enemyFrontRow.addCard(card); break;
-            
-            case 4: enemyBackRow.addCard(card); break;
+            case 3: enemyBackRow.refresh(cards); break;
         }
         
-        revalidate();
-        repaint();
+        this.revalidate();
+        this.repaint();
+        this.doLayout();
+        
     }
+    
+
 }

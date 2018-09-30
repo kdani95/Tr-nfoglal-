@@ -2,6 +2,7 @@ package Player;
 
 import Cards.Card;
 import Table.Table;
+import Table.Row;
 import java.util.List;
 
 public abstract class Player {
@@ -25,6 +26,10 @@ public abstract class Player {
     }
     
     abstract public Card getCard();
+    
+    abstract public List<Card> getHand();
+    
+    abstract public Row getRow(int r);
     
     abstract public void addToTable(Card card,int player);
     
