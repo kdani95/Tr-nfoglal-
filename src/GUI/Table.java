@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Cards.Card;
@@ -13,26 +8,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import tronfoglalo.Controller;
 
-/**
- *
- * @author Nati
- */
 public class Table extends javax.swing.JPanel {
-
+    private int p = 0;
+    public boolean enabled = false;
     /**
      * Creates new form Table
      */
     public Table() {
         initComponents();
         
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Table.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         revalidate();
         repaint();
+        doLayout();
     }
 
     /**
@@ -51,14 +38,27 @@ public class Table extends javax.swing.JPanel {
         handRow = new GUI.RowGui();
         placeButton = new javax.swing.JButton();
         passButton = new javax.swing.JButton();
-        myBackPoint = new javax.swing.JButton();
-        myFrontPoint = new javax.swing.JButton();
+        myBackPoint = new javax.swing.JLabel();
+        enemyFrontPoint = new javax.swing.JLabel();
+        myFrontPoint = new javax.swing.JLabel();
+        enemyBackPoint = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(230, 115, 0));
+        setBackground(new java.awt.Color(221, 188, 169));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setPreferredSize(new java.awt.Dimension(1100, 700));
 
+        enemyBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+
+        enemyFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+
+        myFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+
+        myBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+
+        handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+
         placeButton.setText("Place");
+        placeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
         placeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 placeButtonActionPerformed(evt);
@@ -66,84 +66,125 @@ public class Table extends javax.swing.JPanel {
         });
 
         passButton.setText("Pass");
+        passButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
         passButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passButtonActionPerformed(evt);
             }
         });
 
+        myBackPoint.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        myBackPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         myBackPoint.setText("0");
+        myBackPoint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
 
+        enemyFrontPoint.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        enemyFrontPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enemyFrontPoint.setText("0");
+        enemyFrontPoint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
+
+        myFrontPoint.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        myFrontPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         myFrontPoint.setText("0");
+        myFrontPoint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
+
+        enemyBackPoint.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        enemyBackPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enemyBackPoint.setText("0");
+        enemyBackPoint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enemyBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(enemyFrontRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(enemyFrontPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(myFrontPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(enemyBackPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(handRow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(passButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(placeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(myBackPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(enemyBackRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(enemyFrontRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(myFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(myBackPoint, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                            .addComponent(myFrontPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(myFrontRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(myBackRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(myBackRow, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(handRow, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(placeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(enemyBackRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(enemyBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(enemyBackPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enemyFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(enemyFrontPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(myFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(myFrontPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(myBackRow, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(myBackPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(enemyFrontRow, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(myFrontRow, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(myFrontPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(myBackRow, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(myBackPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(handRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(passButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(placeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(handRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(passButton, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addComponent(placeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {enemyBackRow, enemyFrontRow, handRow, myBackRow, myFrontRow});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {enemyBackRow, enemyFrontRow, myBackRow, myFrontRow, passButton, placeButton});
 
     }// </editor-fold>//GEN-END:initComponents
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
         Card card = handRow.getSelected();
-        int p = 0;
-        Controller.addCard(card, 1);
-        Controller.removeCard(card);
-        refreshHandRow();
-        for(int i = 0; i < 4 ; i++){
-            refreshRow(Controller.getRow(i).getCards(), i, Controller.getRow(i).getPoints());
-        }
+       
+            Controller.sendCard(card);
+            Controller.removeCard(card);
+            refreshHandRow();
+        
     }//GEN-LAST:event_placeButtonActionPerformed
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed
 
-        Controller.refreshHandRow();
-        
-        //Controller.refreshHandRow();
+        refreshHandRow();
+        for(int i = 0; i < 4; i++){
+            Controller.refreshRow(i);
+        }
         
         this.revalidate();
         this.repaint();
@@ -152,12 +193,14 @@ public class Table extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel enemyBackPoint;
     private GUI.RowGui enemyBackRow;
+    private javax.swing.JLabel enemyFrontPoint;
     private GUI.RowGui enemyFrontRow;
     private GUI.RowGui handRow;
-    private javax.swing.JButton myBackPoint;
+    private javax.swing.JLabel myBackPoint;
     private GUI.RowGui myBackRow;
-    private javax.swing.JButton myFrontPoint;
+    private javax.swing.JLabel myFrontPoint;
     private GUI.RowGui myFrontRow;
     private javax.swing.JButton passButton;
     private javax.swing.JButton placeButton;
@@ -165,6 +208,12 @@ public class Table extends javax.swing.JPanel {
 
     public void refreshHandRow() {
         handRow.refresh(Controller.getHand());
+        placeButton.setEnabled(enabled);
+        passButton.setEnabled(enabled);
+        if(enabled){
+            handRow.setEnabled();
+        }
+        
     }
     
     public void refreshRow(List<Card> cards, int row, int points) {
@@ -174,10 +223,12 @@ public class Table extends javax.swing.JPanel {
             
             case 1: myBackRow.refresh(cards); myBackPoint.setText(""+points); break;
             
-            case 2: enemyFrontRow.refresh(cards); break;
+            case 2: enemyFrontRow.refresh(cards); enemyFrontPoint.setText(""+points); break;
             
-            case 3: enemyBackRow.refresh(cards); break;
+            case 3: enemyBackRow.refresh(cards); enemyBackPoint.setText(""+points);break;
         }
+        
+        
         
         this.revalidate();
         this.repaint();
@@ -185,5 +236,18 @@ public class Table extends javax.swing.JPanel {
         
     }
     
+    public void enableHand(){
+        this.enabled = true;
+        handRow.setEnabled();
+        passButton.setEnabled(enabled);
+        placeButton.setEnabled(enabled);
+    }
+    
+     public void disableHand(){
+        this.enabled = false;
+        handRow.setDisabled();
+        passButton.setEnabled(enabled);
+        placeButton.setEnabled(enabled);
+    }
 
 }

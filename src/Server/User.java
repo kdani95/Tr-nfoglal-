@@ -77,7 +77,7 @@ public class User {
     }
 
     boolean isConnected() {
-        return s.isConnected();
+        return !s.isClosed();
     }
 
     void isDone() {

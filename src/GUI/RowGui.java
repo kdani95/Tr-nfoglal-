@@ -53,20 +53,41 @@ public class RowGui extends javax.swing.JPanel {
         return resizedImg;
 }
     
+    public void setDisabled(){
+        for(Mybutton mb : buttons){
+            mb.setEnabled(false);
+        }
+    }
+    
+    public void setEnabled(){
+        for(Mybutton mb : buttons){
+            mb.setEnabled(true);
+        }
+    }
+    
     public void addCard(Card card){
         //this.cards.add(card);
         ImageIcon image = new ImageIcon(card.getPictureLoc());
-        Image resized = getScaledImage(image.getImage(), 75, 120);
+        
         
         Mybutton button = new Mybutton();
         button.setCard(card);
         button.setText(card.getName());
-        button.setMaximumSize(new Dimension(200, 300));
-        button.setPreferredSize(new Dimension(90, 120));
-        button.setBackground(new Color(210, 210, 210) );
-
-        //JLabel inner = new JLabel(new ImageIcon(resized),JLabel.CENTER);
+        button.setMaximumSize(new Dimension(80, 110));
+        button.setPreferredSize(new Dimension(80, 110));
+        //button.setBackground(new Color(230, 230, 230) );
+        button.setFocusPainted(true);
+        Image resized = getScaledImage(image.getImage(), 80, 110);
+        
+        button.setIcon(new ImageIcon(resized));
+        button.setEnabled(false);
+        button.setBounds(0,0,0,0);
+        //JLabel inner = new JLabel(new ImageIcon(resized));
         JLabel inner = new JLabel();
+        inner.setMaximumSize(new Dimension(80, 110));
+        inner.setPreferredSize(new Dimension(80, 110));
+
+        //JLabel inner = new JLabel();
         inner.setText(""+card.getStrength());
         button.add(inner);
 

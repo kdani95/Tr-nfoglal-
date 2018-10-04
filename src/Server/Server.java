@@ -10,8 +10,7 @@ public class Server implements Runnable{
     private int PORT = 0;
     private ServerSocket ss;
     private ArrayList<User> players = new ArrayList<User>();
-    private boolean LOG = false;
-    
+    private boolean LOG = true;
     
     private void LOG(String log){
         if(LOG){
@@ -66,15 +65,15 @@ public class Server implements Runnable{
     }
     
     private void sendPlayersCard(String card,int from){
-        LOG("Sending players card"); 
-        players.get(0).send("CARD");
-        players.get(1).send("CARD");
+        LOG("Sending players card from: " + from);
+        if(from == 0){
+            players.get(0).send( 1 +"" +card);
+            players.get(1).send( 2 +"" +card);
+        }else{
+            players.get(0).send( 2 +"" +card);
+            players.get(1).send( 1 +"" +card);
+        }
         
-        players.get(0).send( (from+1) +"");
-        players.get(1).send( ( ((from + 1) % 2 ) + 1) +"");
-        
-        players.get(0).send(card);
-        players.get(1).send(card);
     }
     
     @Override
@@ -86,20 +85,14 @@ public class Server implements Runnable{
         int i = 0;
         int k = 0;
         while ( (players.get(0).notDone() || players.get(1).notDone() ) &&
-                (players.get(0).isConnected() && players.get(1).isConnected() ) && k < 6 )
+                (players.get(0).isConnected() && players.get(1).isConnected() ) )
         {
             if(players.get(i).notDone()){
-                
+                System.out.println("Player" + i);
                 sendPlayersWait();
                 sendPlayerGo(i);
 
                 String card = receivePlayer(i);
-
-                try {
-                    Thread.sleep((long) 1000.0);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                }
 
                 if(card.equals("DONE")){
                     players.get(i).isDone();

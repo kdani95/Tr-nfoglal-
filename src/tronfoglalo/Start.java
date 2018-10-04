@@ -4,6 +4,7 @@ import Cards.Card;
 import Cards.Cards;
 import Client.Client;
 import Common.Types;
+import GUI.Tronfoglalo;
 import Player.HumanPlayer;
 import Player.Player;
 import Server.Server;
@@ -15,7 +16,6 @@ import java.util.logging.Logger;
 public class Start {
 
     public static void main(String[] args) {
-        /*
         List<Card> deck = new ArrayList<Card>();
         List<Card> deck2 = new ArrayList<Card>();
         
@@ -28,33 +28,33 @@ public class Start {
         
         deck2.add(Cards.getCard(0));
         deck2.add(Cards.getCard(1));
-        deck2.add(Cards.getCard(2));
         deck2.add(Cards.getCard(0));
         deck2.add(Cards.getCard(1));
         deck2.add(Cards.getCard(2));
         
         String addr = "localhost";
         int PORT = 12345;
-        Thread c1 = new Thread(new Client(addr, PORT,"Danika","HUMAN",deck));  
-        Thread c2 = new Thread(new Client(addr, PORT,"Natika","HUMAN",deck2));
-        Thread server = new Thread(new Server(PORT));
+
+       // Thread c1 = new Thread(new Client(addr, PORT,"Danika","HUMAN",deck) ); 
         
-        GUI.Tronfoglalo.main(args);
+        Thread GUI = new Thread(new Tronfoglalo() );
         
-        server.start();
+       
+        //Thread c2 = new Thread(new Client(addr, PORT,"Natika","HUMAN",deck2));
+        
+        //Thread server = new Thread(new Server(PORT));
+        
+        //server.start();
         
         try {
-            Thread.sleep((long) 1000.0);
-            c1.start();
-            Thread.sleep((long) 1000.0);
-            c2.start();
-        } catch (InterruptedException ex) {
+            //Thread.sleep((long) 1000.0);
+            //c1.start();
+            GUI.start();
+            //c2.start();
+        } catch (Exception ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
         
-        Controller controller = new Controller();
-        controller.start();
     }
     
 }
