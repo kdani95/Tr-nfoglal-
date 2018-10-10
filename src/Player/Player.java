@@ -3,22 +3,40 @@ package Player;
 import Cards.Card;
 import Table.Table;
 import Table.Row;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javafx.print.Collation;
 
 public abstract class Player {
     protected String name;
     protected int frontPoits;
     protected int backPoints;
     protected int points;
+    protected int lifes = 2;
     protected List<Card> deck;
-    protected List<Card> hand;
+    protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
+    private int cards = 10;
     
     public Player(String name, List<Card> deck){
         this.table = new Table();
         this.name = name;
         this.deck = deck;
-        this.hand = deck;
+        Collections.shuffle(deck);
+        int i = 0;
+        
+        for(Card c : deck){
+            if(i < cards){
+                this.hand.add(c);
+                i++;
+            }
+        }
+        
+        for(Card c : hand){
+            this.deck.remove(c);
+        }
+        
     }
     
     protected void drawToHand(int num){
@@ -37,7 +55,19 @@ public abstract class Player {
         return this.table.getPlayerOnePoints();
     }
     
-     public int getPlayerTwoPoints(){
+    public int getPlayerTwoPoints(){
         return this.table.getPlayerTwoPoints();
+    }
+    
+    public int getLifes(){
+        return this.lifes;
+    }
+    
+    public void removeLife(){
+        this.lifes--;
+    }
+
+    public void reset() {
+        table.reset();
     }
 }

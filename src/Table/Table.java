@@ -43,4 +43,10 @@ public class Table {
     public Row getRow(int r){
         return this.rows[r];
     }
+
+    public void reset() {
+       for(int i = 0; i < 4; i++){
+           rows[i].reset();
+       }
+    }
 }

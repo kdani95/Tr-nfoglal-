@@ -9,8 +9,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tronfoglalo.Controller;
 
 public class Client implements Runnable{
@@ -35,6 +33,10 @@ public class Client implements Runnable{
          
     }
     
+    public String getName(){
+        return this.name;
+    }
+    
     public void connect(){
         try {
             s   = new Socket(this.address, this.PORT);
@@ -43,6 +45,9 @@ public class Client implements Runnable{
             
             pw.println(name);
             pw.flush();
+            
+            Controller.setEnemyName(sc.nextLine());
+            
             
         }catch(Exception e ){
             System.err.println("Error at client: " + e.toString());
@@ -83,6 +88,10 @@ public class Client implements Runnable{
         player.addToTable(c, p);
     }
     
+    public int getLifes(){
+        return this.player.getLifes();
+    }
+    
     public void sendCard(Card card){
         if(card != null){
             pw.println(card.toString());
@@ -120,7 +129,50 @@ public class Client implements Runnable{
                                 System.out.println("ENDED");
                                 done = true;
                                 break;
-                
+                                
+                case "GETCARDS" :   
+                                pw.println(Controller.getHand().size());
+                                pw.flush();
+                                receiveMsg();
+                                break;
+                                
+                case "SETCARDS":
+                                String cards = sc.nextLine();
+                                System.out.println("SET CARDS: " + cards);
+                                Controller.setEnemyCards(cards);
+                                Controller.setMyCards();
+                                receiveMsg();
+                                break;
+                                
+                case "GETLIFES":   
+                                pw.println(player.getLifes());
+                                pw.flush();
+                                receiveMsg();
+                                break;
+                                
+                case "SETLIFES":
+                                System.out.println("SETLIFES");
+                                Controller.setEnemyLifes(sc.nextLine());
+                                Controller.setMyLifes();
+                                receiveMsg();
+                                break;
+                                
+                case "GETPOINTS":
+                                pw.println(player.getPlayerOnePoints());
+                                pw.flush();
+                                receiveMsg();
+                                break;
+                                
+                case "REMOVELIFE":
+                                player.removeLife();
+                                receiveMsg();
+                                break;
+                                
+                case "RESET":
+                                Controller.reset();
+                                receiveMsg();
+                                break;
+                                
                 default : 
                                 System.out.println(this.name + " RECEIVING CARD");
                                 int from = Integer.parseInt(msg.substring(0, 1));
@@ -130,6 +182,7 @@ public class Client implements Runnable{
                                 for(int i = 0; i < 4; i++){
                                     Controller.refreshRow(i);
                                 }
+                                Controller.setPoints();
                                 receiveMsg();
                                 break;
             }
@@ -138,5 +191,17 @@ public class Client implements Runnable{
             System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
             System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
         }
+    }
+
+    public void reset() {
+        this.player.reset();
+    }
+    
+    public int getMyPoints(){
+        return player.getPlayerOnePoints();
+    }
+    
+    public int getEnemyPoints(){
+        return player.getPlayerTwoPoints();
     }
 }

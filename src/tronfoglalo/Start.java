@@ -26,11 +26,11 @@ public class Start {
         deck.add(Cards.getCard(0));
         deck.add(Cards.getCard(1));
         
-        deck2.add(Cards.getCard(0));
-        deck2.add(Cards.getCard(1));
-        deck2.add(Cards.getCard(0));
-        deck2.add(Cards.getCard(1));
-        deck2.add(Cards.getCard(2));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(2));
         
         String addr = "localhost";
         int PORT = 12345;

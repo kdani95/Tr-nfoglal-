@@ -21,6 +21,15 @@ public class User {
         } 
     }
     
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getCards(){
+        send("GETCARDS");
+        return sc.nextLine();
+    }
+    
     public User(ServerSocket ss){
     try {
             LOG("Accepting client");
@@ -41,6 +50,22 @@ public class User {
         } catch (IOException ex) {
             System.err.println("Error at client connecting: " + ex.toString());
         }
+    }
+    
+    public int getLifes(){
+        int lifes = 0;
+        if(!s.isClosed()){
+            try {
+                pw.println("GETLIFES");
+                pw.flush();
+              
+                lifes = Integer.parseInt(sc.nextLine());
+                System.out.println("LIFES: " + lifes);
+            } catch (Exception e) {
+                System.err.println("Error at sending: " + e.toString());
+            }  
+        }
+        return lifes;
     }
     
      public void send(String msg){ 
@@ -82,6 +107,20 @@ public class User {
 
     void isDone() {
         this.notDone = false;
+    }
+
+    int getPoints() {
+        send("GETPOINTS");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    void removeLife() {
+       send("REMOVELIFE");
+    }
+
+    void restart() {
+        this.notDone = true;
+        send("RESET");
     }
 
 }

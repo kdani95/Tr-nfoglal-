@@ -22,6 +22,13 @@ public class Controller {
         Controller.client= client;
     }
     
+    public static void refresh(){
+        refreshHandRow();
+        for(int i = 0; i < 4; i++){
+            refreshRow(i);
+        }
+    }
+    
     public static void refreshRow(int r){
         Row row = client.getRow(r);
         System.out.println("Row points = " + row.getPoints());
@@ -62,6 +69,34 @@ public class Controller {
     public static void addToTable(Card c, int p) {
         client.addToTable(c, p);
     }
+
+    public static void setEnemyName(String name) {
+        tronfoglalo.setEnemyName(name);
+    }
+
+    public static void setEnemyCards(String cards) {
+        tronfoglalo.setEnemyCards(cards);
+    }
     
+    public static void setEnemyLifes(String lifes){
+        tronfoglalo.setEnemyLifes(lifes);
+    }
+
+    public static void setMyCards() {
+        tronfoglalo.setMyCards(Controller.getHand().size() + "");
+    }
+
+    public static void setMyLifes() {
+        tronfoglalo.setMyLifes(client.getLifes() + "");
+    }
+
+    public static void reset() {
+        client.reset();
+        refresh();
+    }
+    
+    public static void setPoints(){
+        tronfoglalo.setPoints(client.getMyPoints(),client.getEnemyPoints());
+    }
     
 }

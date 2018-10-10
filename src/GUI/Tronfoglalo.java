@@ -10,11 +10,9 @@ import java.util.logging.Logger;
 import tronfoglalo.Controller;
 
 public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
-
+    private boolean started = false;
     public Tronfoglalo() {
-        
-        initComponents();
-                
+         
         Cards.init();
         String addr = "localhost";
         int PORT = 12345;
@@ -23,12 +21,22 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         deck.add(Cards.getCard(1));
         deck.add(Cards.getCard(0));
         deck.add(Cards.getCard(1));
-
-        Client client = new Client(addr, PORT, "ASD", "HUMAN", deck);
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(0));
+        initComponents();
+        
+        Client client = new Client(addr, PORT, "Danika", "HUMAN", deck);
         Controller.addClient(client);
         Controller.addGUI(this);
-        this.refreshHandRow();
+        
+        setMyName(client.getName());
+
         client.run();
+        started = true;
     }
 
     @SuppressWarnings("unchecked")
@@ -39,37 +47,54 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 51, 0));
+        setMinimumSize(new java.awt.Dimension(1000, 600));
         setName("Trónfoglaló"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1200, 800));
+        setPreferredSize(new java.awt.Dimension(1300, 900));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(table1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(45, 45, 45))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(table1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(62, 62, 62))
-        );
+        table1.setMaximumSize(new java.awt.Dimension(10000, 6000));
+        table1.setMinimumSize(new java.awt.Dimension(1000, 600));
+        table1.setName(""); // NOI18N
+        getContentPane().add(table1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+      if(started){  
+        System.out.println("Height: " + this.getHeight());
+        System.out.println("Width: " + this.getWidth());
+        this.table1.setSize(this.getWidth(), this.getHeight());
+        
+        Controller.refreshHandRow();
+        for(int i = 0; i < 4; i++){
+            Controller.refreshRow(i);
+        }
+      }
+    }//GEN-LAST:event_formComponentResized
+
+    public void setMyName(String name){
+        table1.setMyName(name);
+    }
+    
+    public void setEnemyName(String name){
+        table1.setEnemyName(name);
+    }
+    
+    public void setEnemyCards(String cards){
+        table1.setEnemyCards(cards);
+    }
     
     public void refreshHandRow(){
         this.table1.refreshHandRow();
         
         this.revalidate();
         this.repaint();
-        this.doLayout();
-        
+        this.doLayout();       
     }
     
     public Table getTable(){
@@ -84,10 +109,6 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.doLayout();
     }
     
-   /* public void addCard(Card){
-        
-    }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private GUI.Table table1;
     // End of variables declaration//GEN-END:variables
@@ -104,4 +125,24 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     public void enableHand() {
         table1.enableHand();
     }
+
+    public void setEnemyLifes(String lifes) {
+        table1.setEnemyLifes(lifes);
+    }
+
+    public void setMyCards(String size) {
+        table1.setMyCards(size);
+    }
+
+    public void setMyLifes(String string) {
+        table1.setMyLifes(string);
+    }
+
+    public void setPoints(int myPoints, int enemyPoints) {
+       table1.setPoints(myPoints,enemyPoints);
+    }
+
+
+    
+    
 }

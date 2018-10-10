@@ -3,6 +3,7 @@ package Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,35 +77,87 @@ public class Server implements Runnable{
         
     }
     
+    private void sendPlayersLifes(){
+        System.out.println("SETTING LIFES");
+        
+        players.get(0).send("SETLIFES");
+        players.get(0).send(players.get(1).getLifes()+"");
+        
+        players.get(1).send("SETLIFES");
+        players.get(1).send(players.get(0).getLifes()+"");
+        
+    }
+    
+    private void sendPlayersName(){
+        LOG("Sending players names"); 
+        players.get(0).send(players.get(1).getName());
+        players.get(1).send(players.get(0).getName());
+    }
+    
+    private void sendPlayersCardsNo(){
+        LOG("Sending players cards"); 
+        players.get(0).send("SETCARDS");
+        players.get(0).send(players.get(1).getCards());
+        
+        players.get(1).send("SETCARDS");
+        players.get(1).send(players.get(0).getCards());
+    }
+    
     @Override
     public void run() {
         LOG("The server has started on port " + ss.getLocalPort());
         
         waitForPlayers();
+        
+        sendPlayersName();
+
         LOG("Players connected");
-        int i = 0;
-        int k = 0;
-        while ( (players.get(0).notDone() || players.get(1).notDone() ) &&
-                (players.get(0).isConnected() && players.get(1).isConnected() ) )
-        {
-            if(players.get(i).notDone()){
-                System.out.println("Player" + i);
-                sendPlayersWait();
-                sendPlayerGo(i);
+        Random rand = new Random();
+        int i = rand.nextInt(1);
+        
+        while( players.get(0).getLifes() > 0 && players.get(1).getLifes() > 0){
+            
+            sendPlayersLifes();
+    
+            while ( (players.get(0).notDone() || players.get(1).notDone() ) &&
+                    (players.get(0).isConnected() && players.get(1).isConnected() ) )
+            {
+                if(players.get(i).notDone()){
+                    System.out.println("Player" + i);
+                    sendPlayersWait();
+                    sendPlayersCardsNo();
+                    sendPlayerGo(i);
 
-                String card = receivePlayer(i);
+                    String card = receivePlayer(i);
 
-                if(card.equals("DONE")){
-                    players.get(i).isDone();
-                }else{
-                    sendPlayersCard(card,i);
+                    if(card.equals("DONE")){
+                        players.get(i).isDone();
+                        System.out.println("player" +i +" is done");
+                    }else{
+                        sendPlayersCard(card,i);
+                    }
+                    
                 }
-
-                
+                i = (i+1)%2;
             }
-            i = (i+1)%2;
-                k++;
+        
+            if(players.get(0).getPoints() > players.get(1).getPoints() ){
+                players.get(1).removeLife();
+                i = 0;
+            }else
+            if(players.get(0).getPoints() < players.get(1).getPoints() ){
+                players.get(0).removeLife();
+                i = 1;
+            }else{
+                players.get(0).removeLife();
+                players.get(1).removeLife();
+                i = (i+1)%2;
+            }
+            players.get(0).restart();
+            players.get(1).restart();
         }
+        sendPlayersCardsNo();
+        sendPlayersLifes();
         sendPlayersEnded();
         
     }

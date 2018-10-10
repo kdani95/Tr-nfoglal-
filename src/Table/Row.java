@@ -12,16 +12,19 @@ public class Row {
     
     public void addCard(Card card){
         this.cards.add(card);
-        powerChange(card.getPower());
+        if(card.getPower() != 0){
+            powerChange(card.getPower());
+        }else{
+            card.SetPowerState(this.powerState);
+        }
+        
         pointsUpdate();
     }
     
     public void powerChange(int change){
-        if(change != 0){
-            this.powerState = this.powerState + change;
-            for (Card card : cards) {
-                card.SetPowerState(this.powerState);
-            }
+        this.powerState = this.powerState + change;
+        for (Card card : cards) {
+            card.SetPowerState(this.powerState);
         }
     }
     
@@ -38,5 +41,9 @@ public class Row {
     
     public int getPoints(){
         return this.points;
+    }
+
+    public void reset() {
+       this.cards.removeAll(cards);
     }
 }

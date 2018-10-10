@@ -13,7 +13,7 @@ public class Cards {
         
         Card card1 = new Card(0,"Triss", 7, "Triss.png", 2, 1);
         Card card2 = new Card(1,"Geralt", 10, "Geralt.png", 0, 0);
-        Card card3 = new Card(2,"asd3", 1, "Geralt.png", 0, 0);
+        Card card3 = new Card(2,"Vesemir", 6, "Vesemir.png", 0, 1);
         
         Cards.cards.add(card1);
         Cards.cards.add(card2);

@@ -1,6 +1,7 @@
 package Cards ;
 
 import Common.Types;
+import java.awt.Color;
 
 public class Card {
    
@@ -60,6 +61,16 @@ public class Card {
     
     public String toString(){
         return (this.id + "");
+    }
+
+    public Color getColor() {
+        if (strength < baseStregth){
+            return Color.RED;
+        }
+        if(strength > baseStregth){
+            return Color.GREEN;
+        }
+        return new Color(245,222,179,255);
     }
         
 }

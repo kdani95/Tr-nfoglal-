@@ -2,15 +2,21 @@ package GUI;
 
 import Cards.Card;
 import com.sun.prism.impl.Disposer;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -67,32 +73,40 @@ public class RowGui extends javax.swing.JPanel {
     
     public void addCard(Card card){
         //this.cards.add(card);
+        GridBagLayout gl = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        int height = (int) Math.round(this.getHeight() * 0.75);
+        int width = (int) Math.round( height * 0.7);
         ImageIcon image = new ImageIcon(card.getPictureLoc());
         
-        
         Mybutton button = new Mybutton();
+        button.setLayout(gl);
         button.setCard(card);
-        button.setText(card.getName());
-        button.setMaximumSize(new Dimension(80, 110));
-        button.setPreferredSize(new Dimension(80, 110));
-        //button.setBackground(new Color(230, 230, 230) );
-        button.setFocusPainted(true);
-        Image resized = getScaledImage(image.getImage(), 80, 110);
+        button.setBorder(BorderFactory.createLineBorder(Color.black, 3, true));
+        button.setBackground(card.getColor());
+        //button.setMaximumSize(new Dimension(width, height));
+        //button.setPreferredSize(new Dimension(width, height));
+        Image resized = getScaledImage(image.getImage(), width, height);
         
-        button.setIcon(new ImageIcon(resized));
+        //button.setIcon(new ImageIcon(resized));
         button.setEnabled(false);
-        button.setBounds(0,0,0,0);
-        //JLabel inner = new JLabel(new ImageIcon(resized));
+        
         JLabel inner = new JLabel();
-        inner.setMaximumSize(new Dimension(80, 110));
-        inner.setPreferredSize(new Dimension(80, 110));
-
-        //JLabel inner = new JLabel();
-        inner.setText(""+card.getStrength());
-        button.add(inner);
-
+        inner.setMaximumSize(new Dimension(width, height));
+        inner.setPreferredSize(new Dimension(width, height));
+        inner.setIcon(new ImageIcon(resized));
+        JLabel strength = new JLabel("Strength: "+card.getStrength());
+        strength.setForeground(Color.BLACK);
+        //strength.setMaximumSize(new Dimension(width, height / 10));
+        //strength.setMinimumSize(new Dimension(width, height /10));
+        c.gridy = 1; c.weighty = 0.9;
+        button.add(strength,c);
+        c.gridy = 0; c.weighty = 0.1;
+        button.add(inner,c);
+        
         this.buttons.add(button);
         cardDisplay.add(button);
+       
         this.add(button);
        
         this.revalidate();
@@ -133,6 +147,7 @@ public class RowGui extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1000, 130));
 
         this.setLayout(new GridBagLayout());
+        //GridBagConstraints c = new GridBagConstraints();
     }                    
 
     public Card getSelected(){
