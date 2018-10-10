@@ -170,6 +170,7 @@ public class Client implements Runnable{
                                 
                 case "RESET":
                                 Controller.reset();
+                                Controller.setPoints();
                                 receiveMsg();
                                 break;
                                 

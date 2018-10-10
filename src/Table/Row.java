@@ -45,5 +45,7 @@ public class Row {
 
     public void reset() {
        this.cards.removeAll(cards);
+       this.powerState = 0;
+       this.points = 0;
     }
 }
