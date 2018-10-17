@@ -123,7 +123,7 @@ public class RowGui extends javax.swing.JPanel {
         
         for(Card c : cards){
             this.addCard(c);
-            System.out.println("name : " + c.getName() );
+            //System.out.println("name : " + c.getName() );
         }
         
         this.revalidate();

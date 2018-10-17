@@ -11,7 +11,7 @@ public class Server implements Runnable{
     private int PORT = 0;
     private ServerSocket ss;
     private ArrayList<User> players = new ArrayList<User>();
-    private boolean LOG = true;
+    private boolean LOG = false;
     
     private void LOG(String log){
         if(LOG){
@@ -113,7 +113,8 @@ public class Server implements Runnable{
 
         LOG("Players connected");
         Random rand = new Random();
-        int i = rand.nextInt(1);
+        int i = rand.nextInt(2);
+        System.out.println("RANDOM: " + i);
         
         while( players.get(0).getLifes() > 0 && players.get(1).getLifes() > 0){
             
@@ -133,6 +134,7 @@ public class Server implements Runnable{
                     if(card.equals("DONE")){
                         players.get(i).isDone();
                         System.out.println("player" +i +" is done");
+                        sendPlayersCard("DONE", i);
                     }else{
                         sendPlayersCard(card,i);
                     }

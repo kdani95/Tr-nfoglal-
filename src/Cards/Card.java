@@ -3,7 +3,7 @@ package Cards ;
 import Common.Types;
 import java.awt.Color;
 
-public class Card {
+public class Card{
    
     
     private String name;
@@ -71,6 +71,10 @@ public class Card {
             return Color.GREEN;
         }
         return new Color(245,222,179,255);
+    }
+
+    public int getValue() {
+        return this.baseStregth + this.power;
     }
         
 }

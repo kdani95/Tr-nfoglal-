@@ -11,32 +11,49 @@ import tronfoglalo.Controller;
 
 public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private boolean started = false;
+    private String name;
     public Tronfoglalo() {
-         
-        Cards.init();
-        String addr = "localhost";
-        int PORT = 12345;
-        List<Card> deck = new ArrayList<Card>();
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(0));
         initComponents();
-        
-        Client client = new Client(addr, PORT, "Danika", "HUMAN", deck);
-        Controller.addClient(client);
-        Controller.addGUI(this);
-        
-        setMyName(client.getName());
-
-        client.run();
-        started = true;
+    }
+    
+    public Tronfoglalo(String name) {
+        this.name = name;
+        initComponents();
+    }
+    
+    public Tronfoglalo(String name,String mode) {
+        if(mode.equals("SinglePlayer")){
+            List<Card> deckAI = new ArrayList<Card>();
+            deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(3));
+            deckAI.add(Cards.getCard(0));
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(5));
+            deckAI.add(Cards.getCard(4));
+            deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(1));
+            /*deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(3));
+            deckAI.add(Cards.getCard(0));
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(5));
+            deckAI.add(Cards.getCard(4));
+            deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(1));*/
+            
+            
+            Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
+            c.start();
+            
+        }else{
+            
+        }
+        this.name = name;
+        initComponents();
     }
 
     @SuppressWarnings("unchecked")
@@ -66,8 +83,8 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
       if(started){  
-        System.out.println("Height: " + this.getHeight());
-        System.out.println("Width: " + this.getWidth());
+        //System.out.println("Height: " + this.getHeight());
+        //System.out.println("Width: " + this.getWidth());
         this.table1.setSize(this.getWidth(), this.getHeight());
         
         Controller.refreshHandRow();
@@ -115,6 +132,43 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
     @Override
     public void run() {
+        Cards.init();
+        String addr = "localhost";
+        int PORT = 12345;
+        List<Card> deck = new ArrayList<Card>();
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(3));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(5));
+        deck.add(Cards.getCard(4));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(1));
+        /*deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(3));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(5));
+        deck.add(Cards.getCard(4));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(1));*/
+        
+        
+        Client client = new Client(addr, PORT, this.name , "HUMAN", deck);
+        Controller.addClient(client);
+        Controller.addGUI(this);
+        setMyName(client.getName());
+        
+        Thread clientThread = new Thread(client);
+        clientThread.setDaemon(true);
+        clientThread.start();
+        started = true;
+        
+        
         this.setVisible(true);
     }
 
@@ -124,6 +178,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
     public void enableHand() {
         table1.enableHand();
+        System.out.println(java.lang.Thread.activeCount());
     }
 
     public void setEnemyLifes(String lifes) {

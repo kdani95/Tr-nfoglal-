@@ -21,6 +21,17 @@ public class Row {
         pointsUpdate();
     }
     
+    public void removeCard(Card card){
+        this.cards.remove(card);
+        if(card.getPower() != 0){
+            powerChange(-card.getPower());
+        }else{
+            card.SetPowerState(0);
+        }
+        
+        pointsUpdate();
+    }
+    
     public void powerChange(int change){
         this.powerState = this.powerState + change;
         for (Card card : cards) {

@@ -21,6 +21,18 @@ public class Table {
         return rows[2].getPoints() + rows[3].getPoints();
     }
     
+    public int tryCard(Card card){
+        int beforePoints = getPlayerOnePoints();
+        
+        addCard(card, 1);
+        
+        int afterPoint = getPlayerOnePoints();
+        
+        removeCard(card);
+        
+        return afterPoint - beforePoints;
+    }
+    
     public void addCard(Card card, int player){
         if(player == 1){
             if(card.getRow() == 0){
@@ -38,6 +50,15 @@ public class Table {
                 rows[3].addCard(card);
             }
         }
+    }
+    
+    public void removeCard(Card card){
+        if(card.getRow() == 0){
+                rows[0].removeCard(card);
+            }else
+            {
+                rows[1].removeCard(card);
+            }
     }
     
     public Row getRow(int r){

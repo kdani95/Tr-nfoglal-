@@ -13,8 +13,7 @@ public class User {
     private Scanner sc;
     private PrintWriter pw;
     private boolean notDone = true;
-    private boolean LOG = true;
-    
+    private boolean LOG = false;
     private void LOG(String log){
         if(LOG){
             System.out.println("SERVER LOG: " + log);

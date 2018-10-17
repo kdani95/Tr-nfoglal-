@@ -13,7 +13,7 @@ public class HumanPlayer extends Player{
     
     public Card getCard(){
         if ( super.hand.size() == 0){
-            System.out.println("OUT OF CARDS");
+            //System.out.println("OUT OF CARDS");
             return null;
         }
         Random rand = new Random();
@@ -21,8 +21,8 @@ public class HumanPlayer extends Player{
         
         Card selected = super.hand.get(i);
         super.hand.remove(i);
-        System.out.println("Hand size: " + super.hand.size());
-        System.out.println("Card name: " + selected.getName());
+        //System.out.println("Hand size: " + super.hand.size());
+        //System.out.println("Card name: " + selected.getName());
         return selected;
     }
     
@@ -36,7 +36,7 @@ public class HumanPlayer extends Player{
     
     public void addToTable(Card card,int player){
         if(card != null){
-            System.out.println("addToTable: Card name: " + card.getName());
+            //System.out.println("addToTable: Card name: " + card.getName());
             super.table.addCard(card, player);
         }
         

@@ -14,9 +14,11 @@ public abstract class Player {
     protected int backPoints;
     protected int points;
     protected int lifes = 2;
+    protected int enemyLifes = 2;
     protected List<Card> deck;
     protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
+    protected boolean enemyPassed = false;
     private int cards = 10;
     
     public Player(String name, List<Card> deck){
@@ -41,6 +43,10 @@ public abstract class Player {
     
     protected void drawToHand(int num){
         
+    }
+    
+    public void enemyPassed(){
+        enemyPassed = true;
     }
     
     abstract public Card getCard();
@@ -69,5 +75,6 @@ public abstract class Player {
 
     public void reset() {
         table.reset();
+        enemyPassed = false;
     }
 }

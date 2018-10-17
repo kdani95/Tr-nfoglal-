@@ -31,13 +31,13 @@ public class Controller {
     
     public static void refreshRow(int r){
         Row row = client.getRow(r);
-        System.out.println("Row points = " + row.getPoints());
+        //System.out.println("Row points = " + row.getPoints());
         
         tronfoglalo.refreshRow(row.getCards() , r , row.getPoints() );
     }
     
     public static void refreshHandRow(){
-        System.out.println("Refresh hand row");
+        //System.out.println("Refresh hand row");
         //System.out.println("player.getHand = " + player.getHand().size());
         tronfoglalo.refreshHandRow();
     }
