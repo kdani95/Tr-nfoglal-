@@ -21,12 +21,9 @@ public class Start {
 
        // Thread c1 = new Thread(new Client(addr, PORT,"Danika","HUMAN",deck) ); 
         Cards.init();
+        
         Thread GUI = new Thread(new Tronfoglalo("DANI","SinglePlayer") );
-        
-        Thread server = new Thread(new Server(PORT));
-        
-        server.start();
-        
+
         try {
             Thread.sleep(1000);
             GUI.start();

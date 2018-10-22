@@ -18,10 +18,43 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public Tronfoglalo(String name) {
         this.name = name;
+        Controller.addGUI(this);
         initComponents();
+        
+        
     }
     
-    public Tronfoglalo(String name,String mode) {
+    public void startGame(String mode){  
+        this.add(table1);
+        
+        String addr = "localhost";
+        int PORT = 12345;
+        List<Card> deck = new ArrayList<Card>();
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(3));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(5));
+        deck.add(Cards.getCard(4));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(1));
+        
+        Controller.startServer(12345);
+        
+        Client client = new Client(addr, PORT, this.name , "HUMAN", deck);
+        Controller.addClient(client);
+        
+        
+        Thread clientThread = new Thread(client);
+        clientThread.setDaemon(true);
+        clientThread.start();
+        started = true;
+        
+        this.mainMenu1.setVisible(false);
+        this.table1.setVisible(true);
+        
         if(mode.equals("SinglePlayer")){
             List<Card> deckAI = new ArrayList<Card>();
             deckAI.add(Cards.getCard(2));
@@ -34,17 +67,6 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
             deckAI.add(Cards.getCard(4));
             deckAI.add(Cards.getCard(1));
             deckAI.add(Cards.getCard(1));
-            /*deckAI.add(Cards.getCard(2));
-            deckAI.add(Cards.getCard(2));
-            deckAI.add(Cards.getCard(3));
-            deckAI.add(Cards.getCard(0));
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(5));
-            deckAI.add(Cards.getCard(4));
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(1));*/
-            
             
             Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
             c.start();
@@ -53,6 +75,41 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
             
         }
         this.name = name;
+        
+    }
+    
+    public void joinMultiPlayer(int PORT,String IP){
+        this.add(table1);
+
+        List<Card> deck = new ArrayList<Card>();
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(2));
+        deck.add(Cards.getCard(3));
+        deck.add(Cards.getCard(0));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(6));
+        deck.add(Cards.getCard(5));
+        deck.add(Cards.getCard(4));
+        deck.add(Cards.getCard(1));
+        deck.add(Cards.getCard(1));
+        
+        Client client = new Client(IP, PORT, this.name , "HUMAN", deck);
+        Controller.addClient(client);
+        
+        Thread clientThread = new Thread(client);
+        clientThread.setDaemon(true);
+        clientThread.start();
+        started = true;
+        
+        this.mainMenu1.setVisible(false);
+        this.table1.setVisible(true);
+        
+        this.name = name;
+    }
+    
+    public Tronfoglalo(String name,String mode) {
+        this.name = name;
+        Controller.addGUI(this);
         initComponents();
     }
 
@@ -61,22 +118,22 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private void initComponents() {
 
         table1 = new GUI.Table();
+        mainMenu1 = new GUI.MainMenu();
+
+        table1.setEnabled(false);
+        table1.setMaximumSize(new java.awt.Dimension(10000, 6000));
+        table1.setName(""); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 51, 0));
         setMinimumSize(new java.awt.Dimension(1000, 600));
         setName("Trónfoglaló"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1300, 900));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
         });
-
-        table1.setMaximumSize(new java.awt.Dimension(10000, 6000));
-        table1.setMinimumSize(new java.awt.Dimension(1000, 600));
-        table1.setName(""); // NOI18N
-        getContentPane().add(table1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(mainMenu1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -127,46 +184,14 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private GUI.MainMenu mainMenu1;
     private GUI.Table table1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void run() {
         Cards.init();
-        String addr = "localhost";
-        int PORT = 12345;
-        List<Card> deck = new ArrayList<Card>();
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(3));
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(5));
-        deck.add(Cards.getCard(4));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(1));
-        /*deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(3));
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(5));
-        deck.add(Cards.getCard(4));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(1));*/
         
-        
-        Client client = new Client(addr, PORT, this.name , "HUMAN", deck);
-        Controller.addClient(client);
-        Controller.addGUI(this);
-        setMyName(client.getName());
-        
-        Thread clientThread = new Thread(client);
-        clientThread.setDaemon(true);
-        clientThread.start();
-        started = true;
         
         
         this.setVisible(true);

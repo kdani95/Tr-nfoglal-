@@ -422,7 +422,7 @@ public class Table extends javax.swing.JPanel {
     }//GEN-LAST:event_passButtonActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-       int width = 6000;
+       int width = this.getWidth();
        int height = (int) Math.round( (this.getHeight() * 0.9) / 5 );
        handRow.setMaximumSize(new Dimension(width, height));
        handRow.setMinimumSize(new Dimension(0, height));

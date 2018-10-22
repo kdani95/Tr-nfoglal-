@@ -5,6 +5,7 @@ import Cards.Cards;
 import Client.Client;
 import Player.HumanPlayer;
 import Player.Player;
+import Server.Server;
 import Table.Row;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,23 @@ public class Controller {
     
     public static void setPoints(){
         tronfoglalo.setPoints(client.getMyPoints(),client.getEnemyPoints());
+    }
+    
+    public static void startServer(int PORT){
+        Thread server = new Thread(new Server(PORT));
+        server.start();
+    }
+    
+    public static void startSinglePlayer(){
+       tronfoglalo.startGame("SinglePlayer");
+    }
+
+    public static void startMultiPlayer() {
+        tronfoglalo.startGame("MultiPlayer");
+    }
+    
+    public static void joinMultiPlayer() {
+        tronfoglalo.joinMultiPlayer(12345,"localhost");
     }
     
 }
