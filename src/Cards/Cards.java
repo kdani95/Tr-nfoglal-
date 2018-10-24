@@ -10,21 +10,23 @@ public class Cards {
     
     public static void init(){
         Cards.cards.clear();
-        
+        String cardLocation = "cards/";
         //LOVAG
-        Card card1 = new Card(0,"Knight", 9, "knight.png", 0, 0);
+        Card card1 = new Card(0,"Knight", 6, cardLocation + "knight.png", 0, 0);
         //
-        Card card2 = new Card(1,"Archer", 5, "archer.png", 0, 1);
+        Card card2 = new Card(1,"Archer", 5, cardLocation +"archer.png", 0, 1);
         //
-        Card card3 = new Card(2,"Peasant", 2, "peasant.png", 0, 0);
+        Card card3 = new Card(2,"Peasant", 2, cardLocation +"peasant.png", 0, 0);
         //
-        Card card4 = new Card(3,"King", 10, "king.png", 4, 0);
+        Card card4 = new Card(3,"King", 10, cardLocation +"king.png", 4, 0);
         
-        Card card5 = new Card(4,"Catapult", 7, "catapult.png", 0, 1);
+        Card card5 = new Card(4,"Catapult", 7, cardLocation +"catapult.png", 0, 1);
         
-        Card card6 = new Card(5,"Sorcerer", 7, "sorcerer.png", 2, 1);
+        Card card6 = new Card(5,"Sorcerer", 7, cardLocation +"sorcerer.png", 2, 1);
         
-        Card card7 = new Card(6,"Rider", 8, "rider.png", -2, 0);
+        Card card7 = new Card(6,"Rider", 8, cardLocation +"rider.png", -2, 0);
+        
+        Card card8 = new Card(7,"Commander", 8, cardLocation +"commander.png", 2, 0);
         
         
         Cards.cards.add(card1);
@@ -34,6 +36,7 @@ public class Cards {
         Cards.cards.add(card5);
         Cards.cards.add(card6);
         Cards.cards.add(card7);
+        Cards.cards.add(card8);
 
     }
     

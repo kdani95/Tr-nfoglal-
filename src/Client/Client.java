@@ -136,7 +136,7 @@ public class Client implements Runnable{
         boolean done = false;
         if (!done){
             switch(msg){
-                case "WAIT" : if(!AI) {Controller.disableHand();} receiveMsg(); break;
+                case "WAIT" : if(!AI) {Controller.refresh(); Controller.disableHand();} receiveMsg(); break;
                 
                 case "GO" : 
                                 if(!AI){Controller.enableHand();}else{
@@ -252,5 +252,9 @@ public class Client implements Runnable{
     
     public int getEnemyPoints(){
         return player.getPlayerTwoPoints();
+    }
+
+    public List<Card> getDeck() {
+        return this.player.getDeck();
     }
 }

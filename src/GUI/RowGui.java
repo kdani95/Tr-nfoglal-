@@ -115,6 +115,7 @@ public class RowGui extends javax.swing.JPanel {
     }
     
     public void refresh(List<Card> cards){
+        System.out.println("widht: " + this.getWidth() + " height: " + this.getHeight());
         for(Mybutton mb :  buttons){
             cardDisplay.remove(mb);
             this.remove(mb);
@@ -159,6 +160,16 @@ public class RowGui extends javax.swing.JPanel {
         }
         cardDisplay.clearSelection();
         return selected.getCard();
+    }
+    
+    public List<Card> getCards(){
+        List<Card> cards = new ArrayList<Card>();
+        
+        for( Mybutton mb : buttons){
+            cards.add(mb.getCard());
+        }
+        
+        return cards;
     }
                           
 }

@@ -20,6 +20,8 @@ public class MainMenu extends javax.swing.JPanel {
         startSinglePlayer = new javax.swing.JButton();
         startMultiPlayer = new javax.swing.JButton();
         joinMultiPlayer = new javax.swing.JButton();
+        editDeck = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 188, 169));
         setMinimumSize(new java.awt.Dimension(1000, 600));
@@ -49,6 +51,22 @@ public class MainMenu extends javax.swing.JPanel {
             }
         });
 
+        editDeck.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        editDeck.setText("Edit deck");
+        editDeck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editDeckActionPerformed(evt);
+            }
+        });
+
+        exit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -56,10 +74,12 @@ public class MainMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(216, 216, 216)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editDeck, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(joinMultiPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startMultiPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startSinglePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(525, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,7 +90,11 @@ public class MainMenu extends javax.swing.JPanel {
                 .addComponent(startMultiPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(joinMultiPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(296, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(editDeck, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(440, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -86,8 +110,18 @@ public class MainMenu extends javax.swing.JPanel {
         Controller.joinMultiPlayer();
     }//GEN-LAST:event_joinMultiPlayerActionPerformed
 
+    private void editDeckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDeckActionPerformed
+        Controller.editDeck();
+    }//GEN-LAST:event_editDeckActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        exitActionPerformed(evt);
+    }//GEN-LAST:event_exitActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton editDeck;
+    private javax.swing.JButton exit;
     private javax.swing.JButton joinMultiPlayer;
     private javax.swing.JButton startMultiPlayer;
     private javax.swing.JButton startSinglePlayer;

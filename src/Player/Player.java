@@ -15,11 +15,11 @@ public abstract class Player {
     protected int points;
     protected int lifes = 2;
     protected int enemyLifes = 2;
-    protected List<Card> deck;
+    protected List<Card> deck = new ArrayList<Card>();
     protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
     protected boolean enemyPassed = false;
-    private int cards = 10;
+    private int cards = 20;
     
     public Player(String name, List<Card> deck){
         this.table = new Table();
@@ -76,5 +76,9 @@ public abstract class Player {
     public void reset() {
         table.reset();
         enemyPassed = false;
+    }
+
+    public List<Card> getDeck() {
+        return this.deck;
     }
 }

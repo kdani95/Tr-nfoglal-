@@ -18,28 +18,17 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public Tronfoglalo(String name) {
         this.name = name;
-        Controller.addGUI(this);
+        List<Card> cards = new ArrayList<Card>();
+        cards.add(Cards.getCard(1));
+        Controller.addGUI(this,cards);
         initComponents();
-        
-        
     }
     
-    public void startGame(String mode){  
+    public void startGame(String mode,List<Card> deck){  
         this.add(table1);
         
         String addr = "localhost";
         int PORT = 12345;
-        List<Card> deck = new ArrayList<Card>();
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(3));
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(5));
-        deck.add(Cards.getCard(4));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(1));
         
         Controller.startServer(12345);
         
@@ -67,6 +56,8 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
             deckAI.add(Cards.getCard(4));
             deckAI.add(Cards.getCard(1));
             deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(7));
+            
             
             Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
             c.start();
@@ -78,20 +69,8 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         
     }
     
-    public void joinMultiPlayer(int PORT,String IP){
+    public void joinMultiPlayer(int PORT,String IP,List<Card> deck){
         this.add(table1);
-
-        List<Card> deck = new ArrayList<Card>();
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(2));
-        deck.add(Cards.getCard(3));
-        deck.add(Cards.getCard(0));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(6));
-        deck.add(Cards.getCard(5));
-        deck.add(Cards.getCard(4));
-        deck.add(Cards.getCard(1));
-        deck.add(Cards.getCard(1));
         
         Client client = new Client(IP, PORT, this.name , "HUMAN", deck);
         Controller.addClient(client);
@@ -109,7 +88,22 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public Tronfoglalo(String name,String mode) {
         this.name = name;
-        Controller.addGUI(this);
+        List<Card> cards = new ArrayList<Card>();
+        cards.add(Cards.getCard(0));
+        cards.add(Cards.getCard(0));
+        cards.add(Cards.getCard(1));
+        cards.add(Cards.getCard(1));
+        cards.add(Cards.getCard(2));
+        cards.add(Cards.getCard(2));
+        cards.add(Cards.getCard(3));
+        cards.add(Cards.getCard(4));
+        cards.add(Cards.getCard(5));
+        cards.add(Cards.getCard(6));
+        cards.add(Cards.getCard(7));
+        cards.add(Cards.getCard(0));
+        
+        
+        Controller.addGUI(this,cards);
         initComponents();
     }
 
@@ -118,6 +112,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private void initComponents() {
 
         table1 = new GUI.Table();
+        editDeck1 = new GUI.EditDeck();
         mainMenu1 = new GUI.MainMenu();
 
         table1.setEnabled(false);
@@ -143,11 +138,17 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         //System.out.println("Height: " + this.getHeight());
         //System.out.println("Width: " + this.getWidth());
         this.table1.setSize(this.getWidth(), this.getHeight());
+        this.mainMenu1.setSize(this.getWidth(), this.getHeight());
+        this.editDeck1.setSize(this.getWidth(), this.getHeight());
         
         Controller.refreshHandRow();
         for(int i = 0; i < 4; i++){
             Controller.refreshRow(i);
         }
+      }else{
+        this.table1.setSize(this.getWidth(), this.getHeight());
+        this.mainMenu1.setSize(this.getWidth(), this.getHeight());
+        this.editDeck1.setSize(this.getWidth(), this.getHeight());
       }
     }//GEN-LAST:event_formComponentResized
 
@@ -184,6 +185,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private GUI.EditDeck editDeck1;
     private GUI.MainMenu mainMenu1;
     private GUI.Table table1;
     // End of variables declaration//GEN-END:variables
@@ -191,9 +193,6 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     @Override
     public void run() {
         Cards.init();
-        
-        
-        
         this.setVisible(true);
     }
 
@@ -221,6 +220,20 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     public void setPoints(int myPoints, int enemyPoints) {
        table1.setPoints(myPoints,enemyPoints);
     }
+
+    public void editDeck() {
+        this.editDeck1.init();
+        this.add(editDeck1);
+        this.mainMenu1.setVisible(false);
+        editDeck1.setVisible(true);
+    }
+    
+    public void editDeckBack() {
+        this.remove(editDeck1);
+        this.mainMenu1.setVisible(true);
+        editDeck1.setVisible(false);
+    }
+    
 
 
     

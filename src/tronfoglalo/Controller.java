@@ -14,9 +14,12 @@ public class Controller {
     private static GUI.Tronfoglalo tronfoglalo;
     private static Client client;
     public static String SYNC = "SYNC";
+    private static List<Card> deck = new ArrayList<Card>();
+    private static List<Card> myCards = new ArrayList<Card>();
        
-    public static void addGUI(GUI.Tronfoglalo tronfoglalo){
+    public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards){
         Controller.tronfoglalo =tronfoglalo;
+        Controller.myCards = cards;
     }
     
     public static void addClient(Client client){
@@ -106,15 +109,44 @@ public class Controller {
     }
     
     public static void startSinglePlayer(){
-       tronfoglalo.startGame("SinglePlayer");
+       tronfoglalo.startGame("SinglePlayer",Controller.deck);
     }
 
     public static void startMultiPlayer() {
-        tronfoglalo.startGame("MultiPlayer");
+        tronfoglalo.startGame("MultiPlayer",Controller.deck);
     }
     
     public static void joinMultiPlayer() {
-        tronfoglalo.joinMultiPlayer(12345,"localhost");
+        tronfoglalo.joinMultiPlayer(12345,"localhost",client.getDeck());
+    }
+
+    public static void editDeck() {
+        tronfoglalo.editDeck();
     }
     
+    public static void editDeckBack(){
+        tronfoglalo.editDeckBack();
+    }
+
+    public static void saveDeck(List<Card> cards) {
+        Controller.deck = cards;
+    }
+    
+    public static List<Card> getDeck(){
+        return Controller.deck;
+    }
+    
+    public static List<Card> getCards(){
+        return Controller.myCards;
+    }
+
+    public static void addToDeck(Card selected) {
+       Controller.deck.add(selected);
+       Controller.myCards.remove(selected);
+    }
+
+    public static void removeFromDeck(Card selected) {
+       Controller.myCards.add(selected);
+       Controller.deck.remove(selected);
+    }
 }

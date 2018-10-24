@@ -61,6 +61,7 @@ public class Table extends javax.swing.JPanel {
         playerLifes1 = new javax.swing.JLabel();
         enemyCards = new javax.swing.JLabel();
         enemyLifes = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         handRow = new GUI.RowGui();
 
         setBackground(new java.awt.Color(221, 188, 169));
@@ -394,17 +395,15 @@ public class Table extends javax.swing.JPanel {
         add(playerTwoPanel, gridBagConstraints);
 
         handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        handRow.setPreferredSize(null);
         handRow.setLayout(new FlowLayout());
+        jScrollPane1.setViewportView(handRow);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 907;
-        gridBagConstraints.ipady = 122;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(handRow, gridBagConstraints);
+        add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
@@ -453,6 +452,7 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JLabel enemyName;
     private javax.swing.JLabel enemyPoints;
     private GUI.RowGui handRow;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel myBackPoint;
     private GUI.RowGui myBackRow;
     private javax.swing.JLabel myCards;
