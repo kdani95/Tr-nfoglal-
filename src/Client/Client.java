@@ -5,7 +5,7 @@ import Cards.Cards;
 import GUI.Tronfoglalo;
 import Player.AiPlayer;
 import Player.HumanPlayer;
-import Table.Row;
+import Logic.Row;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.EventListener;
@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
-import tronfoglalo.Controller;
+import Logic.Controller;
 
 public class Client implements Runnable{
     private Socket s;

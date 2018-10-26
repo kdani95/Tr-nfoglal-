@@ -1,43 +1,104 @@
 package Cards;
 
 import Common.Types;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Cards {
     
     private static List<Card> cards = new ArrayList<Card>();
+    private static final String url = "jdbc:sqlite:data/cards.db";
+    private static final String userName = "root";
+    private static final String password = "root";
+    
+    public static void createDatabase(String name){
+        
+        String delete = "DROP TABLE IF EXISTS cards;";
+        String sql = "CREATE TABLE IF NOT EXISTS cards ("+
+                     "id integer PRIMARY KEY," +
+                     "name text NOT NULL," + 
+                     "strength integer NOT NULL," +
+                     "picture text NOT NULL," +
+                     "power integer NOT NULL," + 
+                     "row integer NOT NULL );";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) { 
+                if (conn != null) {
+                    stmt.execute(delete);
+                    stmt.execute(sql);
+                    //System.out.println("The driver name is " + meta.getDriverName());
+                    System.out.println("A new database has been created.");
+            }
+ 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private static void insertCard(String name,int strength,String picture,int power, int row){
+        String sql = "INSERT INTO cards(name,strength,picture,power,row) VALUES (?,?,?,?,?)";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, name);
+                pstmt.setInt(2, strength);
+                pstmt.setString(3, "cards/"+picture);
+                pstmt.setInt(4, power);
+                pstmt.setInt(5, row);
+                pstmt.executeUpdate();
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Card selectByID(int ID,String table){
+        String sql = "SELECT * FROM " + table + " where id = " + ID + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+            if(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int strength = rs.getInt("strength");
+                String picture = rs.getString("picture");
+                int power = rs.getInt("power");   
+                int row = rs.getInt("row");
+                //System.out.println(name + ", " + strength + ", " + picture);
+                return new Card(id, name, strength, picture, power, row);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    } 
+    /*
+        this.id = card.id;
+       this.name = card.name;
+       this.baseStregth = card.strength;
+       this.strength = card.strength;
+       this.pictureLoc = card.pictureLoc;
+       this.power = card.power;
+       this.row = card.row;
+    */
     
     public static void init(){
-        Cards.cards.clear();
-        String cardLocation = "cards/";
-        //LOVAG
-        Card card1 = new Card(0,"Knight", 6, cardLocation + "knight.png", 0, 0);
-        //
-        Card card2 = new Card(1,"Archer", 5, cardLocation +"archer.png", 0, 1);
-        //
-        Card card3 = new Card(2,"Peasant", 2, cardLocation +"peasant.png", 0, 0);
-        //
-        Card card4 = new Card(3,"King", 10, cardLocation +"king.png", 4, 0);
-        
-        Card card5 = new Card(4,"Catapult", 7, cardLocation +"catapult.png", 0, 1);
-        
-        Card card6 = new Card(5,"Sorcerer", 7, cardLocation +"sorcerer.png", 2, 1);
-        
-        Card card7 = new Card(6,"Rider", 8, cardLocation +"rider.png", -2, 0);
-        
-        Card card8 = new Card(7,"Commander", 8, cardLocation +"commander.png", 2, 0);
-        
-        
-        Cards.cards.add(card1);
-        Cards.cards.add(card2);
-        Cards.cards.add(card3);
-        Cards.cards.add(card4);
-        Cards.cards.add(card5);
-        Cards.cards.add(card6);
-        Cards.cards.add(card7);
-        Cards.cards.add(card8);
-
+        /*createDatabase("cards.db");
+        insertCard("Knight", 6, "knight.png", 0, 0);
+        insertCard("Commander", 8, "commander.png", 1, 0);
+        selectByID(2);*/
     }
     
     public static void addCard(Card card){
@@ -45,6 +106,6 @@ public class Cards {
     }
     
     public static Card getCard(int i){
-        return new Card(cards.get(i));
+        return selectByID(i,"cards");
     }
 }

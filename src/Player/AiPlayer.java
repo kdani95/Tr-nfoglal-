@@ -1,7 +1,7 @@
 package Player;
 
 import Cards.Card;
-import Table.Row;
+import Logic.Row;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;

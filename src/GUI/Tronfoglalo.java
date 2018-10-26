@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import tronfoglalo.Controller;
+import Logic.Controller;
 
 public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private boolean started = false;
@@ -89,18 +89,11 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     public Tronfoglalo(String name,String mode) {
         this.name = name;
         List<Card> cards = new ArrayList<Card>();
-        cards.add(Cards.getCard(0));
-        cards.add(Cards.getCard(0));
         cards.add(Cards.getCard(1));
         cards.add(Cards.getCard(1));
         cards.add(Cards.getCard(2));
         cards.add(Cards.getCard(2));
-        cards.add(Cards.getCard(3));
-        cards.add(Cards.getCard(4));
-        cards.add(Cards.getCard(5));
-        cards.add(Cards.getCard(6));
-        cards.add(Cards.getCard(7));
-        cards.add(Cards.getCard(0));
+        
         
         
         Controller.addGUI(this,cards);
@@ -192,7 +185,6 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
     @Override
     public void run() {
-        Cards.init();
         this.setVisible(true);
     }
 

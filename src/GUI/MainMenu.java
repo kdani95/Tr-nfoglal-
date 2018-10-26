@@ -1,6 +1,6 @@
 package GUI;
 
-import tronfoglalo.Controller;
+import Logic.Controller;
 
 
 public class MainMenu extends javax.swing.JPanel {

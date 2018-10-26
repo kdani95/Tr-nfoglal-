@@ -1,8 +1,8 @@
 package Player;
 
 import Cards.Card;
-import Table.Table;
-import Table.Row;
+import Logic.Table;
+import Logic.Row;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class Player {
     protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
     protected boolean enemyPassed = false;
-    private int cards = 20;
+    private int cards = 10;
     
     public Player(String name, List<Card> deck){
         this.table = new Table();

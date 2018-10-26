@@ -2,6 +2,10 @@ package Cards ;
 
 import Common.Types;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Card{
    
@@ -14,6 +18,27 @@ public class Card{
     private int row;
     private int power;
     private int powerState;
+    
+    public Card(ResultSet rs){
+        try {
+            System.out.println(rs.toString());
+            if(rs.next()){
+                this.id = rs.getInt("id");
+                this.name = rs.getString("name");
+                this.baseStregth = rs.getInt("strength");
+                this.strength = rs.getInt("strength");
+                this.pictureLoc = rs.getString("picture");
+                this.power = rs.getInt("power");   
+                this.row = rs.getInt("row");
+                System.out.println(this.name + ", " + this.strength);
+            }else{
+                System.out.println("INVALID CARD");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Card.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public Card(Card card){
        this.id = card.id;
