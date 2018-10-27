@@ -2,10 +2,10 @@ package Logic;
 
 import Cards.Card;
 import Cards.Cards;
-import Client.Client;
+import Netcode.Client.Client;
 import Player.HumanPlayer;
 import Player.Player;
-import Server.Server;
+import Netcode.Server.Server;
 import Logic.Row;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,10 @@ public class Controller {
     private static List<Card> deck = new ArrayList<Card>();
     private static List<Card> myCards = new ArrayList<Card>();
        
-    public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards){
+    public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards, List<Card> deck){
         Controller.tronfoglalo =tronfoglalo;
         Controller.myCards = cards;
+        Controller.deck = deck;
     }
     
     public static void addClient(Client client){
@@ -34,15 +35,11 @@ public class Controller {
     }
     
     public static void refreshRow(int r){
-        Row row = client.getRow(r);
-        //System.out.println("Row points = " + row.getPoints());
-        
+        Row row = client.getRow(r); 
         tronfoglalo.refreshRow(row.getCards() , r , row.getPoints() );
     }
     
     public static void refreshHandRow(){
-        //System.out.println("Refresh hand row");
-        //System.out.println("player.getHand = " + player.getHand().size());
         tronfoglalo.refreshHandRow();
     }
     
@@ -109,15 +106,15 @@ public class Controller {
     }
     
     public static void startSinglePlayer(){
-       tronfoglalo.startGame("SinglePlayer",Controller.deck);
+       tronfoglalo.startGame("SinglePlayer",Cards.getCards("deck"));
     }
 
     public static void startMultiPlayer() {
-        tronfoglalo.startGame("MultiPlayer",Controller.deck);
+        tronfoglalo.startGame("MultiPlayer",Cards.getCards("deck"));
     }
     
     public static void joinMultiPlayer() {
-        tronfoglalo.joinMultiPlayer(12345,"localhost",client.getDeck());
+        tronfoglalo.joinMultiPlayer(12345,"localhost",Cards.getCards("deck"));
     }
 
     public static void editDeck() {
@@ -148,5 +145,14 @@ public class Controller {
     public static void removeFromDeck(Card selected) {
        Controller.myCards.add(selected);
        Controller.deck.remove(selected);
+    }
+
+    public static void enemyPassed() {
+        client.enemyPassed();
+        tronfoglalo.enemyPassed();
+    }
+
+    public static void showWinner(int playerOnePoints, int playerTwoPoints) {
+        tronfoglalo.showWinner(playerOnePoints,playerTwoPoints);
     }
 }

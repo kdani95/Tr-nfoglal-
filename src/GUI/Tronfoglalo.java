@@ -2,12 +2,13 @@ package GUI;
 
 import Cards.Card;
 import Cards.Cards;
-import Client.Client;
+import Netcode.Client.Client;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Logic.Controller;
+import javax.swing.JOptionPane;
 
 public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private boolean started = false;
@@ -18,10 +19,12 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public Tronfoglalo(String name) {
         this.name = name;
-        List<Card> cards = new ArrayList<Card>();
-        cards.add(Cards.getCard(1));
-        Controller.addGUI(this,cards);
+        List<Card> cards = Cards.getCards("mycards");
+        List<Card> deck = Cards.getCards("deck");
+        
+        Controller.addGUI(this,cards,deck);
         initComponents();
+        table1.setMyName(name);
     }
     
     public void startGame(String mode,List<Card> deck){  
@@ -35,29 +38,20 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         Client client = new Client(addr, PORT, this.name , "HUMAN", deck);
         Controller.addClient(client);
         
-        
         Thread clientThread = new Thread(client);
-        clientThread.setDaemon(true);
+        //clientThread.setDaemon(true);
         clientThread.start();
         started = true;
         
         this.mainMenu1.setVisible(false);
         this.table1.setVisible(true);
-        
+        //Controller.refreshHandRow();
         if(mode.equals("SinglePlayer")){
             List<Card> deckAI = new ArrayList<Card>();
-            deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(1));
             deckAI.add(Cards.getCard(2));
             deckAI.add(Cards.getCard(3));
-            deckAI.add(Cards.getCard(0));
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(5));
-            deckAI.add(Cards.getCard(4));
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(7));
-            
+            deckAI.add(Cards.getCard(4));    
             
             Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
             c.start();
@@ -82,21 +76,15 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         
         this.mainMenu1.setVisible(false);
         this.table1.setVisible(true);
-        
+        //Controller.refreshHandRow();
         this.name = name;
     }
     
     public Tronfoglalo(String name,String mode) {
         this.name = name;
-        List<Card> cards = new ArrayList<Card>();
-        cards.add(Cards.getCard(1));
-        cards.add(Cards.getCard(1));
-        cards.add(Cards.getCard(2));
-        cards.add(Cards.getCard(2));
-        
-        
-        
-        Controller.addGUI(this,cards);
+        List<Card> cards = Cards.getCards("mycards");
+        List<Card> deck = Cards.getCards("deck");
+        Controller.addGUI(this,cards,deck);
         initComponents();
     }
 
@@ -225,9 +213,15 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.mainMenu1.setVisible(true);
         editDeck1.setVisible(false);
     }
-    
 
+    public void enemyPassed() {
+        table1.enemyPassed();
+    }
 
-    
-    
+    public void showWinner(int playerOnePoints, int playerTwoPoints) {
+        JOptionPane winner = new JOptionPane("WINNER WINNER CHICKEN DINNER");
+        winner.showMessageDialog(this, "WINNER WINNER CHICKEN DINNER");
+        this.table1.setVisible(false);
+        this.mainMenu1.setVisible(true);
+    }
 }

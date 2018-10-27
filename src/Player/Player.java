@@ -25,7 +25,7 @@ public abstract class Player {
         this.table = new Table();
         this.name = name;
         this.deck = deck;
-        Collections.shuffle(deck);
+        //Collections.shuffle(deck);
         int i = 0;
         
         for(Card c : deck){

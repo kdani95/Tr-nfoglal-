@@ -45,7 +45,7 @@ public class AiPlayer extends Player{
             }
             for(Card c : hand){
            
-        }
+            }
         }
         
         int selected = 0;

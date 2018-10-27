@@ -25,18 +25,34 @@ public class Cards {
         
         String delete = "DROP TABLE IF EXISTS cards;";
         String sql = "CREATE TABLE IF NOT EXISTS cards ("+
-                     "id integer PRIMARY KEY," +
+                     "cardID integer PRIMARY KEY," +
                      "name text NOT NULL," + 
                      "strength integer NOT NULL," +
                      "picture text NOT NULL," +
                      "power integer NOT NULL," + 
                      "row integer NOT NULL );";
         
+        String deleteDeck = "DROP TABLE IF EXISTS deck;";
+        String sqlDeck = "CREATE TABLE IF NOT EXISTS deck ("+
+                         "id integer PRIMARY KEY," +
+                         "cardID integer NOT NULL);";
+        
+        String deleteCards = "DROP TABLE IF EXISTS mycards;";
+        String sqlCards = "CREATE TABLE IF NOT EXISTS mycards ("+
+                          "id integer PRIMARY KEY," +
+                          "cardID integer NOT NULL);";
+        
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) { 
                 if (conn != null) {
                     stmt.execute(delete);
                     stmt.execute(sql);
+                    
+                    stmt.execute(deleteDeck);
+                    stmt.execute(sqlDeck);
+                    
+                    stmt.execute(deleteCards);
+                    stmt.execute(sqlCards);
                     //System.out.println("The driver name is " + meta.getDriverName());
                     System.out.println("A new database has been created.");
             }
@@ -46,7 +62,7 @@ public class Cards {
         }
     }
     
-    private static void insertCard(String name,int strength,String picture,int power, int row){
+    private static void insertNewCard(String name,int strength,String picture,int power, int row){
         String sql = "INSERT INTO cards(name,strength,picture,power,row) VALUES (?,?,?,?,?)";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -61,51 +77,115 @@ public class Cards {
         }
     }
     
-    public static Card selectByID(int ID,String table){
-        String sql = "SELECT * FROM " + table + " where id = " + ID + ";";
-
+    private static void insertIntoMyCards(int cardID){
+        String sql = "INSERT INTO mycards(cardID) VALUES (?)";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, cardID);
+                pstmt.executeUpdate();
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void insertIntoDeck(int cardID){
+        
+        String sql = "INSERT INTO deck(cardID) VALUES (?)";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, cardID);
+                pstmt.executeUpdate();
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void moveToDeck(int id){
+        String sqlDelete = "DELETE FROM mycards WHERE id="+id+";";
+        String sqlGet = "SELECT * FROM mycards WHERE id="+id+";";
+        String sql = "INSERT INTO deck(cardID) VALUES (?)";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlGet)){
+                if(rs.next()){
+                    int cardID = rs.getInt("cardID");
+                    pstmt.setInt(1, cardID);
+                    pstmt.executeUpdate();
+                    stmt.execute(sqlDelete);
+                }
+                
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Card getCard(int ID){
+        String sql = "SELECT * FROM cards WHERE cardID=" + ID + ";";
+        System.out.println(sql);
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt  = conn.createStatement();
             ResultSet rs    = stmt.executeQuery(sql)){
             
             if(rs.next()){
-                int id = rs.getInt("id");
+                int id = rs.getInt("cardID");
                 String name = rs.getString("name");
                 int strength = rs.getInt("strength");
                 String picture = rs.getString("picture");
                 int power = rs.getInt("power");   
                 int row = rs.getInt("row");
                 //System.out.println(name + ", " + strength + ", " + picture);
-                return new Card(id, name, strength, picture, power, row);
+                return new Card(id,id, name, strength, picture, power, row);
             }
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("NULL CARD!!!!! ID: " + ID);
         return null;
     } 
-    /*
-        this.id = card.id;
-       this.name = card.name;
-       this.baseStregth = card.strength;
-       this.strength = card.strength;
-       this.pictureLoc = card.pictureLoc;
-       this.power = card.power;
-       this.row = card.row;
-    */
     
     public static void init(){
-        /*createDatabase("cards.db");
-        insertCard("Knight", 6, "knight.png", 0, 0);
-        insertCard("Commander", 8, "commander.png", 1, 0);
-        selectByID(2);*/
+        createDatabase("cards.db");
+        insertNewCard("Knight", 6, "knight.png", 0, 0);
+        insertNewCard("Commander", 8, "commander.png", 1, 0);
+        insertNewCard("Sorcerer", 6, "sorcerer.png", 2, 1);
+        insertNewCard("Archer", 5, "archer.png", 0, 1);
+        insertIntoMyCards(1);
+        insertIntoMyCards(1);
+        insertIntoMyCards(2);
+        insertIntoMyCards(3);
+        insertIntoMyCards(4);
+        insertIntoMyCards(4);
+        
     }
-    
-    public static void addCard(Card card){
-        Cards.cards.add(new Card(card));
-    }
-    
+/*
     public static Card getCard(int i){
-        return selectByID(i,"cards");
+        return selectCardByID(i,"cards");
+    }
+*/
+    public static List<Card> getCards(String table){
+        String sql = "SELECT * FROM cards INNER JOIN " + table + " ON cards.cardID= " + table + ".cardID;";
+        ArrayList<Card> cards = new ArrayList<Card>();
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int cardID = rs.getInt("cardID");
+                String name = rs.getString("name");
+                int strength = rs.getInt("strength");
+                String picture = rs.getString("picture");
+                int power = rs.getInt("power");   
+                int row = rs.getInt("row");
+                System.out.println(id + ", " + name + ", " + strength + ", " + picture);
+                cards.add(new Card(id,cardID, name, strength, picture, power, row));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return cards;
     }
 }

@@ -19,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
@@ -40,12 +41,16 @@ public class RowGui extends javax.swing.JPanel {
     //private List<JToggleButton> buttons = new ArrayList<JToggleButton>();
     
     private List<Mybutton> buttons = new ArrayList<Mybutton>();
-
+    private JButton assignedButton;
     private javax.swing.ButtonGroup cardDisplay;    
+    
+    public RowGui(JButton button) {
+        this.assignedButton = button;
+        initComponents();
+    }
     
     public RowGui() {
         initComponents();
-
     }
     
     private Image getScaledImage(Image srcImg, int w, int h){
@@ -84,6 +89,14 @@ public class RowGui extends javax.swing.JPanel {
         button.setCard(card);
         button.setBorder(BorderFactory.createLineBorder(Color.black, 3, true));
         button.setBackground(card.getColor());
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(evt.getClickCount() > 1){
+                    assignedButton.doClick();
+                }
+                
+            }
+        });
         //button.setMaximumSize(new Dimension(width, height));
         //button.setPreferredSize(new Dimension(width, height));
         Image resized = getScaledImage(image.getImage(), width, height);

@@ -18,30 +18,11 @@ public class Card{
     private int row;
     private int power;
     private int powerState;
-    
-    public Card(ResultSet rs){
-        try {
-            System.out.println(rs.toString());
-            if(rs.next()){
-                this.id = rs.getInt("id");
-                this.name = rs.getString("name");
-                this.baseStregth = rs.getInt("strength");
-                this.strength = rs.getInt("strength");
-                this.pictureLoc = rs.getString("picture");
-                this.power = rs.getInt("power");   
-                this.row = rs.getInt("row");
-                System.out.println(this.name + ", " + this.strength);
-            }else{
-                System.out.println("INVALID CARD");
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Card.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    private int cardID;
     
     public Card(Card card){
        this.id = card.id;
+       this.cardID = card.cardID;
        this.name = card.name;
        this.baseStregth = card.strength;
        this.strength = card.strength;
@@ -50,8 +31,9 @@ public class Card{
        this.row = card.row;
     }
     
-    public Card(int id ,String name, int strength, String pictureLoc, int power, int row){
+    public Card(int id, int cardID, String name, int strength, String pictureLoc, int power, int row){
         this.id = id;
+        this.cardID = cardID;
         this.name = name;
         this.baseStregth = strength;
         this.strength = strength;
@@ -62,6 +44,10 @@ public class Card{
         
     public String getName(){
         return this.name;
+    }
+    
+    public int getID(){
+        return this.cardID;
     }
     
     public int getStrength(){

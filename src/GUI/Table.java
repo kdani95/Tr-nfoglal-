@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Logic.Controller;
+import javax.swing.BorderFactory;
 
 
 public class Table extends javax.swing.JPanel {
@@ -62,7 +63,7 @@ public class Table extends javax.swing.JPanel {
         enemyCards = new javax.swing.JLabel();
         enemyLifes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        handRow = new GUI.RowGui();
+        handRow = new GUI.RowGui(placeButton);
 
         setBackground(new java.awt.Color(221, 188, 169));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -408,15 +409,12 @@ public class Table extends javax.swing.JPanel {
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
         Card card = handRow.getSelected();
-       
-            Controller.sendCard(card);
-            Controller.removeCard(card);
-            refreshHandRow();
-        
+        Controller.sendCard(card);
+        Controller.removeCard(card);
+        refreshHandRow();
     }//GEN-LAST:event_placeButtonActionPerformed
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed
-
         Controller.sendCard(null);
     }//GEN-LAST:event_passButtonActionPerformed
 
@@ -548,6 +546,10 @@ public class Table extends javax.swing.JPanel {
             this.playerOnePanel.setBackground(new Color(255,217,179));
             this.playerTwoPanel.setBackground(new Color(255,217,179));
         }
+    }
+
+    void enemyPassed() {
+        playerTwoPanel.setBorder(BorderFactory.createLineBorder(Color.red, 4, true));
     }
 
 }

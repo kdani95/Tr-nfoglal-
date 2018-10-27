@@ -118,6 +118,7 @@ public class EditDeck extends javax.swing.JPanel {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Card selected = cardsRow.getSelected();
         Controller.addToDeck(selected);
+        Cards.Cards.moveToDeck(selected.getID());
         //Controller.removeFromDeck(selected);
         deckRow.refresh(Controller.getDeck());
         deckRow.setEnabled();

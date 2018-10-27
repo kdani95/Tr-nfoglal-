@@ -1,4 +1,4 @@
-package Client;
+package Netcode.Client;
 
 import Cards.Card;
 import Cards.Cards;
@@ -39,7 +39,6 @@ public class Client implements Runnable{
              this.player = new AiPlayer(name, deck);
              this.AI = true;
          }
-         
     }
     
     public String getName(){
@@ -148,6 +147,11 @@ public class Client implements Runnable{
                              
                 case "ENDED" : 
                                 //System.out.println("ENDED");
+                                System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
+                                System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
+                                if(!AI){
+                                    Controller.showWinner(player.getPlayerOnePoints(),player.getPlayerTwoPoints());
+                                }
                                 done = true;
                                 break;
                                 
@@ -213,17 +217,17 @@ public class Client implements Runnable{
                                 int from = Integer.parseInt(msg.substring(0, 1));
                                 String rest = msg.substring(1);
                                 if(rest.equals("DONE")){
-                                    player.enemyPassed();
+                                    Controller.enemyPassed();
                                 }else{
                                     
                                     int card = Integer.parseInt(rest);
                                     //System.out.println(this.name + " CARD RECEIVED : " + card + " FROM :" + from);
                                     if(!AI){
-                                        Controller.addToTable(Cards.getCard(card), from);
+                                        Card cardReceived = Cards.getCard(card);
+                                        Controller.addToTable(cardReceived, from);
 
-                                        for(int i = 0; i < 4; i++){
-                                            Controller.refreshRow(i);
-                                        }
+                                        Controller.refreshRow(from + cardReceived.getRow());
+                                        
                                         Controller.setPoints();
                                     }else{
                                         player.addToTable(Cards.getCard(card), from);
@@ -237,8 +241,7 @@ public class Client implements Runnable{
             }
         }
         else{
-            System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
-            System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
+            
         }
     }
 
@@ -256,5 +259,9 @@ public class Client implements Runnable{
 
     public List<Card> getDeck() {
         return this.player.getDeck();
+    }
+
+    public void enemyPassed() {
+        player.enemyPassed();
     }
 }

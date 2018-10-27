@@ -1,4 +1,4 @@
-package Server;
+package Netcode.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -162,6 +162,15 @@ public class Server implements Runnable{
         sendPlayersLifes();
         sendPlayersEnded();
         
+        for(User user : players){
+            user = null;
+        }
+        try {
+            ss.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ss=null;
     }
     
 }

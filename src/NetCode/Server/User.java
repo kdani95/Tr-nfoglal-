@@ -1,4 +1,4 @@
-package Server;
+package Netcode.Server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -121,5 +121,4 @@ public class User {
         this.notDone = true;
         send("RESET");
     }
-
 }

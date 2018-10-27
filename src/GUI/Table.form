@@ -1276,6 +1276,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new GUI.RowGui(placeButton)"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="handRow.setLayout(new FlowLayout());"/>
           </AuxValues>
 
