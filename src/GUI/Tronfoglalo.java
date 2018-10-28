@@ -218,10 +218,35 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         table1.enemyPassed();
     }
 
-    public void showWinner(int playerOnePoints, int playerTwoPoints) {
-        JOptionPane winner = new JOptionPane("WINNER WINNER CHICKEN DINNER");
-        winner.showMessageDialog(this, "WINNER WINNER CHICKEN DINNER");
+    public void showWinner(int playerOneLives, int playerTwoLives) {
+        System.out.println("p1l:" + playerOneLives);
+        System.out.println("p2l:" + playerTwoLives);
+        String winnerMsg = "Draw";
+        if(playerOneLives > playerTwoLives){
+            winnerMsg="The winner is " + table1.getMyName();
+        }
+        if(playerOneLives < playerTwoLives){
+            winnerMsg="The winner is " + table1.getEnemyName();
+        }
+        JOptionPane winner = new JOptionPane("The winner is:");
+        winner.showMessageDialog(this, winnerMsg);
         this.table1.setVisible(false);
         this.mainMenu1.setVisible(true);
+    }
+
+    public void resetEnemyPassed() {
+        table1.resetEnemyPassed();
+    }
+    
+    public void resetPassed(){
+        table1.resetPassed();
+    }
+    
+    public void log(String text){
+        table1.log(text);
+    }
+
+    public String getEnemyName() {
+       return table1.getEnemyName();
     }
 }

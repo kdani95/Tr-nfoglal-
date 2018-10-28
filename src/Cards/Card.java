@@ -46,8 +46,12 @@ public class Card{
         return this.name;
     }
     
-    public int getID(){
+    public int getCardID(){
         return this.cardID;
+    }
+    
+    public int getID(){
+        return this.id;
     }
     
     public int getStrength(){
@@ -71,7 +75,7 @@ public class Card{
     }
     
     public String toString(){
-        return (this.id + "");
+        return (this.cardID + "");
     }
 
     public Color getColor() {

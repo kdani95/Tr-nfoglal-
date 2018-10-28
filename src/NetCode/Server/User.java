@@ -113,8 +113,9 @@ public class User {
         return Integer.parseInt(sc.nextLine());
     }
 
-    void removeLife() {
+    void removeLife(String p) {
        send("REMOVELIFE");
+       send(p);
     }
 
     void restart() {

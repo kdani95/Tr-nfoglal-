@@ -16,7 +16,8 @@ import javax.swing.BorderFactory;
 public class Table extends javax.swing.JPanel {
     private int p = 0;
     public boolean enabled = false;
-
+    private StringBuilder sb = new StringBuilder();
+    
     public Table() {
         initComponents();
         
@@ -27,6 +28,14 @@ public class Table extends javax.swing.JPanel {
 
     public void setMyName(String name){
         this.myName.setText(name);
+    }
+    
+    public String getMyName(){
+        return this.myName.getText();
+    }
+    
+    public String getEnemyName(){
+        return this.enemyName.getText();
     }
 
     @SuppressWarnings("unchecked")
@@ -62,8 +71,11 @@ public class Table extends javax.swing.JPanel {
         playerLifes1 = new javax.swing.JLabel();
         enemyCards = new javax.swing.JLabel();
         enemyLifes = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        handScrollPane = new javax.swing.JScrollPane();
         handRow = new GUI.RowGui(placeButton);
+        logPane = new javax.swing.JPanel();
+        logScrollPane = new javax.swing.JScrollPane();
+        logTextPane = new javax.swing.JTextPane();
 
         setBackground(new java.awt.Color(221, 188, 169));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -398,13 +410,41 @@ public class Table extends javax.swing.JPanel {
         handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         handRow.setPreferredSize(null);
         handRow.setLayout(new FlowLayout());
-        jScrollPane1.setViewportView(handRow);
+        handScrollPane.setViewportView(handRow);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(jScrollPane1, gridBagConstraints);
+        add(handScrollPane, gridBagConstraints);
+
+        logPane.setBackground(new java.awt.Color(255, 217, 179));
+        logPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        logPane.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        logPane.setMinimumSize(new java.awt.Dimension(190, 152));
+        logPane.setPreferredSize(new java.awt.Dimension(190, 152));
+        logPane.setLayout(new java.awt.BorderLayout());
+
+        logTextPane.setBackground(new java.awt.Color(255, 217, 179));
+        logTextPane.setBorder(null);
+        logTextPane.setContentType("text/html");
+        logTextPane.setEditable(false);
+        logTextPane.setText(sb.toString());
+        logTextPane.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        logTextPane.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        logTextPane.setMinimumSize(new java.awt.Dimension(142, 152));
+        logTextPane.setPreferredSize(new java.awt.Dimension(142, 152));
+        logScrollPane.setViewportView(logTextPane);
+
+        logPane.add(logScrollPane, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(logPane, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
@@ -416,6 +456,7 @@ public class Table extends javax.swing.JPanel {
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed
         Controller.sendCard(null);
+        passed();
     }//GEN-LAST:event_passButtonActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
@@ -437,7 +478,6 @@ public class Table extends javax.swing.JPanel {
        enemyBackRow.setMinimumSize(new Dimension(0, height));
     }//GEN-LAST:event_formComponentResized
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PlayerCards;
     private javax.swing.JLabel PlayerCards1;
@@ -450,7 +490,10 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JLabel enemyName;
     private javax.swing.JLabel enemyPoints;
     private GUI.RowGui handRow;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane handScrollPane;
+    private javax.swing.JPanel logPane;
+    private javax.swing.JScrollPane logScrollPane;
+    private javax.swing.JTextPane logTextPane;
     private javax.swing.JLabel myBackPoint;
     private GUI.RowGui myBackRow;
     private javax.swing.JLabel myCards;
@@ -551,5 +594,21 @@ public class Table extends javax.swing.JPanel {
     void enemyPassed() {
         playerTwoPanel.setBorder(BorderFactory.createLineBorder(Color.red, 4, true));
     }
+    
+    void resetEnemyPassed(){
+        playerTwoPanel.setBorder(BorderFactory.createLineBorder(new Color(102,51,0), 4, true));
+    }
+    
+    void passed() {
+        playerOnePanel.setBorder(BorderFactory.createLineBorder(Color.red, 4, true));
+    }
+    
+    void resetPassed(){
+        playerOnePanel.setBorder(BorderFactory.createLineBorder(new Color(102,51,0), 4, true));
+    }
 
+    public void log(String text){
+        this.logTextPane.setText(sb.append( text + "<br>" ).toString());
+    }
+    
 }

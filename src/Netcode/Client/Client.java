@@ -59,9 +59,7 @@ public class Client implements Runnable{
             }else{
                 System.out.println("AI: " + sc.nextLine());
             }
-            
-            
-            
+           
         }catch(Exception e ){
             System.err.println("Error at client: " + e.toString());
         }
@@ -74,23 +72,11 @@ public class Client implements Runnable{
             String msg = "";
             if(sc.hasNextLine()){
                 msg = sc.nextLine();
-                //System.out.println(this.name + " Received: " + msg);
                 received(msg);
             }
-            /*synchronized(this.msg){
-                this.msg = msg;
-            }*/
         });
         
-        receive.start();
-        /*try {
-            receive.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        received(this.msg);
-       */
-        
+        receive.start(); 
     };
     
     public Row getRow(int i){
@@ -106,7 +92,7 @@ public class Client implements Runnable{
     }
     
     public int getLifes(){
-        return this.player.getLifes();
+        return this.player.getLives();
     }
     
     public void sendCard(Card card){
@@ -131,7 +117,6 @@ public class Client implements Runnable{
     }
     
     private void received(String msg){
-        //System.out.println("------------------------->" + Thread.currentThread());
         boolean done = false;
         if (!done){
             switch(msg){
@@ -141,8 +126,6 @@ public class Client implements Runnable{
                                 if(!AI){Controller.enableHand();}else{
                                     sendCard(player.getCard());
                                 }
-                                
-                                //System.out.println(this.name + " GOING");
                                 break;
                              
                 case "ENDED" : 
@@ -150,7 +133,7 @@ public class Client implements Runnable{
                                 System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
                                 System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
                                 if(!AI){
-                                    Controller.showWinner(player.getPlayerOnePoints(),player.getPlayerTwoPoints());
+                                    Controller.showWinner(player.getLives(),player.getEnemyLives());
                                 }
                                 done = true;
                                 break;
@@ -175,7 +158,7 @@ public class Client implements Runnable{
                                 break;
                                 
                 case "GETLIFES":   
-                                pw.println(player.getLifes());
+                                pw.println(player.getLives());
                                 pw.flush();
                                 receiveMsg();
                                 break;
@@ -198,12 +181,27 @@ public class Client implements Runnable{
                                 break;
                                 
                 case "REMOVELIFE":
-                                player.removeLife();
+                                String p = sc.nextLine();
+                                player.removeLife(p);
+                                if(!AI){
+                                    String name = "";
+                                    if(p.equals("0")){
+                                        name = this.name;
+                                    }
+                                    if(p.equals("1")){
+                                        name = Controller.getEnemyName();
+                                    }
+                                    if(p.equals("2")){
+                                        name = "Both player";
+                                    }
+                                    Controller.log(name + " lost a life");
+                                }
                                 receiveMsg();
                                 break;
                                 
                 case "RESET":
                                 if(!AI){
+                                    Controller.log("Round ended");
                                     Controller.reset();
                                     Controller.setPoints();
                                 }else{
@@ -217,17 +215,31 @@ public class Client implements Runnable{
                                 int from = Integer.parseInt(msg.substring(0, 1));
                                 String rest = msg.substring(1);
                                 if(rest.equals("DONE")){
-                                    Controller.enemyPassed();
+                                    if(!AI){
+                                        Controller.passed(from);
+                                        name = "";
+                                        if(from == 1){
+                                            name = this.name;
+                                        }else{
+                                           name = Controller.getEnemyName();
+                                        }
+                                        Controller.log(name + " passed ");
+                                    }
                                 }else{
                                     
                                     int card = Integer.parseInt(rest);
                                     //System.out.println(this.name + " CARD RECEIVED : " + card + " FROM :" + from);
                                     if(!AI){
                                         Card cardReceived = Cards.getCard(card);
+                                        name = "";
+                                        if(from == 1){
+                                            name = this.name;
+                                        }else{
+                                            name = Controller.getEnemyName();
+                                        }
+                                        Controller.log(name + " placed " + cardReceived.getName());
                                         Controller.addToTable(cardReceived, from);
-
                                         Controller.refreshRow(from + cardReceived.getRow());
-                                        
                                         Controller.setPoints();
                                     }else{
                                         player.addToTable(Cards.getCard(card), from);
@@ -259,9 +271,5 @@ public class Client implements Runnable{
 
     public List<Card> getDeck() {
         return this.player.getDeck();
-    }
-
-    public void enemyPassed() {
-        player.enemyPassed();
     }
 }

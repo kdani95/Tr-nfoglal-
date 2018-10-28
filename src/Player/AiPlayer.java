@@ -1,6 +1,7 @@
 package Player;
 
 import Cards.Card;
+import Logic.Controller;
 import Logic.Row;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,18 +23,13 @@ public class AiPlayer extends Player{
             System.out.println("OUT OF CARDS");
             return null;
         }
-        /*
+        
         try {
             Thread.sleep((long) 1000.0);
         } catch (InterruptedException ex) {
             Logger.getLogger(AiPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
-        //Random rand = new Random();
-        //int i = rand.nextInt(super.hand.size());
-        
-        
-        
+
         //sorting
         for(int i = 0; i < hand.size()-1; i++){
             for(int j = i+1; j < hand.size(); j++){
@@ -66,7 +62,7 @@ public class AiPlayer extends Player{
             
         }        
         
-        if(!bigger && lifes > 1){
+        if(!bigger && lives > 1){
             Random rand = new Random();
             int i = rand.nextInt(3);
             if(i == 0){
@@ -77,14 +73,13 @@ public class AiPlayer extends Player{
             }
         }
         
-        System.out.println(cards);
+        //System.out.println(cards);
         System.out.println("selected: " + hand.get(selected).getName());
-            
-       if (super.enemyPassed && getPlayerOnePoints() > getPlayerTwoPoints()){
-            //System.out.println("PASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSIIIIIIIIIIIIINGGGGGGG");
+        System.out.println(Controller.getEnemyPassed());
+        if (Controller.getEnemyPassed() && getPlayerOnePoints() > getPlayerTwoPoints()){
+            System.out.println("PASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSIIIIIIIIIIIIINGGGGGGG");
             return null;
         }
-        
         Card selectedCard = hand.get(selected);
         hand.remove(selected);
         System.out.println("Hand size: " + super.hand.size());

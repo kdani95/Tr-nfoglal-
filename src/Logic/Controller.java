@@ -16,7 +16,8 @@ public class Controller {
     public static String SYNC = "SYNC";
     private static List<Card> deck = new ArrayList<Card>();
     private static List<Card> myCards = new ArrayList<Card>();
-       
+    private static boolean enemyPassed = false;   
+    
     public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards, List<Card> deck){
         Controller.tronfoglalo =tronfoglalo;
         Controller.myCards = cards;
@@ -74,6 +75,10 @@ public class Controller {
     public static void setEnemyName(String name) {
         tronfoglalo.setEnemyName(name);
     }
+    
+    public static String getEnemyName(){
+        return tronfoglalo.getEnemyName();
+    }
 
     public static void setEnemyCards(String cards) {
         tronfoglalo.setEnemyCards(cards);
@@ -92,7 +97,10 @@ public class Controller {
     }
 
     public static void reset() {
+        enemyPassed = false;
         client.reset();
+        tronfoglalo.resetEnemyPassed();
+        tronfoglalo.resetPassed();
         refresh();
     }
     
@@ -147,12 +155,22 @@ public class Controller {
        Controller.deck.remove(selected);
     }
 
-    public static void enemyPassed() {
-        client.enemyPassed();
-        tronfoglalo.enemyPassed();
+    public static void showWinner(int playerOneLives, int playerTwoLives) {
+        tronfoglalo.showWinner(playerOneLives,playerTwoLives);
     }
 
-    public static void showWinner(int playerOnePoints, int playerTwoPoints) {
-        tronfoglalo.showWinner(playerOnePoints,playerTwoPoints);
+    public static void passed(int from) {
+        if(from == 2){
+            enemyPassed=true;
+            tronfoglalo.enemyPassed();
+        }
+    }
+
+    public static boolean getEnemyPassed() {
+        return Controller.enemyPassed;
+    }
+    
+    public static void log(String text){
+        tronfoglalo.log(text);
     }
 }

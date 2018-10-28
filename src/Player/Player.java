@@ -13,8 +13,8 @@ public abstract class Player {
     protected int frontPoits;
     protected int backPoints;
     protected int points;
-    protected int lifes = 2;
-    protected int enemyLifes = 2;
+    protected int lives = 2;
+    protected int enemyLives = 2;
     protected List<Card> deck = new ArrayList<Card>();
     protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
@@ -46,6 +46,7 @@ public abstract class Player {
     }
     
     public void enemyPassed(){
+        System.out.println("PLAYER PASSSSSSSSSSSSING");
         enemyPassed = true;
     }
     
@@ -65,12 +66,25 @@ public abstract class Player {
         return this.table.getPlayerTwoPoints();
     }
     
-    public int getLifes(){
-        return this.lifes;
+    public int getEnemyLives(){
+        return this.enemyLives;
     }
     
-    public void removeLife(){
-        this.lifes--;
+    public int getLives(){
+        return this.lives;
+    }
+    
+    public void removeLife(String p){
+        if(p.equals("0")){
+            lives--;
+        }
+        if(p.equals("1")){
+            enemyLives --;
+        }
+        if(p.equals("2")){
+            lives--;
+            enemyLives--;
+        }
     }
 
     public void reset() {

@@ -74,11 +74,10 @@ public class Server implements Runnable{
             players.get(0).send( 2 +"" +card);
             players.get(1).send( 1 +"" +card);
         }
-        
     }
     
-    private void sendPlayersLifes(){
-        System.out.println("SETTING LIFES");
+    private void sendPlayersLives(){
+        System.out.println("SETTING LIVES");
         
         players.get(0).send("SETLIFES");
         players.get(0).send(players.get(1).getLifes()+"");
@@ -118,7 +117,7 @@ public class Server implements Runnable{
         
         while( players.get(0).getLifes() > 0 && players.get(1).getLifes() > 0){
             
-            sendPlayersLifes();
+            sendPlayersLives();
     
             while ( (players.get(0).notDone() || players.get(1).notDone() ) &&
                     (players.get(0).isConnected() && players.get(1).isConnected() ) )
@@ -144,22 +143,24 @@ public class Server implements Runnable{
             }
         
             if(players.get(0).getPoints() > players.get(1).getPoints() ){
-                players.get(1).removeLife();
+                players.get(0).removeLife("1");
+                players.get(1).removeLife("0");
                 i = 0;
             }else
             if(players.get(0).getPoints() < players.get(1).getPoints() ){
-                players.get(0).removeLife();
+                players.get(0).removeLife("0");
+                players.get(1).removeLife("1");
                 i = 1;
             }else{
-                players.get(0).removeLife();
-                players.get(1).removeLife();
+                players.get(0).removeLife("2");
+                players.get(1).removeLife("2");
                 i = (i+1)%2;
             }
             players.get(0).restart();
             players.get(1).restart();
         }
         sendPlayersCardsNo();
-        sendPlayersLifes();
+        sendPlayersLives();
         sendPlayersEnded();
         
         for(User user : players){

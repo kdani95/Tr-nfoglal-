@@ -103,7 +103,7 @@ public class Cards {
     public static void moveToDeck(int id){
         String sqlDelete = "DELETE FROM mycards WHERE id="+id+";";
         String sqlGet = "SELECT * FROM mycards WHERE id="+id+";";
-        String sql = "INSERT INTO deck(cardID) VALUES (?)";
+        String sql = "INSERT INTO deck(cardID) VALUES (?);";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             Statement stmt = conn.createStatement();
@@ -113,8 +113,26 @@ public class Cards {
                     pstmt.setInt(1, cardID);
                     pstmt.executeUpdate();
                     stmt.execute(sqlDelete);
-                }
-                
+                }       
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void moveToMycards(int id) {
+        String sqlDelete = "DELETE FROM deck WHERE id="+id+";";
+        String sqlGet = "SELECT * FROM deck WHERE id="+id+";";
+        String sql = "INSERT INTO mycards(cardID) VALUES (?);";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlGet)){
+                if(rs.next()){
+                    int cardID = rs.getInt("cardID");
+                    pstmt.setInt(1, cardID);
+                    pstmt.executeUpdate();
+                    stmt.execute(sqlDelete);
+                }       
         }catch (SQLException ex) {
             Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
