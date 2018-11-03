@@ -25,6 +25,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         Controller.addGUI(this,cards,deck);
         initComponents();
         table1.setMyName(name);
+        //this.setSize(1080, 720);
     }
     
     public void startGame(String mode,List<Card> deck){  
@@ -49,9 +50,16 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         if(mode.equals("SinglePlayer")){
             List<Card> deckAI = new ArrayList<Card>();
             deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(1));
             deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(6));   
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(5));
+            deckAI.add(Cards.getCard(4));
+            deckAI.add(Cards.getCard(4)); 
+            deckAI.add(Cards.getCard(7));
+            deckAI.add(Cards.getCard(7));
             deckAI.add(Cards.getCard(3));
-            deckAI.add(Cards.getCard(4));    
             
             Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
             c.start();

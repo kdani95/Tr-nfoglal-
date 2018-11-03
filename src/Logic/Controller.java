@@ -13,10 +13,10 @@ import java.util.List;
 public class Controller {
     private static GUI.Tronfoglalo tronfoglalo;
     private static Client client;
-    public static String SYNC = "SYNC";
     private static List<Card> deck = new ArrayList<Card>();
     private static List<Card> myCards = new ArrayList<Card>();
-    private static boolean enemyPassed = false;   
+    private static boolean enemyPassed = false;
+    private static int difficulty = 3;
     
     public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards, List<Card> deck){
         Controller.tronfoglalo =tronfoglalo;
@@ -173,4 +173,14 @@ public class Controller {
     public static void log(String text){
         tronfoglalo.log(text);
     }
+    
+    public static int getDifficulty(){
+        return Controller.difficulty;
+    }
+    
+    public static void setDifficulty(int d){
+        Controller.difficulty = d;
+    }
 }
+
+    

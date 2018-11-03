@@ -140,7 +140,7 @@ public class Cards {
     
     public static Card getCard(int ID){
         String sql = "SELECT * FROM cards WHERE cardID=" + ID + ";";
-        System.out.println(sql);
+        //System.out.println(sql);
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt  = conn.createStatement();
             ResultSet rs    = stmt.executeQuery(sql)){
@@ -159,7 +159,7 @@ public class Cards {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("NULL CARD!!!!! ID: " + ID);
+        //System.out.println("NULL CARD!!!!! ID: " + ID);
         return null;
     } 
     
@@ -169,12 +169,33 @@ public class Cards {
         insertNewCard("Commander", 8, "commander.png", 1, 0);
         insertNewCard("Sorcerer", 6, "sorcerer.png", 2, 1);
         insertNewCard("Archer", 5, "archer.png", 0, 1);
+        insertNewCard("King", 8, "king.png", 2, 0);
+        insertNewCard("Peasant", 2, "peasant.png", 0, 0);
+        insertNewCard("Rider", 6, "rider.png", -2, 0);
+        //knights
         insertIntoMyCards(1);
         insertIntoMyCards(1);
+        
+        //commander
         insertIntoMyCards(2);
+        
+        //peasants
+        insertIntoMyCards(6);
+        insertIntoMyCards(6);
+        
+        //king
+        insertIntoMyCards(5);
+        
+        //archers
+        insertIntoMyCards(4);
+        insertIntoMyCards(4);
+        
+        //riders
+        insertIntoMyCards(7);
+        insertIntoMyCards(7);
+        
+        //sorcerer
         insertIntoMyCards(3);
-        insertIntoMyCards(4);
-        insertIntoMyCards(4);
         
     }
 /*
@@ -197,7 +218,7 @@ public class Cards {
                 String picture = rs.getString("picture");
                 int power = rs.getInt("power");   
                 int row = rs.getInt("row");
-                System.out.println(id + ", " + name + ", " + strength + ", " + picture);
+                //System.out.println(id + ", " + name + ", " + strength + ", " + picture);
                 cards.add(new Card(id,cardID, name, strength, picture, power, row));
             }
             

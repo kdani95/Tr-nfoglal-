@@ -224,7 +224,12 @@ public class Client implements Runnable{
                                            name = Controller.getEnemyName();
                                         }
                                         Controller.log(name + " passed ");
-                                    }
+                                    }/*else{
+                                        System.out.println("ASDASDASDASDASDASDASDASDASDASDASDASD"); 
+                                       if(from == 2){
+                                            player.enemyPassed();
+                                        }
+                                    }*/
                                 }else{
                                     
                                     int card = Integer.parseInt(rest);

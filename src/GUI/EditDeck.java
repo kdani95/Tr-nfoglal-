@@ -26,18 +26,17 @@ public class EditDeck extends javax.swing.JPanel {
         cardsRow.setEnabled();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cardScrollPane = new javax.swing.JScrollPane();
-        cardsRow = new GUI.RowGui();
-        deckScrollPane = new javax.swing.JScrollPane();
-        deckRow = new GUI.RowGui();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        cardScrollPane = new javax.swing.JScrollPane();
+        cardsRow = new GUI.RowGui(addButton);
+        deckScrollPane = new javax.swing.JScrollPane();
+        deckRow = new GUI.RowGui(removeButton);
 
         setBackground(new java.awt.Color(221, 188, 169));
         setMinimumSize(new java.awt.Dimension(1000, 600));
@@ -48,33 +47,6 @@ public class EditDeck extends javax.swing.JPanel {
             }
         });
         setLayout(new java.awt.GridBagLayout());
-
-        cardScrollPane.setViewportView(cardsRow);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 1186;
-        gridBagConstraints.ipady = 109;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
-        add(cardScrollPane, gridBagConstraints);
-
-        deckScrollPane.setViewportView(deckRow);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 1190;
-        gridBagConstraints.ipady = 109;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
-        add(deckScrollPane, gridBagConstraints);
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +94,33 @@ public class EditDeck extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(70, 10, 10, 10);
         add(backButton, gridBagConstraints);
+
+        cardScrollPane.setViewportView(cardsRow);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 1186;
+        gridBagConstraints.ipady = 109;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
+        add(cardScrollPane, gridBagConstraints);
+
+        deckScrollPane.setViewportView(deckRow);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 1190;
+        gridBagConstraints.ipady = 109;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
+        add(deckScrollPane, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized

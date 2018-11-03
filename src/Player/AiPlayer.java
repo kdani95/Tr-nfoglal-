@@ -3,6 +3,7 @@ package Player;
 import Cards.Card;
 import Logic.Controller;
 import Logic.Row;
+import Logic.Table;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,8 +15,29 @@ import java.util.logging.Logger;
 
 public class AiPlayer extends Player{
     
+    private boolean playSmallCards = false;
+    private int startHandSize;
+    private int placedCards = 0;
+    private Logic.Table handTable;
+    
     public AiPlayer(String name, List<Card> deck) {
         super(name, deck);
+        startHandSize = hand.size();
+        handTable = new Table();
+    }
+    
+    public void addCard(Card c){
+        int i = 0;
+        boolean notAdded = true;
+        while( i < hand.size() && notAdded){
+            if( hand.get(i).getStrength() > c.getStrength()){
+                notAdded= false;
+            }else{
+                i++;
+            }
+        }
+        hand.add(i, c);
+        //System.out.println("AI ADDED");
     }
     
     public Card getCard(){
@@ -24,24 +46,32 @@ public class AiPlayer extends Player{
             return null;
         }
         
-        try {
-            Thread.sleep((long) 1000.0);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AiPlayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //sorting
-        for(int i = 0; i < hand.size()-1; i++){
-            for(int j = i+1; j < hand.size(); j++){
-                if(table.tryCard(hand.get(i)) > table.tryCard(hand.get(j)) ){
-                    Card temp = hand.get(i);
-                    hand.set(i,hand.get(j));
-                    hand.set(j,temp);
+        if(Controller.getDifficulty() > 2){
+            if(lives > 1 && !playSmallCards){
+                //play small cards
+                Random rand = new Random();
+                int i = rand.nextInt(2);
+                if(i == 0){
+                    playSmallCards = false;
+                    System.out.println("AI NOT PLAYING SMALL CARDS");
+                }
+                if(i == 1){
+                    playSmallCards = true;
+                    System.out.println("AI PLAYING SMALL CARDS");
                 }
             }
-            for(Card c : hand){
-           
+        }
+        
+        if(playSmallCards && lives > 1){
+            Random rand = new Random();
+            int i = rand.nextInt(startHandSize + 2);
+            if(i >= ( startHandSize ) - placedCards){
+                return null;
             }
+            placedCards++;
+            Card selectedCard = hand.get(0);
+            hand.remove(0);
+            return selectedCard;
         }
         
         int selected = 0;
@@ -54,7 +84,7 @@ public class AiPlayer extends Player{
                 bigger = true;
                 if(hand.get(i).getValue() < selectedValue){
                     selected = i;
-                    selectedValue = hand.get(selected).getValue();
+                    selectedValue = handTable.tryCard(hand.get(selected));
                 }
             }else{
                 selected = i;
@@ -62,33 +92,31 @@ public class AiPlayer extends Player{
             
         }        
         
-        if(!bigger && lives > 1){
-            Random rand = new Random();
-            int i = rand.nextInt(3);
-            if(i == 0){
-                return null;
-            }
-            if(i == 1){
-                selected = 0;
+        if(Controller.getDifficulty() > 1){
+            if( ( (selected >= hand.size()/2) || playSmallCards ) && lives > 1){
+                System.out.println("LIVES: " + lives + " playSmallCard: " + playSmallCards);
+                Random rand = new Random();
+                int i = rand.nextInt(2);
+                if(i == 0){
+                    return null;
+                }
+                if(i == 1){
+                    selected = 0;
+                }
             }
         }
+
         
-        //System.out.println(cards);
         System.out.println("selected: " + hand.get(selected).getName());
-        System.out.println(Controller.getEnemyPassed());
-        if (Controller.getEnemyPassed() && getPlayerOnePoints() > getPlayerTwoPoints()){
-            System.out.println("PASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSIIIIIIIIIIIIINGGGGGGG");
+        System.out.println(enemyPassed);
+        if (enemyPassed && getPlayerOnePoints() > getPlayerTwoPoints()){
             return null;
         }
         Card selectedCard = hand.get(selected);
         hand.remove(selected);
-        System.out.println("Hand size: " + super.hand.size());
-        System.out.println("Card name: " + selectedCard.getName());
-        /*try {
-            Thread.sleep(3000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AiPlayer.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        //System.out.println("Hand size: " + super.hand.size());
+        //System.out.println("Card name: " + selectedCard.getName());
+        placedCards++;
         return selectedCard;
     }
     
@@ -102,11 +130,22 @@ public class AiPlayer extends Player{
     
     public void addToTable(Card card,int player){
         if(card != null){
-            System.out.println("addToTable: Card name: " + card.getName());
+            //System.out.println("addToTable: Card name: " + card.getName());
             super.table.addCard(card, player);
         }
         
     }
     
+    private int getValue(Card card){
+        handTable = new Logic.Table();
+        int value = 0;
+        for(Card c : hand){
+            if(card.getRow() == c.getRow()){
+                handTable.addCard(c,1);
+            }
+        }
+        value = handTable.tryCard(card);
+        return value;
+    }
    
 }

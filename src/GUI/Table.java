@@ -451,7 +451,7 @@ public class Table extends javax.swing.JPanel {
         Card card = handRow.getSelected();
         Controller.sendCard(card);
         Controller.removeCard(card);
-        refreshHandRow();
+        //refreshHandRow();
     }//GEN-LAST:event_placeButtonActionPerformed
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed

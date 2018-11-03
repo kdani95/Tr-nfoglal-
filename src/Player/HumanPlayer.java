@@ -11,6 +11,10 @@ public class HumanPlayer extends Player{
         super(name, deck);
     }
     
+    public void addCard(Card c){
+        hand.add(c);
+    }
+    
     public Card getCard(){
         if ( super.hand.size() == 0){
             //System.out.println("OUT OF CARDS");
