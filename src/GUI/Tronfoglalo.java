@@ -257,4 +257,10 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     public String getEnemyName() {
        return table1.getEnemyName();
     }
+
+    public void gameExit() {
+        this.remove(table1);
+        this.mainMenu1.setVisible(true);
+        table1.setVisible(false);
+    }
 }

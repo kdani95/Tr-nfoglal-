@@ -11,7 +11,7 @@ public class Server implements Runnable{
     private int PORT = 0;
     private ServerSocket ss;
     private ArrayList<User> players = new ArrayList<User>();
-    private boolean LOG = false;
+    private boolean LOG = true;
     
     private void LOG(String log){
         if(LOG){
@@ -43,10 +43,14 @@ public class Server implements Runnable{
         }
     }
     
-    private void sendPlayersWait(){
+    private boolean sendPlayersWait(){
         LOG("Sending players wait"); 
         players.get(0).send("WAIT");
         players.get(1).send("WAIT");
+        String p1 = players.get(0).receive();
+        String p2 = players.get(1).receive();
+        
+        return p1.equals("READY") && p2.equals("READY");
     }
     
     private void sendPlayersEnded(){
@@ -94,7 +98,7 @@ public class Server implements Runnable{
     }
     
     private void sendPlayersCardsNo(){
-        LOG("Sending players cards"); 
+        LOG("Sending players cards number"); 
         players.get(0).send("SETCARDS");
         players.get(0).send(players.get(1).getCards());
         
@@ -104,6 +108,7 @@ public class Server implements Runnable{
     
     @Override
     public void run() {
+        boolean disconnected = false;
         LOG("The server has started on port " + ss.getLocalPort());
         
         waitForPlayers();
@@ -124,7 +129,13 @@ public class Server implements Runnable{
             {
                 if(players.get(i).notDone()){
                     System.out.println("Player" + i);
-                    sendPlayersWait();
+                    if(!sendPlayersWait() ){
+                        players.get(0).isDone();
+                        players.get(1).isDone();
+                        sendPlayersEnded();
+                        disconnected = true;
+                        break;
+                    }
                     sendPlayersCardsNo();
                     sendPlayerGo(i);
 
@@ -134,6 +145,14 @@ public class Server implements Runnable{
                         players.get(i).isDone();
                         System.out.println("player" +i +" is done");
                         sendPlayersCard("DONE", i);
+                    }else if(card.equals("DISCONNECTED")){
+                        players.get(i).disconnected();
+                        players.get(0).isDone();
+                        players.get(1).isDone();
+                        System.out.println("player" + i + " disconnected");
+                        sendPlayersEnded();
+                        disconnected = true;
+                        break;
                     }else{
                         sendPlayersCard(card,i);
                     }
@@ -141,7 +160,11 @@ public class Server implements Runnable{
                 }
                 i = (i+1)%2;
             }
-        
+            
+            if(disconnected){
+                break;
+            }
+            
             if(players.get(0).getPoints() > players.get(1).getPoints() ){
                 players.get(0).removeLife("1");
                 players.get(1).removeLife("0");
@@ -159,10 +182,12 @@ public class Server implements Runnable{
             players.get(0).restart();
             players.get(1).restart();
         }
-        sendPlayersCardsNo();
-        sendPlayersLives();
-        sendPlayersEnded();
         
+        if(!disconnected){
+            sendPlayersCardsNo();
+            sendPlayersLives();
+            sendPlayersEnded();
+        }
         for(User user : players){
             user = null;
         }
@@ -172,6 +197,7 @@ public class Server implements Runnable{
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         ss=null;
+        System.out.println("SERVER ENDED");
     }
     
 }

@@ -110,17 +110,18 @@ public class Client implements Runnable{
     @Override
     public void run() {
         connect();
-        
         receiveMsg();
-        
-        
     }
     
     private void received(String msg){
         boolean done = false;
         if (!done){
             switch(msg){
-                case "WAIT" : if(!AI) {Controller.refresh(); Controller.disableHand();} receiveMsg(); break;
+                case "WAIT" :   if(!AI) {Controller.refresh(); Controller.disableHand();}
+                                receiveMsg(); 
+                                pw.println("READY");
+                                pw.flush();
+                                break;
                 
                 case "GO" : 
                                 if(!AI){Controller.enableHand();}else{
@@ -276,5 +277,17 @@ public class Client implements Runnable{
 
     public List<Card> getDeck() {
         return this.player.getDeck();
+    }
+
+    public void sendExit() {
+        pw.println("DISCONNECTED");
+        pw.flush();
+        pw.close();
+        sc.close();
+        try{
+            s.close();
+        }catch(Exception ex){
+            System.err.println("Error at closing socket: " + ex.toString());
+        }
     }
 }

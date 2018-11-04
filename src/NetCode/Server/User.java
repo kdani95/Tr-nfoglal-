@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class User {
@@ -26,7 +27,14 @@ public class User {
     
     public String getCards(){
         send("GETCARDS");
-        return sc.nextLine();
+        String cards = "0";
+        try{
+            cards = sc.nextLine();
+        }catch(IllegalStateException ex){
+            cards = "0";
+        }
+        System.out.println(cards);
+        return cards;
     }
     
     public User(ServerSocket ss){
@@ -35,7 +43,6 @@ public class User {
             this.s = ss.accept();
             this.sc = new Scanner(s.getInputStream());
             this.pw = new PrintWriter(s.getOutputStream());
-            
             if(sc.hasNextLine()){
                 this.name = sc.nextLine();
             }
@@ -70,6 +77,7 @@ public class User {
      public void send(String msg){ 
         if(!s.isClosed()){
             try {
+                System.out.println("sending: " + msg);
                 pw.println(msg);
                 pw.flush();
             } catch (Exception e) {
@@ -110,6 +118,14 @@ public class User {
 
     int getPoints() {
         send("GETPOINTS");
+        try{
+            String points = sc.nextLine();
+        }catch(NoSuchElementException ex){
+            sc.close();
+            pw.close();
+            return 0;
+        }
+        
         return Integer.parseInt(sc.nextLine());
     }
 
@@ -122,4 +138,16 @@ public class User {
         this.notDone = true;
         send("RESET");
     }
+
+    void disconnected() {
+        
+        try{
+            s.close();
+            pw.close();
+            sc.close();
+        }catch(Exception ex){
+            System.err.println("Error at closing socket: " + ex.toString());
+        }
+    }
+    
 }

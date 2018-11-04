@@ -43,16 +43,12 @@ public class Table extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        enemyBackRow = new GUI.RowGui();
-        enemyFrontRow = new GUI.RowGui();
-        myFrontRow = new GUI.RowGui();
-        myBackRow = new GUI.RowGui();
         myBackPoint = new javax.swing.JLabel();
         enemyFrontPoint = new javax.swing.JLabel();
         myFrontPoint = new javax.swing.JLabel();
         enemyBackPoint = new javax.swing.JLabel();
         passButton = new javax.swing.JButton();
-        placeButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
         playerOnePanel = new javax.swing.JPanel();
         myName = new javax.swing.JLabel();
         myPoints = new javax.swing.JLabel();
@@ -71,11 +67,16 @@ public class Table extends javax.swing.JPanel {
         playerLifes1 = new javax.swing.JLabel();
         enemyCards = new javax.swing.JLabel();
         enemyLifes = new javax.swing.JLabel();
-        handScrollPane = new javax.swing.JScrollPane();
-        handRow = new GUI.RowGui(placeButton);
         logPane = new javax.swing.JPanel();
         logScrollPane = new javax.swing.JScrollPane();
         logTextPane = new javax.swing.JTextPane();
+        myFrontRow = new GUI.RowGui();
+        myBackRow = new GUI.RowGui();
+        enemyFrontRow = new GUI.RowGui();
+        enemyBackRow = new GUI.RowGui();
+        handScrollPane = new javax.swing.JScrollPane();
+        handRow = new GUI.RowGui(exitButton);
+        placeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 188, 169));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -87,54 +88,6 @@ public class Table extends javax.swing.JPanel {
             }
         });
         setLayout(new java.awt.GridBagLayout());
-
-        enemyBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 908;
-        gridBagConstraints.ipady = 122;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(enemyBackRow, gridBagConstraints);
-
-        enemyFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 908;
-        gridBagConstraints.ipady = 122;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(enemyFrontRow, gridBagConstraints);
-
-        myFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 908;
-        gridBagConstraints.ipady = 122;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(myFrontRow, gridBagConstraints);
-
-        myBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 907;
-        gridBagConstraints.ipady = 122;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(myBackRow, gridBagConstraints);
 
         myBackPoint.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         myBackPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -210,23 +163,23 @@ public class Table extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(13, 3, 13, 3);
         add(passButton, gridBagConstraints);
 
-        placeButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        placeButton.setText("Place");
-        placeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
-        placeButton.addActionListener(new java.awt.event.ActionListener() {
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        exitButton.setText("Exit");
+        exitButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                placeButtonActionPerformed(evt);
+                exitButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 36;
         gridBagConstraints.ipady = 99;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 3, 13, 3);
-        add(placeButton, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(13, 100, 13, 3);
+        add(exitButton, gridBagConstraints);
 
         playerOnePanel.setBackground(new java.awt.Color(255, 217, 179));
         playerOnePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
@@ -407,17 +360,6 @@ public class Table extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(playerTwoPanel, gridBagConstraints);
 
-        handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        handRow.setPreferredSize(null);
-        handRow.setLayout(new FlowLayout());
-        handScrollPane.setViewportView(handRow);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(handScrollPane, gridBagConstraints);
-
         logPane.setBackground(new java.awt.Color(255, 217, 179));
         logPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         logPane.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -445,14 +387,88 @@ public class Table extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(logPane, gridBagConstraints);
+
+        myFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 908;
+        gridBagConstraints.ipady = 122;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(myFrontRow, gridBagConstraints);
+
+        myBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 907;
+        gridBagConstraints.ipady = 122;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(myBackRow, gridBagConstraints);
+
+        enemyFrontRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 908;
+        gridBagConstraints.ipady = 122;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(enemyFrontRow, gridBagConstraints);
+
+        enemyBackRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 908;
+        gridBagConstraints.ipady = 122;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(enemyBackRow, gridBagConstraints);
+
+        handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        handRow.setPreferredSize(null);
+        handRow.setLayout(new FlowLayout());
+        handScrollPane.setViewportView(handRow);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(handScrollPane, gridBagConstraints);
+
+        placeButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        placeButton.setText("Place");
+        placeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
+        placeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placeButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 36;
+        gridBagConstraints.ipady = 99;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 3, 13, 3);
+        add(placeButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
-        Card card = handRow.getSelected();
-        Controller.sendCard(card);
-        Controller.removeCard(card);
-        //refreshHandRow();
-    }//GEN-LAST:event_placeButtonActionPerformed
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        Controller.exitGame();
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     private void passButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passButtonActionPerformed
         Controller.sendCard(null);
@@ -478,6 +494,10 @@ public class Table extends javax.swing.JPanel {
        enemyBackRow.setMinimumSize(new Dimension(0, height));
     }//GEN-LAST:event_formComponentResized
 
+    private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_placeButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PlayerCards;
     private javax.swing.JLabel PlayerCards1;
@@ -489,6 +509,7 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JLabel enemyLifes;
     private javax.swing.JLabel enemyName;
     private javax.swing.JLabel enemyPoints;
+    private javax.swing.JButton exitButton;
     private GUI.RowGui handRow;
     private javax.swing.JScrollPane handScrollPane;
     private javax.swing.JPanel logPane;

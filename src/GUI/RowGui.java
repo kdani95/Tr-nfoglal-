@@ -171,7 +171,11 @@ public class RowGui extends javax.swing.JPanel {
             }
         }
         cardDisplay.clearSelection();
-        return selected.getCard();
+        if(selected == null){
+            return null;
+        }else{
+            return selected.getCard();
+        }
     }
     
     public List<Card> getCards(){

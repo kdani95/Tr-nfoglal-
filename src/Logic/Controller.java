@@ -181,6 +181,11 @@ public class Controller {
     public static void setDifficulty(int d){
         Controller.difficulty = d;
     }
+
+    public static void exitGame() {
+        client.sendExit();
+        tronfoglalo.gameExit();
+    }
 }
 
     
