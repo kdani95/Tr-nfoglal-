@@ -30,7 +30,10 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public void startGame(String mode,List<Card> deck){  
         this.add(table1);
-        
+        this.table1.resetEnemyPassed();
+        this.table1.resetPassed();
+        this.table1.setSize(this.getWidth(), this.getHeight());
+        this.table1.clearLog();
         String addr = "localhost";
         int PORT = 12345;
         
@@ -60,6 +63,9 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
             deckAI.add(Cards.getCard(7));
             deckAI.add(Cards.getCard(7));
             deckAI.add(Cards.getCard(3));
+            deckAI.add(Cards.getCard(8));
+            deckAI.add(Cards.getCard(9));
+            deckAI.add(Cards.getCard(10));
             
             Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
             c.start();
@@ -73,7 +79,10 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public void joinMultiPlayer(int PORT,String IP,List<Card> deck){
         this.add(table1);
-        
+        this.table1.resetEnemyPassed();
+        this.table1.resetPassed();
+        this.table1.setSize(this.getWidth(), this.getHeight());
+        this.table1.clearLog();
         Client client = new Client(IP, PORT, this.name , "HUMAN", deck);
         Controller.addClient(client);
         
@@ -262,5 +271,9 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.remove(table1);
         this.mainMenu1.setVisible(true);
         table1.setVisible(false);
+    }
+
+    public void exit() {
+        System.exit(0);
     }
 }

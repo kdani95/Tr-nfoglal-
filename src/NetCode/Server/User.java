@@ -120,13 +120,14 @@ public class User {
         send("GETPOINTS");
         try{
             String points = sc.nextLine();
+            return Integer.parseInt(points);
         }catch(NoSuchElementException ex){
             sc.close();
             pw.close();
             return 0;
         }
         
-        return Integer.parseInt(sc.nextLine());
+        
     }
 
     void removeLife(String p) {

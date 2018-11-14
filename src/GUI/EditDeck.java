@@ -30,12 +30,12 @@ public class EditDeck extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        cardScrollPane = new javax.swing.JScrollPane();
+        deckScrollPane = new javax.swing.JScrollPane();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
-        cardScrollPane = new javax.swing.JScrollPane();
         cardsRow = new GUI.RowGui(addButton);
-        deckScrollPane = new javax.swing.JScrollPane();
         deckRow = new GUI.RowGui(removeButton);
 
         setBackground(new java.awt.Color(221, 188, 169));
@@ -49,6 +49,7 @@ public class EditDeck extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         addButton.setText("Add");
+        addButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -65,6 +66,7 @@ public class EditDeck extends javax.swing.JPanel {
         add(addButton, gridBagConstraints);
 
         removeButton.setText("Remove");
+        removeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
@@ -72,7 +74,7 @@ public class EditDeck extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipady = 109;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -80,6 +82,7 @@ public class EditDeck extends javax.swing.JPanel {
         add(removeButton, gridBagConstraints);
 
         backButton.setText("Back");
+        backButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -87,7 +90,7 @@ public class EditDeck extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 16;
         gridBagConstraints.ipady = 96;
@@ -95,32 +98,23 @@ public class EditDeck extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(70, 10, 10, 10);
         add(backButton, gridBagConstraints);
 
-        cardScrollPane.setViewportView(cardsRow);
-
+        cardsRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        cardsRow.setLayout(new java.awt.GridLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 1186;
-        gridBagConstraints.ipady = 109;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
-        add(cardScrollPane, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(cardsRow, gridBagConstraints);
 
-        deckScrollPane.setViewportView(deckRow);
-
+        deckRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        deckRow.setLayout(new java.awt.GridLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 1190;
-        gridBagConstraints.ipady = 109;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(70, 0, 0, 0);
-        add(deckScrollPane, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(deckRow, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized

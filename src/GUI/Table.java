@@ -49,6 +49,7 @@ public class Table extends javax.swing.JPanel {
         enemyBackPoint = new javax.swing.JLabel();
         passButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        placeButton = new javax.swing.JButton();
         playerOnePanel = new javax.swing.JPanel();
         myName = new javax.swing.JLabel();
         myPoints = new javax.swing.JLabel();
@@ -74,9 +75,8 @@ public class Table extends javax.swing.JPanel {
         myBackRow = new GUI.RowGui();
         enemyFrontRow = new GUI.RowGui();
         enemyBackRow = new GUI.RowGui();
-        handScrollPane = new javax.swing.JScrollPane();
-        handRow = new GUI.RowGui(exitButton);
-        placeButton = new javax.swing.JButton();
+        handRow = new GUI.RowGui(placeButton);
+        weatherRow = new GUI.RowGui();
 
         setBackground(new java.awt.Color(221, 188, 169));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -180,6 +180,24 @@ public class Table extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(13, 100, 13, 3);
         add(exitButton, gridBagConstraints);
+
+        placeButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        placeButton.setText("Place");
+        placeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
+        placeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placeButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 36;
+        gridBagConstraints.ipady = 99;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 3, 13, 3);
+        add(placeButton, gridBagConstraints);
 
         playerOnePanel.setBackground(new java.awt.Color(255, 217, 179));
         playerOnePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
@@ -439,31 +457,23 @@ public class Table extends javax.swing.JPanel {
         handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         handRow.setPreferredSize(null);
         handRow.setLayout(new FlowLayout());
-        handScrollPane.setViewportView(handRow);
-
+        handRow.setLayout(new java.awt.GridLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(handScrollPane, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(handRow, gridBagConstraints);
 
-        placeButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        placeButton.setText("Place");
-        placeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 8, true));
-        placeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                placeButtonActionPerformed(evt);
-            }
-        });
+        weatherRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        weatherRow.setLayout(new java.awt.GridLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 36;
-        gridBagConstraints.ipady = 99;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 3, 13, 3);
-        add(placeButton, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(weatherRow, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -479,6 +489,7 @@ public class Table extends javax.swing.JPanel {
        int width = this.getWidth();
        int height = (int) Math.round( (this.getHeight() * 0.9) / 5 );
        handRow.setMaximumSize(new Dimension(width, height));
+       handRow.setSize(new Dimension(width, height));
        handRow.setMinimumSize(new Dimension(0, height));
        
        myFrontRow.setMaximumSize(new Dimension(width, height));
@@ -492,10 +503,15 @@ public class Table extends javax.swing.JPanel {
        
        enemyBackRow.setMaximumSize(new Dimension(width, height));
        enemyBackRow.setMinimumSize(new Dimension(0, height));
+       
+       weatherRow.setMaximumSize(new Dimension(width, height));
+       weatherRow.setMinimumSize(new Dimension(0, height));
     }//GEN-LAST:event_formComponentResized
 
     private void placeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeButtonActionPerformed
-        // TODO add your handling code here:
+        Card card = handRow.getSelected();
+        Controller.sendCard(card);
+        Controller.removeCard(card);
     }//GEN-LAST:event_placeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -511,7 +527,6 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JLabel enemyPoints;
     private javax.swing.JButton exitButton;
     private GUI.RowGui handRow;
-    private javax.swing.JScrollPane handScrollPane;
     private javax.swing.JPanel logPane;
     private javax.swing.JScrollPane logScrollPane;
     private javax.swing.JTextPane logTextPane;
@@ -533,6 +548,7 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JLabel playerPoints;
     private javax.swing.JLabel playerPoints1;
     private javax.swing.JPanel playerTwoPanel;
+    private GUI.RowGui weatherRow;
     // End of variables declaration//GEN-END:variables
 
     public void refreshHandRow() {
@@ -555,6 +571,9 @@ public class Table extends javax.swing.JPanel {
             case 2: enemyFrontRow.refresh(cards); enemyFrontPoint.setText(""+points); break;
             
             case 3: enemyBackRow.refresh(cards); enemyBackPoint.setText(""+points);break;
+            
+            default: weatherRow.refresh(cards); break;
+            
         }
 
         this.revalidate();
@@ -630,6 +649,11 @@ public class Table extends javax.swing.JPanel {
 
     public void log(String text){
         this.logTextPane.setText(sb.append( text + "<br>" ).toString());
+    }
+
+    void clearLog() {
+        sb=new StringBuilder();
+        this.logTextPane.setText(sb.toString());
     }
     
 }

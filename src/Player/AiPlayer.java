@@ -41,8 +41,18 @@ public class AiPlayer extends Player{
     }
     
     public Card getCard(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AiPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if ( super.hand.size() == 0){
             System.out.println("OUT OF CARDS");
+            return null;
+        }
+        
+        System.out.println("ENEMY PASSED: " + enemyPassed + " --------------------------------");
+        if (enemyPassed && getPlayerOnePoints() > getPlayerTwoPoints()){
             return null;
         }
         
@@ -108,10 +118,7 @@ public class AiPlayer extends Player{
 
         
         System.out.println("selected: " + hand.get(selected).getName());
-        System.out.println(enemyPassed);
-        if (enemyPassed && getPlayerOnePoints() > getPlayerTwoPoints()){
-            return null;
-        }
+        
         Card selectedCard = hand.get(selected);
         hand.remove(selected);
         //System.out.println("Hand size: " + super.hand.size());
@@ -145,6 +152,7 @@ public class AiPlayer extends Player{
             }
         }
         value = handTable.tryCard(card);
+        System.out.println(card.getName() + " value:" + value);
         return value;
     }
    

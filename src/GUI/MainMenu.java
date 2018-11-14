@@ -115,7 +115,7 @@ public class MainMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_editDeckActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        exitActionPerformed(evt);
+        Controller.exit();
     }//GEN-LAST:event_exitActionPerformed
 
 

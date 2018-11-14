@@ -19,6 +19,7 @@ public class Card{
     private int power;
     private int powerState;
     private int cardID;
+    private String ability;
     
     public Card(Card card){
        this.id = card.id;
@@ -29,9 +30,10 @@ public class Card{
        this.pictureLoc = card.pictureLoc;
        this.power = card.power;
        this.row = card.row;
+       this.ability = card.ability;
     }
     
-    public Card(int id, int cardID, String name, int strength, String pictureLoc, int power, int row){
+    public Card(int id, int cardID, String name, int strength, String pictureLoc, int power, int row,String ability){
         this.id = id;
         this.cardID = cardID;
         this.name = name;
@@ -40,6 +42,7 @@ public class Card{
         this.pictureLoc = pictureLoc;
         this.power = power;
         this.row = row;
+        this.ability = ability;
     }  
         
     public String getName(){
@@ -52,6 +55,10 @@ public class Card{
     
     public int getID(){
         return this.id;
+    }
+    
+    public String getAbility(){
+        return this.ability;
     }
     
     public int getStrength(){

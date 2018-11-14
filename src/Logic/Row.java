@@ -28,7 +28,6 @@ public class Row {
         }else{
             card.SetPowerState(0);
         }
-        
         pointsUpdate();
     }
     

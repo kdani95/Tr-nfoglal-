@@ -30,7 +30,7 @@ public class Controller {
     
     public static void refresh(){
         refreshHandRow();
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 5; i++){
             refreshRow(i);
         }
     }
@@ -185,6 +185,10 @@ public class Controller {
     public static void exitGame() {
         client.sendExit();
         tronfoglalo.gameExit();
+    }
+
+    public static void exit() {
+        tronfoglalo.exit();
     }
 }
 

@@ -109,13 +109,19 @@ public class RowGui extends javax.swing.JPanel {
         inner.setPreferredSize(new Dimension(width, height));
         inner.setIcon(new ImageIcon(resized));
         JLabel strength = new JLabel("Strength: "+card.getStrength());
+        JLabel name = new JLabel(""+card.getName());
         strength.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
         //strength.setMaximumSize(new Dimension(width, height / 10));
         //strength.setMinimumSize(new Dimension(width, height /10));
-        c.gridy = 1; c.weighty = 0.9;
+        c.gridy = 2; c.weighty = 0.9;
         button.add(strength,c);
+        c.gridy = 1; c.weighty = 0.9;
+        button.add(name,c);
         c.gridy = 0; c.weighty = 0.1;
         button.add(inner,c);
+        
+        
         
         this.buttons.add(button);
         cardDisplay.add(button);

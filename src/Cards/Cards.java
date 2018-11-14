@@ -30,7 +30,8 @@ public class Cards {
                      "strength integer NOT NULL," +
                      "picture text NOT NULL," +
                      "power integer NOT NULL," + 
-                     "row integer NOT NULL );";
+                     "row integer NOT NULL,"+
+                     "ability text);";
         
         String deleteDeck = "DROP TABLE IF EXISTS deck;";
         String sqlDeck = "CREATE TABLE IF NOT EXISTS deck ("+
@@ -59,6 +60,22 @@ public class Cards {
  
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    
+    private static void insertNewCard(String name,int strength,String picture,int power, int row,String ability){
+        String sql = "INSERT INTO cards(name,strength,picture,power,row,ability) VALUES (?,?,?,?,?,?)";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, name);
+                pstmt.setInt(2, strength);
+                pstmt.setString(3, "cards/"+picture);
+                pstmt.setInt(4, power);
+                pstmt.setInt(5, row);
+                pstmt.setString(6, ability);
+                pstmt.executeUpdate();
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -152,8 +169,9 @@ public class Cards {
                 String picture = rs.getString("picture");
                 int power = rs.getInt("power");   
                 int row = rs.getInt("row");
+                String ability = rs.getString("ability");
                 //System.out.println(name + ", " + strength + ", " + picture);
-                return new Card(id,id, name, strength, picture, power, row);
+                return new Card(id,id, name, strength, picture, power, row,ability);
             }
             
         } catch (SQLException e) {
@@ -172,31 +190,31 @@ public class Cards {
         insertNewCard("King", 8, "king.png", 2, 0);
         insertNewCard("Peasant", 2, "peasant.png", 0, 0);
         insertNewCard("Rider", 6, "rider.png", -2, 0);
+        insertNewCard("Plague", 0, "plague.png", 0, 10, "plague");
+        insertNewCard("Frost", 0, "frost.png", 0, 10, "frost");
+        insertNewCard("Fog", 0, "fog.png", 0, 10, "fog");
         //knights
         insertIntoMyCards(1);
-        insertIntoMyCards(1);
-        
+        insertIntoMyCards(1);        
         //commander
-        insertIntoMyCards(2);
-        
+        insertIntoMyCards(2);        
         //peasants
         insertIntoMyCards(6);
-        insertIntoMyCards(6);
-        
+        insertIntoMyCards(6);      
         //king
-        insertIntoMyCards(5);
-        
+        insertIntoMyCards(5);       
         //archers
         insertIntoMyCards(4);
-        insertIntoMyCards(4);
-        
+        insertIntoMyCards(4);       
         //riders
         insertIntoMyCards(7);
         insertIntoMyCards(7);
-        
         //sorcerer
         insertIntoMyCards(3);
-        
+        //plague,frost,fog
+        insertIntoMyCards(8);
+        insertIntoMyCards(9);
+        insertIntoMyCards(10);
     }
 /*
     public static Card getCard(int i){
@@ -218,8 +236,9 @@ public class Cards {
                 String picture = rs.getString("picture");
                 int power = rs.getInt("power");   
                 int row = rs.getInt("row");
+                String ability = rs.getString("ability");
                 //System.out.println(id + ", " + name + ", " + strength + ", " + picture);
-                cards.add(new Card(id,cardID, name, strength, picture, power, row));
+                cards.add(new Card(id,cardID, name, strength, picture, power, row,ability));
             }
             
         } catch (SQLException e) {

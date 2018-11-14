@@ -69,11 +69,8 @@ public class Client implements Runnable{
     public void receiveMsg(){
         
         Thread receive = new Thread( () -> {
-            String msg = "";
-            if(sc.hasNextLine()){
-                msg = sc.nextLine();
-                received(msg);
-            }
+            String msg = sc.nextLine();
+            received(msg);
         });
         
         receive.start(); 
@@ -118,9 +115,9 @@ public class Client implements Runnable{
         if (!done){
             switch(msg){
                 case "WAIT" :   if(!AI) {Controller.refresh(); Controller.disableHand();}
-                                receiveMsg(); 
                                 pw.println("READY");
                                 pw.flush();
+                                receiveMsg(); 
                                 break;
                 
                 case "GO" : 
@@ -212,7 +209,8 @@ public class Client implements Runnable{
                                 break;
                                 
                 default : 
-                                //System.out.println(this.name + " RECEIVING CARD");
+                                System.out.println(this.name + " RECEIVING CARD");
+                                System.out.println(msg);
                                 int from = Integer.parseInt(msg.substring(0, 1));
                                 String rest = msg.substring(1);
                                 if(rest.equals("DONE")){
@@ -222,15 +220,15 @@ public class Client implements Runnable{
                                         if(from == 1){
                                             name = this.name;
                                         }else{
-                                           name = Controller.getEnemyName();
+                                            name = Controller.getEnemyName();
                                         }
                                         Controller.log(name + " passed ");
-                                    }/*else{
+                                    }else{
                                         System.out.println("ASDASDASDASDASDASDASDASDASDASDASDASD"); 
                                        if(from == 2){
                                             player.enemyPassed();
                                         }
-                                    }*/
+                                    }
                                 }else{
                                     
                                     int card = Integer.parseInt(rest);
