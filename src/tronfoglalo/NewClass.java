@@ -6,14 +6,20 @@ import Statistics.Stats;
 public class NewClass {
     
     public static void main(String[] args){
-        Stat s = Stats.getStat(8);
-        s.addStat(2);
-        s.addStat(6);
-        s.addStat(10);
-        s.getChance(10);
-        System.out.println("2: " + s.getChance(2));
-        System.out.println("6: " + s.getChance(6));
-        System.out.println("10: " + s.getChance(10));
+        Stat s = Stats.getStat("Fog");
+        System.out.println("min: " + s.getChance(s.getMin()));
+        System.out.println("avg: " + s.getChance((int)Math.round(s.getAvg())));
+        System.out.println("max: " + s.getChance(s.getMax()));
+        
+        s = Stats.getStat("Frost");
+        System.out.println("min: " + s.getChance(s.getMin()));
+        System.out.println("avg: " + s.getChance((int)Math.round(s.getAvg())));
+        System.out.println("max: " + s.getChance(s.getMax()));
+        
+        s = Stats.getStat("Plague");
+        System.out.println("min: " + s.getChance(s.getMin()));
+        System.out.println("avg: " + s.getChance((int)Math.round(s.getAvg())));
+        System.out.println("max: " + s.getChance(s.getMax()));
         
     }
 }

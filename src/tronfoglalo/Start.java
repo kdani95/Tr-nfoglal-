@@ -23,7 +23,8 @@ public class Start {
         //Cards.init();
         
         Thread GUI = new Thread(new Tronfoglalo("DANI") );
-
+        GUI.start();
+        /*
         try {
             Thread.sleep(1000);
             GUI.start();
@@ -31,7 +32,7 @@ public class Start {
         } catch (Exception ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
     }
     
 }

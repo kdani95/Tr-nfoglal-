@@ -457,16 +457,20 @@ public class Table extends javax.swing.JPanel {
         handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         handRow.setPreferredSize(null);
         handRow.setLayout(new FlowLayout());
-        handRow.setLayout(new java.awt.GridLayout());
+        handRow.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 907;
+        gridBagConstraints.ipady = 122;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(handRow, gridBagConstraints);
 
         weatherRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        weatherRow.setLayout(new java.awt.GridLayout());
+        weatherRow.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;

@@ -19,7 +19,7 @@ public abstract class Player {
     protected List<Card> hand = new ArrayList<Card>();
     protected Table table;
     protected boolean enemyPassed = false;
-    private int cards = 10;
+    private int cards = 15;
     
     public Player(String name, List<Card> deck){
         this.table = new Table();

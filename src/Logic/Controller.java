@@ -113,8 +113,34 @@ public class Controller {
         server.start();
     }
     
-    public static void startSinglePlayer(){
+    public static void openMap(){
+        tronfoglalo.openMap();
+    };
+    
+    public static void startSinglePlayer(/*List<Card> deckAI*/){
+        List<Card> deckAI = new ArrayList<Card>();
+            deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(1));
+            deckAI.add(Cards.getCard(2));
+            deckAI.add(Cards.getCard(2));   
+            deckAI.add(Cards.getCard(3));
+            deckAI.add(Cards.getCard(4));
+            deckAI.add(Cards.getCard(5));
+            deckAI.add(Cards.getCard(5)); 
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(6));
+            deckAI.add(Cards.getCard(7));
+            deckAI.add(Cards.getCard(8));
+            deckAI.add(Cards.getCard(8));
+            deckAI.add(Cards.getCard(9));
+            deckAI.add(Cards.getCard(9));
+            deckAI.add(Cards.getCard(10));
+            deckAI.add(Cards.getCard(11));
+            deckAI.add(Cards.getCard(12));
+            deckAI.add(Cards.getCard(13));
+        
        tronfoglalo.startGame("SinglePlayer",Cards.getCards("deck"));
+       tronfoglalo.startAI(deckAI);
     }
 
     public static void startMultiPlayer() {

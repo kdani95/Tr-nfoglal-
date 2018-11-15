@@ -4,6 +4,8 @@ import Cards.Card;
 import Logic.Controller;
 import Logic.Row;
 import Logic.Table;
+import Statistics.Stat;
+import Statistics.Stats;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,6 +21,7 @@ public class AiPlayer extends Player{
     private int startHandSize;
     private int placedCards = 0;
     private Logic.Table handTable;
+    private int unitCard = 11;
     
     public AiPlayer(String name, List<Card> deck) {
         super(name, deck);
@@ -46,17 +49,17 @@ public class AiPlayer extends Player{
         } catch (InterruptedException ex) {
             Logger.getLogger(AiPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         if ( super.hand.size() == 0){
-            System.out.println("OUT OF CARDS");
+            //System.out.println("OUT OF CARDS");
             return null;
         }
-        
-        System.out.println("ENEMY PASSED: " + enemyPassed + " --------------------------------");
+
         if (enemyPassed && getPlayerOnePoints() > getPlayerTwoPoints()){
             return null;
         }
         
-        if(Controller.getDifficulty() > 2){
+        if(Controller.getDifficulty() > 1){
             if(lives > 1 && !playSmallCards){
                 //play small cards
                 Random rand = new Random();
@@ -73,49 +76,67 @@ public class AiPlayer extends Player{
         }
         
         if(playSmallCards && lives > 1){
+            Card selectedCard = null;
             Random rand = new Random();
             int i = rand.nextInt(startHandSize + 2);
             if(i >= ( startHandSize ) - placedCards){
                 return null;
             }
             placedCards++;
-            Card selectedCard = hand.get(0);
-            hand.remove(0);
+            int j = 0;
+            boolean selected = false;
+            while( ! selected && j < hand.size()){
+                if(hand.get(j).getCardID() < unitCard){
+                    System.out.println("cardID: " + hand.get(j).getCardID());
+                    selected = true;
+                    selectedCard = hand.get(j);
+                    hand.remove(j);
+                }
+                j++;
+            }
             return selectedCard;
         }
         
+        if(Controller.getDifficulty() > 2){
+            for(Card c : hand){
+                if(c.getCardID() >= unitCard){
+                    Random r = new Random();
+                    Stat s = Stats.getStat(c.getName());
+                    int points = table.tryCard(c, 1);
+                    double chance = s.getChance(points);
+                    
+                    if(r.nextDouble() < chance){
+                        Card selected = c;
+                        hand.remove(c);
+                        return selected;
+                    }
+                    
+                }
+            }
+        }
+        
+        //base card selection
         int selected = 0;
         int selectedValue = 999;
         boolean bigger = false;
         String cards = "";
         for(int i = 0; i < super.hand.size() ; i++){
             cards = cards + ", " + hand.get(i).getName();
-            if(getPlayerOnePoints() + table.tryCard(hand.get(i)) > getPlayerTwoPoints() ){
+            if( getPlayerOnePoints() + table.tryCard(hand.get(i),1) > getPlayerTwoPoints() && hand.get(i).getCardID() < unitCard){
+                System.out.println("cardID: " + hand.get(i).getCardID());
                 bigger = true;
-                if(hand.get(i).getValue() < selectedValue){
+                if(getValue(hand.get(i)) < selectedValue){
                     selected = i;
-                    selectedValue = handTable.tryCard(hand.get(selected));
+                    selectedValue = hand.get(selected).getValue();
                 }
             }else{
                 selected = i;
             }
-            
         }        
         
-        if(Controller.getDifficulty() > 1){
-            if( ( (selected >= hand.size()/2) || playSmallCards ) && lives > 1){
-                System.out.println("LIVES: " + lives + " playSmallCard: " + playSmallCards);
-                Random rand = new Random();
-                int i = rand.nextInt(2);
-                if(i == 0){
-                    return null;
-                }
-                if(i == 1){
-                    selected = 0;
-                }
-            }
+        if(!bigger && lives > 1){
+            return null;
         }
-
         
         System.out.println("selected: " + hand.get(selected).getName());
         
@@ -137,21 +158,63 @@ public class AiPlayer extends Player{
     
     public void addToTable(Card card,int player){
         if(card != null){
-            //System.out.println("addToTable: Card name: " + card.getName());
-            super.table.addCard(card, player);
+            System.out.println("addToTable: Card name: " + card.getName());
+            if(card.getID() >= unitCard && player == 2){
+                Stat s = Stats.getStat(card.getName());
+                int before = this.getPlayerTwoPoints() - this.getPlayerOnePoints();
+                System.out.println("before points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
+                super.table.addCard(card, player);
+                int after = this.getPlayerTwoPoints() - this.getPlayerOnePoints();
+                System.out.println("after points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
+                s.addStat(after - before);
+            }else
+            {
+                super.table.addCard(card, player);
+                
+                for(Card c : this.hand){
+                    System.out.print(" " + c.getName());
+                }
+                System.out.println(""); 
+                Row x = table.getRow(1);
+                System.out.println("--------------------");
+                for(Card c : x.getCards()){
+                    System.out.print(" " + c.getName());
+                }
+                System.out.println("");
+                System.out.println("--------------------");
+                x = table.getRow(0);
+                for(Card c : x.getCards()){
+                    System.out.print(" " + c.getName());
+                }
+                System.out.println("");
+                System.out.println("---------------------");
+                x = table.getRow(2);
+                for(Card c : x.getCards()){
+                    System.out.print(" " + c.getName());
+                }
+                System.out.println("");
+                System.out.println("--------------------");
+                x = table.getRow(3);
+                for(Card c : x.getCards()){
+                    System.out.print(" " + c.getName());
+                }
+                System.out.println("");
+                System.out.println("--------------------");
+            }
         }
+        System.out.println("points: " + getPlayerTwoPoints()  + " -- " + getPlayerOnePoints());
         
     }
     
     private int getValue(Card card){
         handTable = new Logic.Table();
-        int value = 0;
+        int value = -handTable.getPlayerOnePoints();
         for(Card c : hand){
             if(card.getRow() == c.getRow()){
                 handTable.addCard(c,1);
             }
         }
-        value = handTable.tryCard(card);
+        value = handTable.tryCard(card,1);
         System.out.println(card.getName() + " value:" + value);
         return value;
     }

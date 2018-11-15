@@ -33,7 +33,7 @@ public class User {
         }catch(IllegalStateException ex){
             cards = "0";
         }
-        System.out.println(cards);
+        LOG(cards);
         return cards;
     }
     
@@ -66,7 +66,7 @@ public class User {
                 pw.flush();
               
                 lifes = Integer.parseInt(sc.nextLine());
-                System.out.println("LIFES: " + lifes);
+                LOG("LIFES: " + lifes);
             } catch (Exception e) {
                 System.err.println("Error at sending: " + e.toString());
             }  
@@ -77,7 +77,7 @@ public class User {
      public void send(String msg){ 
         if(!s.isClosed()){
             try {
-                System.out.println("sending: " + msg);
+                LOG("sending: " + msg);
                 pw.println(msg);
                 pw.flush();
             } catch (Exception e) {
@@ -150,5 +150,4 @@ public class User {
             System.err.println("Error at closing socket: " + ex.toString());
         }
     }
-    
 }

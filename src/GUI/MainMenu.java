@@ -99,7 +99,8 @@ public class MainMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startSinglePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSinglePlayerActionPerformed
-        Controller.startSinglePlayer();
+        //Controller.startSinglePlayer();
+        Controller.openMap();
     }//GEN-LAST:event_startSinglePlayerActionPerformed
 
     private void startMultiPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMultiPlayerActionPerformed

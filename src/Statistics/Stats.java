@@ -25,7 +25,7 @@ public class Stats {
         
         String delete = "DROP TABLE IF EXISTS statistics;";
         String sql = "CREATE TABLE IF NOT EXISTS statistics ("+
-                     "cardID integer PRIMARY KEY," +
+                     "name text PRIMARY KEY," +
                      "average float NOT NULL," +
                      "max integer NOT NULL," +
                      "min integer NOT NULL," + 
@@ -49,16 +49,16 @@ public class Stats {
     
     public static void init(){
         createDatabase();
-        insertNewStat(8, 0.0, 0, 500, 0, 0, 0);
-        insertNewStat(9, 0.0, 0, 500, 0, 0, 0);
-        insertNewStat(10, 0.0, 0, 500, 0, 0, 0);
+        insertNewStat("Plague", 0.0, 0, 500, 0, 0, 0);
+        insertNewStat("Frost", 0.0, 0, 500, 0, 0, 0);
+        insertNewStat("Fog", 0.0, 0, 500, 0, 0, 0);
     }
     
-    private static void insertNewStat(int id,double avg,int max, int min,int smpls, double mult, double exp){
-        String sql = "INSERT INTO statistics(cardid,average,max,min,samples,mult,exp) VALUES (?,?,?,?,?,?,?)";
+    private static void insertNewStat(String name,double avg,int max, int min,int smpls, double mult, double exp){
+        String sql = "INSERT INTO statistics(name,average,max,min,samples,mult,exp) VALUES (?,?,?,?,?,?,?)";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, id);
+                pstmt.setString(1, name);
                 pstmt.setDouble(2, avg);
                 pstmt.setInt(3, max);
                 pstmt.setInt(4, min);
@@ -71,22 +71,22 @@ public class Stats {
         }
     }
 
-    public static Stat getStat(int ID){
-        String sql = "SELECT * FROM statistics WHERE cardID=" + ID + ";";
+    public static Stat getStat(String name){
+        String sql = "SELECT * FROM statistics WHERE name=\"" + name + "\";";
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt  = conn.createStatement();
             ResultSet rs    = stmt.executeQuery(sql)){
             
             if(rs.next()){
-                int id = rs.getInt("cardID");
+                String cardName = rs.getString("name");
                 double avg = rs.getDouble("average");
                 int max = rs.getInt("max");
                 int min = rs.getInt("min");
                 int smpls = rs.getInt("samples");   
                 double mult = rs.getDouble("mult");
                 double exp = rs.getDouble("exp");
-                
-                return new Stat(id,avg,max,min,smpls,mult,exp);
+                System.out.println(cardName + ", "+ avg + ", " + max + ", "+ min + ", " + smpls);
+                return new Stat(cardName,avg,max,min,smpls,mult,exp);
             }
             
         } catch (SQLException e) {
@@ -104,7 +104,7 @@ public class Stats {
                + " samples =" + s.getSmpls()+ ","
                + " mult =" + s.getMult()+ ","
                + " exp =" + s.getExp()
-               + " WHERE cardID =" +s.getId() + ";";
+               + " WHERE name =\"" +s.getName() + "\";";
         System.out.println(sql);
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){

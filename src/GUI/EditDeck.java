@@ -22,6 +22,8 @@ public class EditDeck extends javax.swing.JPanel {
         inMenu = true;
         deckRow.refresh(Controller.getDeck());
         cardsRow.refresh(Controller.getCards());
+        cardsNO.setText("" + cardsRow.getCards().size());
+        deckNO.setText("" + deckRow.getCards().size());
         deckRow.setEnabled();
         cardsRow.setEnabled();
     }
@@ -30,10 +32,10 @@ public class EditDeck extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cardScrollPane = new javax.swing.JScrollPane();
-        deckScrollPane = new javax.swing.JScrollPane();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
+        deckNO = new javax.swing.JLabel();
+        cardsNO = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         cardsRow = new GUI.RowGui(addButton);
         deckRow = new GUI.RowGui(removeButton);
@@ -58,11 +60,10 @@ public class EditDeck extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 109;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 50;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(70, 10, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(addButton, gridBagConstraints);
 
         removeButton.setText("Remove");
@@ -75,11 +76,38 @@ public class EditDeck extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipady = 109;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(70, 10, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(removeButton, gridBagConstraints);
+
+        deckNO.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        deckNO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        deckNO.setText("0");
+        deckNO.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
+        deckNO.setMinimumSize(new java.awt.Dimension(40, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(deckNO, gridBagConstraints);
+
+        cardsNO.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cardsNO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cardsNO.setText("0");
+        cardsNO.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
+        cardsNO.setMinimumSize(new java.awt.Dimension(40, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        add(cardsNO, gridBagConstraints);
 
         backButton.setText("Back");
         backButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
@@ -92,27 +120,30 @@ public class EditDeck extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 16;
-        gridBagConstraints.ipady = 96;
+        gridBagConstraints.ipady = 100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(70, 10, 10, 10);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(backButton, gridBagConstraints);
 
         cardsRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        cardsRow.setLayout(new java.awt.GridLayout());
+        cardsRow.setPreferredSize(new java.awt.Dimension(1000, 200));
+        cardsRow.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(cardsRow, gridBagConstraints);
 
         deckRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        deckRow.setLayout(new java.awt.GridLayout());
+        deckRow.setPreferredSize(new java.awt.Dimension(1000, 200));
+        deckRow.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(deckRow, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
@@ -130,6 +161,8 @@ public class EditDeck extends javax.swing.JPanel {
         deckRow.setEnabled();
         cardsRow.refresh(Controller.getCards());
         cardsRow.setEnabled();
+        cardsNO.setText("" + deckRow.getCards().size());
+        deckNO.setText("" + deckRow.getCards().size());
                 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -145,25 +178,18 @@ public class EditDeck extends javax.swing.JPanel {
         deckRow.setEnabled();
         cardsRow.refresh(Controller.getCards());
         cardsRow.setEnabled();
+        cardsNO.setText("" + deckRow.getCards().size());
+        deckNO.setText("" + deckRow.getCards().size());
     }//GEN-LAST:event_removeButtonActionPerformed
    
     private void resized(){
-       //System.out.println("widht: " + this.getWidth() + " height: " + this.getHeight());
        int width = this.getWidth()-this.addButton.getWidth();
        int height = (int) Math.round( (this.getHeight() * 0.9) / 5 );
 
-       cardScrollPane.setMaximumSize(new Dimension(width, height));
-       //cardScrollPane.setSize(new Dimension(width, height));
-       cardScrollPane.setMinimumSize(new Dimension(1, height));
-       
        cardsRow.setMaximumSize(new Dimension(width, height));
        cardsRow.setSize(new Dimension(width, height));
        cardsRow.setMinimumSize(new Dimension(1, height));
-       
-       deckScrollPane.setMaximumSize(new Dimension(width, height));
-       //deckScrollPane.setSize(new Dimension(width, height));
-       deckScrollPane.setMinimumSize(new Dimension(1, height));
-      
+    
        deckRow.setMaximumSize(new Dimension(width, height));
        deckRow.setSize(new Dimension(width, height));
        deckRow.setMinimumSize(new Dimension(1, height));
@@ -180,10 +206,10 @@ public class EditDeck extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JScrollPane cardScrollPane;
+    private javax.swing.JLabel cardsNO;
     private GUI.RowGui cardsRow;
+    private javax.swing.JLabel deckNO;
     private GUI.RowGui deckRow;
-    private javax.swing.JScrollPane deckScrollPane;
     private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 }

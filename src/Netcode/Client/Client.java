@@ -128,8 +128,8 @@ public class Client implements Runnable{
                              
                 case "ENDED" : 
                                 //System.out.println("ENDED");
-                                System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
-                                System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
+                                //System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
+                                //System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
                                 if(!AI){
                                     Controller.showWinner(player.getLives(),player.getEnemyLives());
                                 }
@@ -209,8 +209,8 @@ public class Client implements Runnable{
                                 break;
                                 
                 default : 
-                                System.out.println(this.name + " RECEIVING CARD");
-                                System.out.println(msg);
+                                //System.out.println(this.name + " RECEIVING CARD");
+                                //System.out.println(msg);
                                 int from = Integer.parseInt(msg.substring(0, 1));
                                 String rest = msg.substring(1);
                                 if(rest.equals("DONE")){
@@ -224,7 +224,7 @@ public class Client implements Runnable{
                                         }
                                         Controller.log(name + " passed ");
                                     }else{
-                                        System.out.println("ASDASDASDASDASDASDASDASDASDASDASDASD"); 
+                                        //System.out.println("ASDASDASDASDASDASDASDASDASDASDASDASD"); 
                                        if(from == 2){
                                             player.enemyPassed();
                                         }
@@ -241,14 +241,19 @@ public class Client implements Runnable{
                                         }else{
                                             name = Controller.getEnemyName();
                                         }
-                                        Controller.log(name + " placed " + cardReceived.getName());
+                                        //Controller.log(name + " placed " + cardReceived.getName());
                                         Controller.addToTable(cardReceived, from);
+                                        if(card > 7){
+                                            for(int i = 0; i < 4; i++){
+                                                Controller.refreshRow(i);
+                                            }
+                                        }
                                         Controller.refreshRow(from + cardReceived.getRow());
                                         Controller.setPoints();
                                     }else{
                                         player.addToTable(Cards.getCard(card), from);
-                                        System.out.println("AI points: " + player.getPlayerOnePoints());
-                                        System.out.println("Human points: " + player.getPlayerTwoPoints());
+                                        //System.out.println("AI points: " + player.getPlayerOnePoints());
+                                        //System.out.println("Human points: " + player.getPlayerTwoPoints());
                                     }
                                     
                                 }

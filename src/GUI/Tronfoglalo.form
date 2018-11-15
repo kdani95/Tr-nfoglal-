@@ -13,6 +13,8 @@
     </Component>
     <Component class="GUI.EditDeck" name="editDeck1">
     </Component>
+    <Component class="GUI.Map" name="map1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>

@@ -10,6 +10,19 @@ public class Row {
     private List<Card> cards = new ArrayList<Card>();
     private int powerState;
     
+    public Row(){
+        this.points = 0;
+        this.powerState = 0;
+    }
+    
+    public Row(Row that){
+        for(Card c : that.getCards()){
+            this.cards.add(new Card(c));
+        }
+        this.points = that.points;
+        this.powerState = that.powerState;
+    }
+    
     public void addCard(Card card){
         this.cards.add(card);
         if(card.getPower() != 0){
@@ -25,6 +38,7 @@ public class Row {
         this.cards.remove(card);
         if(card.getPower() != 0){
             powerChange(-card.getPower());
+            card.SetPowerState(0);
         }else{
             card.SetPowerState(0);
         }
@@ -50,7 +64,11 @@ public class Row {
     }
     
     public int getPoints(){
-        return this.points;
+        int points = 0;
+        for (Card card : cards){
+            points += card.getStrength();
+        }
+        return points;
     }
 
     public void reset() {

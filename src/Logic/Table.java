@@ -16,6 +16,12 @@ public class Table {
         }
     }
     
+    public Table(Table that){
+        for(int i = 0; i < 5; ++i){
+            rows[i] = new Row(that.getRow(i));
+        }
+    }
+    
     public int getPlayerOnePoints(){
         return rows[0].getPoints() + rows[1].getPoints();
     }
@@ -24,16 +30,23 @@ public class Table {
         return rows[2].getPoints() + rows[3].getPoints();
     }
     
-    public int tryCard(Card card){
-        int beforePoints = getPlayerOnePoints();
-        
-        addCard(card, 1);
-        
-        int afterPoint = getPlayerOnePoints();
-        
-        removeCard(card);
-        
-        return afterPoint - beforePoints;
+    /*
+        6 - 12 = -6
+        14 - 12 = 2 
+        2 - -6 = 8
+    
+        6 - 8 = -2
+        6 - 4 = 2
+        2 - -2 = 4
+    
+    */
+    
+    public int tryCard(Card card, int p){
+        Table temp = new Table(this);
+        int diff = temp.getPlayerOnePoints() - temp.getPlayerTwoPoints();
+        temp.addCard(card, p);
+        int diffAfter = temp.getPlayerOnePoints() - temp.getPlayerTwoPoints();
+        return diffAfter - diff;
     }
     
     public void addCard(Card card, int player){
@@ -106,12 +119,12 @@ public class Table {
     }
     
     private void applyFrost(){
-        rows[3].powerChange(-2);
+        rows[2].powerChange(-2);
         rows[0].powerChange(-2);
     }
     
     private void applyFog(){
         rows[1].powerChange(-2);
-        rows[2].powerChange(-2);
+        rows[3].powerChange(-2);
     }
 }

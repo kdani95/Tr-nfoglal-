@@ -11,7 +11,7 @@ public class Server implements Runnable{
     private int PORT = 0;
     private ServerSocket ss;
     private ArrayList<User> players = new ArrayList<User>();
-    private boolean LOG = true;
+    private boolean LOG = false;
     
     private void LOG(String log){
         if(LOG){
@@ -81,7 +81,7 @@ public class Server implements Runnable{
     }
     
     private void sendPlayersLives(){
-        System.out.println("SETTING LIVES");
+        LOG("SETTING LIVES");
         
         players.get(0).send("SETLIFES");
         players.get(0).send(players.get(1).getLifes()+"");
@@ -118,7 +118,6 @@ public class Server implements Runnable{
         LOG("Players connected");
         Random rand = new Random();
         int i = rand.nextInt(2);
-        System.out.println("RANDOM: " + i);
         
         while( players.get(0).getLifes() > 0 && players.get(1).getLifes() > 0){
             
@@ -128,7 +127,7 @@ public class Server implements Runnable{
                     (players.get(0).isConnected() && players.get(1).isConnected() ) )
             {
                 if(players.get(i).notDone()){
-                    System.out.println("Player" + i);
+                    LOG("Player" + i);
                     if(!sendPlayersWait() ){
                         players.get(0).isDone();
                         players.get(1).isDone();
@@ -143,13 +142,13 @@ public class Server implements Runnable{
 
                     if(card.equals("DONE")){
                         players.get(i).isDone();
-                        System.out.println("player" +i +" is done");
+                        LOG("player" +i +" is done");
                         sendPlayersCard("DONE", i);
                     }else if(card.equals("DISCONNECTED")){
                         players.get(i).disconnected();
                         players.get(0).isDone();
                         players.get(1).isDone();
-                        System.out.println("player" + i + " disconnected");
+                        LOG("player" + i + " disconnected");
                         sendPlayersEnded();
                         disconnected = true;
                         break;
@@ -197,7 +196,7 @@ public class Server implements Runnable{
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         ss=null;
-        System.out.println("SERVER ENDED");
+        LOG("SERVER ENDED");
     }
     
 }

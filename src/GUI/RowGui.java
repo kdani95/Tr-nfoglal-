@@ -1,23 +1,17 @@
 package GUI;
 
 import Cards.Card;
-import com.sun.prism.impl.Disposer;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,7 +56,7 @@ public class RowGui extends javax.swing.JPanel {
         g2.dispose();
 
         return resizedImg;
-}
+    }
     
     public void setDisabled(){
         for(Mybutton mb : buttons){
@@ -77,7 +71,6 @@ public class RowGui extends javax.swing.JPanel {
     }
     
     public void addCard(Card card){
-        //this.cards.add(card);
         GridBagLayout gl = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         int height = (int) Math.round(this.getHeight() * 0.75);
@@ -97,11 +90,8 @@ public class RowGui extends javax.swing.JPanel {
                 
             }
         });
-        //button.setMaximumSize(new Dimension(width, height));
-        //button.setPreferredSize(new Dimension(width, height));
         Image resized = getScaledImage(image.getImage(), width, height);
         
-        //button.setIcon(new ImageIcon(resized));
         button.setEnabled(false);
         
         JLabel inner = new JLabel();
@@ -112,8 +102,7 @@ public class RowGui extends javax.swing.JPanel {
         JLabel name = new JLabel(""+card.getName());
         strength.setForeground(Color.BLACK);
         name.setForeground(Color.BLACK);
-        //strength.setMaximumSize(new Dimension(width, height / 10));
-        //strength.setMinimumSize(new Dimension(width, height /10));
+        
         c.gridy = 2; c.weighty = 0.9;
         button.add(strength,c);
         c.gridy = 1; c.weighty = 0.9;

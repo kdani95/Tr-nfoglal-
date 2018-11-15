@@ -2,7 +2,7 @@ package Statistics;
 
 public class Stat{
    
-    private int cardID;
+    private String name;
     private double avg;
     private int min;
     private int max;
@@ -11,8 +11,8 @@ public class Stat{
     private double exp;
     private double mult;
 
-    public Stat(int id, double avg, int max, int min, int smpls,double mult,double exp) {
-        this.cardID = id;
+    public Stat(String name, double avg, int max, int min, int smpls,double mult,double exp) {
+        this.name = name;
         this.avg = avg;
         this.max = max;
         this.min = min;
@@ -22,12 +22,15 @@ public class Stat{
     }
     
     public double getChance(int points){
-        System.out.println("avg: " + this.avg + " min:" + this.min + " max:" + this.max);
-        int p = points -min;
-        if(p > max-min){
-            return 1.0;
-        }else if(p < 0){
+        //System.out.println("avg: " + this.avg + " min:" + this.min + " max:" + this.max);
+        if(samples < 4){
             return 0.0;
+        }
+        int p = points -min;
+        if(p < 0){
+            return -0.1;
+        }else if(p > max-min){
+            return 1.0;
         }
         
         return Function(mult, exp, p);
@@ -37,7 +40,7 @@ public class Stat{
         double pMax = max - min;
         double pMin = 0;
         double pAvg = avg - min;
-        double pErr = 0.0001;
+        double pErr = 0.01;
         boolean fit = false;
         double e = 1;
         double m = 1;
@@ -69,6 +72,10 @@ public class Stat{
     }
     
     public void addStat(int p){
+        if(p < 0){
+            return;
+        }
+        System.out.println("stat points: " + p);
         this.avg = ((this.avg*this.samples) + p) / (this.samples+1) ;
         this.samples++;
         if(p < this.min){
@@ -85,19 +92,19 @@ public class Stat{
         return m * Math.pow(p, e);
     }
 
-    int getId() {
-        return this.cardID;
+    String getName() {
+        return this.name;
     }
 
-    double getAvg() {
+    public double getAvg() {
         return this.avg;
     }
 
-    int getMax() {
+    public int getMax() {
         return this.max;
     }
 
-    int getMin() {
+    public int getMin() {
         return this.min;
     }
 

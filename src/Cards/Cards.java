@@ -184,11 +184,14 @@ public class Cards {
     public static void init(){
         createDatabase("cards.db");
         insertNewCard("Knight", 6, "knight.png", 0, 0);
+        insertNewCard("Soldier", 4, "soldier.png", 0, 0);
         insertNewCard("Commander", 8, "commander.png", 1, 0);
         insertNewCard("Sorcerer", 6, "sorcerer.png", 2, 1);
-        insertNewCard("Archer", 5, "archer.png", 0, 1);
+        insertNewCard("Archer", 4, "archer.png", 0, 1);
+        insertNewCard("Ballista", 6, "catapult.png", 0, 1);
         insertNewCard("King", 8, "king.png", 2, 0);
-        insertNewCard("Peasant", 2, "peasant.png", 0, 0);
+        insertNewCard("Villager", 1, "peasant.png", 0, 0);
+        insertNewCard("Peasant", 2, "peasant2.png", 0, 0);
         insertNewCard("Rider", 6, "rider.png", -2, 0);
         insertNewCard("Plague", 0, "plague.png", 0, 10, "plague");
         insertNewCard("Frost", 0, "frost.png", 0, 10, "frost");
@@ -196,25 +199,33 @@ public class Cards {
         //knights
         insertIntoMyCards(1);
         insertIntoMyCards(1);        
+        //soldier
+        insertIntoMyCards(2); 
+        insertIntoMyCards(2);   
         //commander
-        insertIntoMyCards(2);        
-        //peasants
-        insertIntoMyCards(6);
-        insertIntoMyCards(6);      
-        //king
-        insertIntoMyCards(5);       
-        //archers
-        insertIntoMyCards(4);
-        insertIntoMyCards(4);       
-        //riders
-        insertIntoMyCards(7);
-        insertIntoMyCards(7);
+        insertIntoMyCards(3);   
         //sorcerer
-        insertIntoMyCards(3);
-        //plague,frost,fog
+        insertIntoMyCards(4);      
+        //archer
+        insertIntoMyCards(5);   
+        insertIntoMyCards(5);
+        //ballista
+        insertIntoMyCards(6);
+        insertIntoMyCards(6);       
+        //king
+        insertIntoMyCards(7);
+        //villager
         insertIntoMyCards(8);
+        insertIntoMyCards(8);
+        //peasant
         insertIntoMyCards(9);
+        insertIntoMyCards(9);
+        //rider
         insertIntoMyCards(10);
+        //plague,frost,fog
+        insertIntoMyCards(11);
+        insertIntoMyCards(12);
+        insertIntoMyCards(13);
     }
 /*
     public static Card getCard(int i){

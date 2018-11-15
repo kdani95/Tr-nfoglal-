@@ -28,6 +28,14 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         //this.setSize(1080, 720);
     }
     
+    public void openMap(){
+        this.add(map1);
+        this.map1.setSize(this.getWidth(), this.getHeight());
+        this.mainMenu1.setVisible(false);
+        this.map1.setVisible(true);
+        this.map1.display();
+    }
+    
     public void startGame(String mode,List<Card> deck){  
         this.add(table1);
         this.table1.resetEnemyPassed();
@@ -50,31 +58,14 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.mainMenu1.setVisible(false);
         this.table1.setVisible(true);
         //Controller.refreshHandRow();
-        if(mode.equals("SinglePlayer")){
-            List<Card> deckAI = new ArrayList<Card>();
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(2));
-            deckAI.add(Cards.getCard(6));   
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(5));
-            deckAI.add(Cards.getCard(4));
-            deckAI.add(Cards.getCard(4)); 
-            deckAI.add(Cards.getCard(7));
-            deckAI.add(Cards.getCard(7));
-            deckAI.add(Cards.getCard(3));
-            deckAI.add(Cards.getCard(8));
-            deckAI.add(Cards.getCard(9));
-            deckAI.add(Cards.getCard(10));
-            
-            Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deckAI ));
-            c.start();
-            
-        }else{
-            
-        }
-        this.name = name;
         
+        this.name = name;
+
+    }
+    
+    public void startAI(List<Card> deck){
+            Thread c = new Thread(new Client("localhost", 12345, "BOT_Alf", "AI", deck ));
+            c.start();
     }
     
     public void joinMultiPlayer(int PORT,String IP,List<Card> deck){
@@ -111,6 +102,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
 
         table1 = new GUI.Table();
         editDeck1 = new GUI.EditDeck();
+        map1 = new GUI.Map();
         mainMenu1 = new GUI.MainMenu();
 
         table1.setEnabled(false);
@@ -138,6 +130,8 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.table1.setSize(this.getWidth(), this.getHeight());
         this.mainMenu1.setSize(this.getWidth(), this.getHeight());
         this.editDeck1.setSize(this.getWidth(), this.getHeight());
+        this.map1.setSize(this.getWidth(), this.getHeight());
+        
         
         Controller.refreshHandRow();
         for(int i = 0; i < 4; i++){
@@ -147,6 +141,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.table1.setSize(this.getWidth(), this.getHeight());
         this.mainMenu1.setSize(this.getWidth(), this.getHeight());
         this.editDeck1.setSize(this.getWidth(), this.getHeight());
+        this.map1.setSize(this.getWidth(), this.getHeight());
       }
     }//GEN-LAST:event_formComponentResized
 
@@ -185,6 +180,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private GUI.EditDeck editDeck1;
     private GUI.MainMenu mainMenu1;
+    private GUI.Map map1;
     private GUI.Table table1;
     // End of variables declaration//GEN-END:variables
 
