@@ -10,15 +10,11 @@ public class EditDeck extends javax.swing.JPanel {
     private boolean inMenu = false;
     
     public EditDeck() {
-        //System.out.println("widht: " + this.getWidth() + " height: " + this.getHeight());
         initComponents();
-        resized();
-        
+        resized(); 
     }
     
     public void init(){
-        
-        
         inMenu = true;
         deckRow.refresh(Controller.getDeck());
         cardsRow.refresh(Controller.getCards());
@@ -26,6 +22,9 @@ public class EditDeck extends javax.swing.JPanel {
         deckNO.setText("" + deckRow.getCards().size());
         deckRow.setEnabled();
         cardsRow.setEnabled();
+        if(Controller.getDeck().size() < 20){
+            backButton.setEnabled(false);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -126,8 +125,8 @@ public class EditDeck extends javax.swing.JPanel {
         add(backButton, gridBagConstraints);
 
         cardsRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        cardsRow.setPreferredSize(new java.awt.Dimension(1000, 200));
-        cardsRow.setLayout(new java.awt.GridLayout(1, 0));
+        cardsRow.setPreferredSize(new java.awt.Dimension(1000, 300));
+        cardsRow.setLayout(new java.awt.GridLayout(1, 0, 2, 2));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -137,8 +136,8 @@ public class EditDeck extends javax.swing.JPanel {
         add(cardsRow, gridBagConstraints);
 
         deckRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        deckRow.setPreferredSize(new java.awt.Dimension(1000, 200));
-        deckRow.setLayout(new java.awt.GridLayout(1, 0));
+        deckRow.setPreferredSize(new java.awt.Dimension(1000, 300));
+        deckRow.setLayout(new java.awt.GridLayout(1, 0, 2, 2));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -154,16 +153,21 @@ public class EditDeck extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Card selected = cardsRow.getSelected();
-        Controller.addToDeck(selected);
-        Cards.Cards.moveToDeck(selected.getID());
-        //Controller.removeFromDeck(selected);
-        deckRow.refresh(Controller.getDeck());
-        deckRow.setEnabled();
-        cardsRow.refresh(Controller.getCards());
-        cardsRow.setEnabled();
-        cardsNO.setText("" + deckRow.getCards().size());
-        deckNO.setText("" + deckRow.getCards().size());
-                
+        if(selected != null){
+            Controller.addToDeck(selected);
+            Cards.Cards.moveToDeck(selected.getID());
+            //Controller.removeFromDeck(selected);
+            deckRow.refresh(Controller.getDeck());
+            deckRow.setEnabled();
+            cardsRow.refresh(Controller.getCards());
+            cardsRow.setEnabled();
+            cardsNO.setText("" + cardsRow.getCards().size());
+            deckNO.setText("" + deckRow.getCards().size());
+
+            if(Controller.getDeck().size() >= 20){
+                backButton.setEnabled(true);
+            }
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -172,20 +176,25 @@ public class EditDeck extends javax.swing.JPanel {
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         Card selected = deckRow.getSelected();
-        Controller.removeFromDeck(selected);
-        Cards.Cards.moveToMycards(selected.getID());
-        deckRow.refresh(Controller.getDeck());
-        deckRow.setEnabled();
-        cardsRow.refresh(Controller.getCards());
-        cardsRow.setEnabled();
-        cardsNO.setText("" + deckRow.getCards().size());
-        deckNO.setText("" + deckRow.getCards().size());
+        if(selected != null){
+            Controller.removeFromDeck(selected);
+            Cards.Cards.moveToMycards(selected.getID());
+            deckRow.refresh(Controller.getDeck());
+            deckRow.setEnabled();
+            cardsRow.refresh(Controller.getCards());
+            cardsRow.setEnabled();
+            cardsNO.setText("" + cardsRow.getCards().size());
+            deckNO.setText("" + deckRow.getCards().size());
+
+            if(Controller.getDeck().size() < 20){
+                backButton.setEnabled(false);
+            }
+        }
     }//GEN-LAST:event_removeButtonActionPerformed
    
     private void resized(){
        int width = this.getWidth()-this.addButton.getWidth();
-       int height = (int) Math.round( (this.getHeight() * 0.9) / 5 );
-
+       int height = (int) Math.round( (this.getHeight() * 0.9) / 3 );
        cardsRow.setMaximumSize(new Dimension(width, height));
        cardsRow.setSize(new Dimension(width, height));
        cardsRow.setMinimumSize(new Dimension(1, height));
@@ -198,7 +207,6 @@ public class EditDeck extends javax.swing.JPanel {
            deckRow.refresh(Controller.getDeck());
            cardsRow.refresh(Controller.getCards());
        }
-       
        deckRow.setEnabled();
        cardsRow.setEnabled();
     }

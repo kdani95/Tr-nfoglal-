@@ -1,9 +1,6 @@
 package Cards;
 
-import Common.Types;
-import java.io.File;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -197,41 +194,13 @@ public class Cards {
         insertNewCard("Frost", 0, "frost.png", 0, 10, "frost");
         insertNewCard("Fog", 0, "fog.png", 0, 10, "fog");
         //knights
-        insertIntoMyCards(1);
-        insertIntoMyCards(1);        
-        //soldier
-        insertIntoMyCards(2); 
-        insertIntoMyCards(2);   
-        //commander
-        insertIntoMyCards(3);   
-        //sorcerer
-        insertIntoMyCards(4);      
-        //archer
-        insertIntoMyCards(5);   
-        insertIntoMyCards(5);
-        //ballista
-        insertIntoMyCards(6);
-        insertIntoMyCards(6);       
-        //king
-        insertIntoMyCards(7);
-        //villager
-        insertIntoMyCards(8);
-        insertIntoMyCards(8);
-        //peasant
-        insertIntoMyCards(9);
-        insertIntoMyCards(9);
-        //rider
-        insertIntoMyCards(10);
-        //plague,frost,fog
-        insertIntoMyCards(11);
-        insertIntoMyCards(12);
-        insertIntoMyCards(13);
+        
+        int cards[] = {1,1,2,2,2,4,5,5,5,6,8,8,8,9,9,9,10,10,11,12,13};
+        for(int i : cards){
+            insertIntoMyCards(i);
+        }
     }
-/*
-    public static Card getCard(int i){
-        return selectCardByID(i,"cards");
-    }
-*/
+    
     public static List<Card> getCards(String table){
         String sql = "SELECT * FROM cards INNER JOIN " + table + " ON cards.cardID= " + table + ".cardID;";
         ArrayList<Card> cards = new ArrayList<Card>();

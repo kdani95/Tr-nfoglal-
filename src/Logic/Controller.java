@@ -3,12 +3,11 @@ package Logic;
 import Cards.Card;
 import Cards.Cards;
 import Netcode.Client.Client;
-import Player.HumanPlayer;
-import Player.Player;
 import Netcode.Server.Server;
-import Logic.Row;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import tronfoglalo.InitDatabase;
 
 public class Controller {
     private static GUI.Tronfoglalo tronfoglalo;
@@ -17,11 +16,19 @@ public class Controller {
     private static List<Card> myCards = new ArrayList<Card>();
     private static boolean enemyPassed = false;
     private static int difficulty = 3;
-    
-    public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards, List<Card> deck){
+    private static int map = -1;
+    private static int[][] prize = { {4,6},{3,1},{7,3}};
+    private static String name;
+    private static int[][] decks = { {5,5,5,2,2,2,1,1,3,4,7,8,8,9,9,10,10,11,12,13},
+                                     //{1,1,2,2,3,4,5,5,6,6,7,9,9,11,12,13},
+                                     {1,1,1,2,2,2,3,3,5,5,5,9,9,9,10,10,10,11,12,13},
+                                     {1,1,1,2,2,2,3,3,4,5,5,6,6,6,7,9,9,11,12,13}}; 
+  
+    public static void addGUI(GUI.Tronfoglalo tronfoglalo, List<Card> cards, List<Card> deck,String name){
         Controller.tronfoglalo =tronfoglalo;
         Controller.myCards = cards;
         Controller.deck = deck;
+        Controller.name = name;
     }
     
     public static void addClient(Client client){
@@ -117,30 +124,20 @@ public class Controller {
         tronfoglalo.openMap();
     };
     
-    public static void startSinglePlayer(/*List<Card> deckAI*/){
-        List<Card> deckAI = new ArrayList<Card>();
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(1));
-            deckAI.add(Cards.getCard(2));
-            deckAI.add(Cards.getCard(2));   
-            deckAI.add(Cards.getCard(3));
-            deckAI.add(Cards.getCard(4));
-            deckAI.add(Cards.getCard(5));
-            deckAI.add(Cards.getCard(5)); 
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(6));
-            deckAI.add(Cards.getCard(7));
-            deckAI.add(Cards.getCard(8));
-            deckAI.add(Cards.getCard(8));
-            deckAI.add(Cards.getCard(9));
-            deckAI.add(Cards.getCard(9));
-            deckAI.add(Cards.getCard(10));
-            deckAI.add(Cards.getCard(11));
-            deckAI.add(Cards.getCard(12));
-            deckAI.add(Cards.getCard(13));
+    public static void closeMap(){
+        tronfoglalo.closeMap();
+        tronfoglalo.cardNumberCheck();
+    };
+    
+    public static void startSinglePlayer(){
+        List<Card> deckAI = new ArrayList<>();
+        map = Save.getSave(name);
+        for(int i : decks[map]){
+            deckAI.add(Cards.getCard(i));
+        }
         
-       tronfoglalo.startGame("SinglePlayer",Cards.getCards("deck"));
-       tronfoglalo.startAI(deckAI);
+        tronfoglalo.startGame("SinglePlayer",Cards.getCards("deck"));
+        tronfoglalo.startAI(deckAI);
     }
 
     public static void startMultiPlayer() {
@@ -157,6 +154,7 @@ public class Controller {
     
     public static void editDeckBack(){
         tronfoglalo.editDeckBack();
+        tronfoglalo.cardNumberCheck();
     }
 
     public static void saveDeck(List<Card> cards) {
@@ -182,7 +180,45 @@ public class Controller {
     }
 
     public static void showWinner(int playerOneLives, int playerTwoLives) {
+        if(playerOneLives > playerTwoLives && map > -1){
+            for(int i: prize[map]){
+                myCards.add(Cards.getCard(i));
+            }
+            if(Save.getSave(name)+1 >= prize.length){
+                Save.refreshSave(name, 0);
+            }else{
+                Save.refreshSave(name, Save.getSave(name)+1);
+            }
+        }
+        if(playerOneLives < playerTwoLives && map > -1){
+            Random r = new Random();
+            if(myCards.size() > 0){
+                int i = r.nextInt(myCards.size());
+                myCards.remove(i);
+            }else if(deck.size() > 0){
+                int i = r.nextInt(deck.size());
+                deck.remove(i);
+            }
+        }
         tronfoglalo.showWinner(playerOneLives,playerTwoLives);
+        if(deck.size() + myCards.size() < 20){
+            InitDatabase.resetCardsAndSaves(name);
+            myCards = Cards.getCards(name);
+            
+            myCards = Cards.getCards("mycards");
+            deck = Cards.getCards("deck");
+            
+            tronfoglalo.cardNumberCheck();
+            
+            tronfoglalo.showGameLost();
+        }
+        if(playerOneLives == playerTwoLives){
+            if(map > -1){
+                startSinglePlayer();
+            }
+        }else{
+            map = -1;
+        }
     }
 
     public static void passed(int from) {
@@ -215,6 +251,10 @@ public class Controller {
 
     public static void exit() {
         tronfoglalo.exit();
+    }
+
+    public static String getName() {
+        return name;
     }
 }
 

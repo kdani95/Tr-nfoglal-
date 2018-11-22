@@ -1,11 +1,8 @@
 package Logic;
 
 import Cards.Card;
-import Common.Types;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
 
 public class Table {
     private Row[] rows = new Row[5];
@@ -31,14 +28,8 @@ public class Table {
     }
     
     /*
-        6 - 12 = -6
-        14 - 12 = 2 
-        2 - -6 = 8
-    
-        6 - 8 = -2
-        6 - 4 = 2
-        2 - -2 = 4
-    
+        4 4 6 6 8 8 8  = 44
+        5 5 7 7 9 9 9 10 = 
     */
     
     public int tryCard(Card card, int p){
@@ -107,15 +98,21 @@ public class Table {
                 }
             }
         }   
+        
         for(int i = 0; i < 4; i++){
+            ArrayList<Card> toDelete = new ArrayList<Card>();
             Iterator it = rows[i].getCards().iterator();
             while(it.hasNext()){
                 Card c = (Card)it.next();
                 if(c.getStrength() == weakest){
-                    it.remove();
+                    toDelete.add(c);
                 }
             }
+            for(Card c : toDelete){
+                rows[i].removeCard(c);
+            }
         }
+        
     }
     
     private void applyFrost(){

@@ -3,10 +3,7 @@ package GUI;
 import Cards.Card;
 import Cards.Cards;
 import Netcode.Client.Client;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import Logic.Controller;
 import javax.swing.JOptionPane;
 
@@ -22,7 +19,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         List<Card> cards = Cards.getCards("mycards");
         List<Card> deck = Cards.getCards("deck");
         
-        Controller.addGUI(this,cards,deck);
+        Controller.addGUI(this,cards,deck,name);
         initComponents();
         table1.setMyName(name);
         //this.setSize(1080, 720);
@@ -34,6 +31,11 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.mainMenu1.setVisible(false);
         this.map1.setVisible(true);
         this.map1.display();
+    }
+    
+    public void closeMap() {
+        this.mainMenu1.setVisible(true);
+        this.map1.setVisible(false);
     }
     
     public void startGame(String mode,List<Card> deck){  
@@ -56,6 +58,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         started = true;
         
         this.mainMenu1.setVisible(false);
+        this.map1.setVisible(false);
         this.table1.setVisible(true);
         //Controller.refreshHandRow();
         
@@ -87,15 +90,15 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         //Controller.refreshHandRow();
         this.name = name;
     }
-    
+    /*
     public Tronfoglalo(String name,String mode) {
         this.name = name;
         List<Card> cards = Cards.getCards("mycards");
         List<Card> deck = Cards.getCards("deck");
-        Controller.addGUI(this,cards,deck);
+        Controller.addGUI(this,cards,deck,name);
         initComponents();
     }
-
+*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -272,4 +275,14 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     public void exit() {
         System.exit(0);
     }
+
+    public void showGameLost() {
+        JOptionPane lost = new JOptionPane("You lost the game");
+        lost.showMessageDialog(this, "You have lost the game! The card and saves will reset!");
+    }
+    
+    public void cardNumberCheck(){
+        mainMenu1.cardNumberCheck();
+    }
+
 }

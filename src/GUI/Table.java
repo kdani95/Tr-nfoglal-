@@ -1,14 +1,10 @@
 package GUI;
 
 import Cards.Card;
-import Cards.Cards;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import Logic.Controller;
 import javax.swing.BorderFactory;
 
@@ -455,9 +451,8 @@ public class Table extends javax.swing.JPanel {
         add(enemyBackRow, gridBagConstraints);
 
         handRow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
-        handRow.setPreferredSize(null);
         handRow.setLayout(new FlowLayout());
-        handRow.setLayout(new java.awt.GridLayout(1, 0));
+        handRow.setLayout(new java.awt.GridLayout(1, 0, 2, 2));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;

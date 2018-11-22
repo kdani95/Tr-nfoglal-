@@ -1,18 +1,14 @@
 package GUI;
 
+import Logic.Controller;
+import Logic.Save;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Map extends javax.swing.JPanel {
@@ -20,39 +16,42 @@ public class Map extends javax.swing.JPanel {
     JLabel p2 = new JLabel();
     JLabel p3 = new JLabel();
     
-    
     public Map() {
         initComponents();
-        GridBagLayout gl = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
         
-        sector1.setLayout(gl);
-        sector2.setLayout(gl);
-        sector3.setLayout(gl);
-        sectorButtons.add(sector1);
-        sectorButtons.add(sector2);
-        sectorButtons.add(sector3);
-        sector1.setBorder(BorderFactory.createLineBorder(new Color(102, 51, 0), 4, true));
-        sector2.setBorder(BorderFactory.createLineBorder(new Color(102, 51, 0), 4, true));
-        sector3.setBorder(BorderFactory.createLineBorder(new Color(102, 51, 0), 4, true));
-        c.gridy = 1; c.weighty = 0.9;
-        sector1.add(p1,c);
-        sector2.add(p2,c);
-        sector3.add(p3,c);
-        c.gridy = 2; c.weighty = 0.1;
-        sector1.add(new JLabel("sector1"),c);
-        sector2.add(new JLabel("sector2"),c);
-        sector3.add(new JLabel("sector3"),c);
+        BorderLayout bl = new BorderLayout();
         
-        sector2.setEnabled(false);
-        sector3.setEnabled(false);
+        difficultyButtons.add(diff1);
+        difficultyButtons.add(diff2);
+        difficultyButtons.add(diff3);
+       
+        JLabel l1 = new JLabel("Beach");
+        l1.setBackground(new Color(0, 0, 0, 0));
+        sector1.add(l1);
+        JLabel l2 = new JLabel("Forest");
+        l2.setBackground(new Color(0, 0, 0, 0));
+        sector2.add(l2);
+        JLabel l3 = new JLabel("Castle");
+        l3.setBackground(new Color(0, 0, 0, 0));
+        sector3.add(l3);
+
+        diff1.setSelected(true);
     }
     
-    public void display(){
-       
-        p1.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map1.png").getImage(), this.getWidth()/3, this.getHeight())));
-        p2.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map2.png").getImage(), this.getWidth()/3, this.getHeight())));
-        p3.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map3.png").getImage(), this.getWidth()/3, this.getHeight())));
+    public void display(){ 
+        p1.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map1.png").getImage(), this.getWidth()/3, this.getHeight() - 200)));
+        p2.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map2.png").getImage(), this.getWidth()/3, this.getHeight() - 200)));
+        p3.setIcon(new ImageIcon(getScaledImage(new ImageIcon("data/map3.png").getImage(), this.getWidth()/3, this.getHeight() - 200)));
+        
+        sector1.add(p1);
+        sector2.add(p2);
+        sector3.add(p3);
+        
+        switch(Save.getSave(Controller.getName())){
+            case 0: sector1.setOpaque(true); sector2.setOpaque(false); sector3.setOpaque(false); break;
+            case 1: sector1.setOpaque(false); sector2.setOpaque(true); sector3.setOpaque(false); break;
+            case 2: sector1.setOpaque(false); sector2.setOpaque(false); sector3.setOpaque(true); break;
+        }
         
     }
 
@@ -72,12 +71,17 @@ public class Map extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sectorButtons = new javax.swing.ButtonGroup();
+        difficultyButtons = new javax.swing.ButtonGroup();
         startButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
-        sector1 = new javax.swing.JToggleButton();
-        sector2 = new javax.swing.JToggleButton();
-        sector3 = new javax.swing.JToggleButton();
+        jPanel1 = new javax.swing.JPanel();
+        diff1 = new javax.swing.JRadioButton();
+        diff2 = new javax.swing.JRadioButton();
+        diff3 = new javax.swing.JRadioButton();
+        difficultyLabel = new javax.swing.JLabel();
+        sector1 = new javax.swing.JPanel();
+        sector2 = new javax.swing.JPanel();
+        sector3 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(221, 188, 169));
         setMinimumSize(new java.awt.Dimension(8, 8));
@@ -90,6 +94,7 @@ public class Map extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         startButton.setText("Start Game");
+        startButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startButtonActionPerformed(evt);
@@ -104,6 +109,7 @@ public class Map extends javax.swing.JPanel {
         add(startButton, gridBagConstraints);
 
         backButton.setText("Back");
+        backButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -112,9 +118,48 @@ public class Map extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         add(backButton, gridBagConstraints);
+
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 51, 0), 4, true));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        diff1.setText("EASY");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(diff1, gridBagConstraints);
+
+        diff2.setText("MEDIUM");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(diff2, gridBagConstraints);
+
+        diff3.setText("HARD");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(diff3, gridBagConstraints);
+
+        difficultyLabel.setText("DIFFICULTY");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        jPanel1.add(difficultyLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.75;
+        gridBagConstraints.weighty = 1.0;
+        add(jPanel1, gridBagConstraints);
+
+        sector1.setBackground(new java.awt.Color(102, 153, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -122,6 +167,8 @@ public class Map extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         add(sector1, gridBagConstraints);
+
+        sector2.setBackground(new java.awt.Color(102, 153, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -129,6 +176,8 @@ public class Map extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         add(sector2, gridBagConstraints);
+
+        sector3.setBackground(new java.awt.Color(102, 153, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -143,20 +192,33 @@ public class Map extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentResized
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        Controller.closeMap();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_startButtonActionPerformed
+        if(diff1.isSelected()){
+            Controller.setDifficulty(1);
+        }else if(diff2.isSelected()){
+            Controller.setDifficulty(2);
+        }else if (diff3.isSelected()){
+            Controller.setDifficulty(3);
+        }
+        
+        Controller.startSinglePlayer();
 
+    }//GEN-LAST:event_startButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JToggleButton sector1;
-    private javax.swing.JToggleButton sector2;
-    private javax.swing.JToggleButton sector3;
-    private javax.swing.ButtonGroup sectorButtons;
+    private javax.swing.JRadioButton diff1;
+    private javax.swing.JRadioButton diff2;
+    private javax.swing.JRadioButton diff3;
+    private javax.swing.ButtonGroup difficultyButtons;
+    private javax.swing.JLabel difficultyLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel sector1;
+    private javax.swing.JPanel sector2;
+    private javax.swing.JPanel sector3;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }

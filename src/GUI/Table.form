@@ -1356,9 +1356,6 @@
             </LineBorder>
           </Border>
         </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
-        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new GUI.RowGui(placeButton)"/>
@@ -1372,7 +1369,9 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="0"/>
+        <Property name="horizontalGap" type="int" value="2"/>
         <Property name="rows" type="int" value="1"/>
+        <Property name="verticalGap" type="int" value="2"/>
       </Layout>
     </Container>
     <Container class="GUI.RowGui" name="weatherRow">

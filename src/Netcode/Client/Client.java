@@ -2,17 +2,13 @@ package Netcode.Client;
 
 import Cards.Card;
 import Cards.Cards;
-import GUI.Tronfoglalo;
 import Player.AiPlayer;
 import Player.HumanPlayer;
 import Logic.Row;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 import Logic.Controller;
 
@@ -127,9 +123,6 @@ public class Client implements Runnable{
                                 break;
                              
                 case "ENDED" : 
-                                //System.out.println("ENDED");
-                                //System.out.println(this.name + "PLAYER1 POINTS = " + player.getPlayerOnePoints() );
-                                //System.out.println(this.name + "PLAYER2 POINTS = " + player.getPlayerTwoPoints() );
                                 if(!AI){
                                     Controller.showWinner(player.getLives(),player.getEnemyLives());
                                 }
@@ -216,7 +209,7 @@ public class Client implements Runnable{
                                 if(rest.equals("DONE")){
                                     if(!AI){
                                         Controller.passed(from);
-                                        name = "";
+                                        String name = "NONAME";
                                         if(from == 1){
                                             name = this.name;
                                         }else{
@@ -235,13 +228,13 @@ public class Client implements Runnable{
                                     //System.out.println(this.name + " CARD RECEIVED : " + card + " FROM :" + from);
                                     if(!AI){
                                         Card cardReceived = Cards.getCard(card);
-                                        name = "";
+                                        String name = "NONAME";
                                         if(from == 1){
                                             name = this.name;
                                         }else{
                                             name = Controller.getEnemyName();
                                         }
-                                        //Controller.log(name + " placed " + cardReceived.getName());
+                                        Controller.log(name + " placed " + cardReceived.getName());
                                         Controller.addToTable(cardReceived, from);
                                         if(card > 7){
                                             for(int i = 0; i < 4; i++){
@@ -252,17 +245,12 @@ public class Client implements Runnable{
                                         Controller.setPoints();
                                     }else{
                                         player.addToTable(Cards.getCard(card), from);
-                                        //System.out.println("AI points: " + player.getPlayerOnePoints());
-                                        //System.out.println("Human points: " + player.getPlayerTwoPoints());
                                     }
                                     
                                 }
                                 receiveMsg();
                                 break;
             }
-        }
-        else{
-            
         }
     }
 

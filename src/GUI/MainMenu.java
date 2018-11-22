@@ -5,11 +5,15 @@ import Logic.Controller;
 
 public class MainMenu extends javax.swing.JPanel {
 
-    /**
-     * Creates new form MainMenu
-     */
     public MainMenu() {
         initComponents();
+        
+        if(Controller.getDeck().size() < 20){
+            startSinglePlayer.setEnabled(false);
+            startMultiPlayer.setEnabled(false);
+            joinMultiPlayer.setEnabled(false);
+        }
+        
     }
 
 
@@ -119,6 +123,17 @@ public class MainMenu extends javax.swing.JPanel {
         Controller.exit();
     }//GEN-LAST:event_exitActionPerformed
 
+    public void cardNumberCheck(){
+        if(Controller.getDeck().size() < 20){
+            startSinglePlayer.setEnabled(false);
+            startMultiPlayer.setEnabled(false);
+            joinMultiPlayer.setEnabled(false);
+        }else{
+            startSinglePlayer.setEnabled(true);
+            startMultiPlayer.setEnabled(true);
+            joinMultiPlayer.setEnabled(true);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton editDeck;

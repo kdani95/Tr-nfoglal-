@@ -1,11 +1,6 @@
 package Cards ;
 
-import Common.Types;
 import java.awt.Color;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Card{
    
@@ -97,6 +92,10 @@ public class Card{
 
     public int getValue() {
         return this.baseStregth + this.power;
+    }
+    
+    public boolean equals(Card c){
+        return this.cardID == c.cardID;
     }
         
 }

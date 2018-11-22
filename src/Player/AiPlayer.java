@@ -6,12 +6,8 @@ import Logic.Row;
 import Logic.Table;
 import Statistics.Stat;
 import Statistics.Stats;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,6 +40,7 @@ public class AiPlayer extends Player{
     }
     
     public Card getCard(){
+        
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -158,19 +155,18 @@ public class AiPlayer extends Player{
     
     public void addToTable(Card card,int player){
         if(card != null){
-            System.out.println("addToTable: Card name: " + card.getName());
             if(card.getID() >= unitCard && player == 2){
                 Stat s = Stats.getStat(card.getName());
                 int before = this.getPlayerTwoPoints() - this.getPlayerOnePoints();
-                System.out.println("before points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
+                //System.out.println("before points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
                 super.table.addCard(card, player);
                 int after = this.getPlayerTwoPoints() - this.getPlayerOnePoints();
-                System.out.println("after points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
+                //System.out.println("after points: " + getPlayerTwoPoints()  + " - " + getPlayerOnePoints());
                 s.addStat(after - before);
             }else
             {
                 super.table.addCard(card, player);
-                
+                /*
                 for(Card c : this.hand){
                     System.out.print(" " + c.getName());
                 }
@@ -200,6 +196,7 @@ public class AiPlayer extends Player{
                 }
                 System.out.println("");
                 System.out.println("--------------------");
+            */
             }
         }
         System.out.println("points: " + getPlayerTwoPoints()  + " -- " + getPlayerOnePoints());
@@ -208,13 +205,15 @@ public class AiPlayer extends Player{
     
     private int getValue(Card card){
         handTable = new Logic.Table();
-        int value = -handTable.getPlayerOnePoints();
         for(Card c : hand){
-            if(card.getRow() == c.getRow()){
+            if(card.getRow() == c.getRow() && !c.equals(card)){
                 handTable.addCard(c,1);
             }
         }
-        value = handTable.tryCard(card,1);
+        int before = handTable.getPlayerOnePoints();
+        handTable.addCard(card, 1);
+        int after = handTable.getPlayerOnePoints();
+        int value = after - before;
         System.out.println(card.getName() + " value:" + value);
         return value;
     }

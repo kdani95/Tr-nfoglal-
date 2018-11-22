@@ -6,7 +6,6 @@ import Logic.Row;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javafx.print.Collation;
 
 public abstract class Player {
     protected String name;

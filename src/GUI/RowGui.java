@@ -31,9 +31,6 @@ class Mybutton extends JToggleButton{
 
 public class RowGui extends javax.swing.JPanel {
     
-    //private List<Card> cards = new ArrayList<Card>();
-    //private List<JToggleButton> buttons = new ArrayList<JToggleButton>();
-    
     private List<Mybutton> buttons = new ArrayList<Mybutton>();
     private JButton assignedButton;
     private javax.swing.ButtonGroup cardDisplay;    
