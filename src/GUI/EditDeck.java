@@ -2,7 +2,6 @@ package GUI;
 
 import Cards.Card;
 import java.awt.Dimension;
-import java.util.List;
 import Logic.Controller;
 
 public class EditDeck extends javax.swing.JPanel {

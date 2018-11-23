@@ -149,6 +149,8 @@ public class Controller {
     }
 
     public static void editDeck() {
+        myCards = Cards.getCards("mycards");
+        deck = Cards.getCards("deck");
         tronfoglalo.editDeck();
     }
     
@@ -182,7 +184,7 @@ public class Controller {
     public static void showWinner(int playerOneLives, int playerTwoLives) {
         if(playerOneLives > playerTwoLives && map > -1){
             for(int i: prize[map]){
-                myCards.add(Cards.getCard(i));
+                Cards.insertIntoMyCards(i);
             }
             if(Save.getSave(name)+1 >= prize.length){
                 Save.refreshSave(name, 0);
@@ -194,10 +196,10 @@ public class Controller {
             Random r = new Random();
             if(myCards.size() > 0){
                 int i = r.nextInt(myCards.size());
-                myCards.remove(i);
+                Cards.deleteFromMycards(myCards.get(i).getID());
             }else if(deck.size() > 0){
                 int i = r.nextInt(deck.size());
-                deck.remove(i);
+                Cards.deleteFromDeck(deck.get(i).getID());
             }
         }
         tronfoglalo.showWinner(playerOneLives,playerTwoLives);

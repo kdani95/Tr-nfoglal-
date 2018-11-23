@@ -18,7 +18,7 @@ public class Cards {
     private static final String userName = "root";
     private static final String password = "root";
     
-    public static void createDatabase(String name){
+    public static void createDatabase(){
         
         String delete = "DROP TABLE IF EXISTS cards;";
         String sql = "CREATE TABLE IF NOT EXISTS cards ("+
@@ -51,7 +51,6 @@ public class Cards {
                     
                     stmt.execute(deleteCards);
                     stmt.execute(sqlCards);
-                    //System.out.println("The driver name is " + meta.getDriverName());
                     System.out.println("A new database has been created.");
             }
  
@@ -91,7 +90,7 @@ public class Cards {
         }
     }
     
-    private static void insertIntoMyCards(int cardID){
+    public static void insertIntoMyCards(int cardID){
         String sql = "INSERT INTO mycards(cardID) VALUES (?)";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -133,6 +132,16 @@ public class Cards {
         }
     }
     
+    public static void deleteFromDeck(int id){
+        String sqlDelete = "DELETE FROM deck WHERE id="+id+";";
+        try(Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement()){
+                stmt.execute(sqlDelete);     
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void moveToMycards(int id) {
         String sqlDelete = "DELETE FROM deck WHERE id="+id+";";
         String sqlGet = "SELECT * FROM deck WHERE id="+id+";";
@@ -147,6 +156,16 @@ public class Cards {
                     pstmt.executeUpdate();
                     stmt.execute(sqlDelete);
                 }       
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void deleteFromMycards(int id){
+        String sqlDelete = "DELETE FROM mycards WHERE id="+id+";";
+        try(Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement()){
+                stmt.execute(sqlDelete);     
         }catch (SQLException ex) {
             Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -179,7 +198,7 @@ public class Cards {
     } 
     
     public static void init(){
-        createDatabase("cards.db");
+        createDatabase();
         insertNewCard("Knight", 6, "knight.png", 0, 0);
         insertNewCard("Soldier", 4, "soldier.png", 0, 0);
         insertNewCard("Commander", 8, "commander.png", 1, 0);

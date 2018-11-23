@@ -16,6 +16,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     
     public Tronfoglalo(String name) {
         this.name = name;
+        
         List<Card> cards = Cards.getCards("mycards");
         List<Card> deck = Cards.getCards("deck");
         

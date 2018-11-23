@@ -31,7 +31,7 @@ public class Stats {
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) { 
                 if (conn != null) {
-                    stmt.execute(delete);
+                    //stmt.execute(delete);
                     stmt.execute(sql);
 
                     System.out.println("A new statistics database has been created.");

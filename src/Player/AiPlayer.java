@@ -63,11 +63,11 @@ public class AiPlayer extends Player{
                 int i = rand.nextInt(2);
                 if(i == 0){
                     playSmallCards = false;
-                    System.out.println("AI NOT PLAYING SMALL CARDS");
+                    //System.out.println("AI NOT PLAYING SMALL CARDS");
                 }
                 if(i == 1){
                     playSmallCards = true;
-                    System.out.println("AI PLAYING SMALL CARDS");
+                    //System.out.println("AI PLAYING SMALL CARDS");
                 }
             }
         }
@@ -84,7 +84,7 @@ public class AiPlayer extends Player{
             boolean selected = false;
             while( ! selected && j < hand.size()){
                 if(hand.get(j).getCardID() < unitCard){
-                    System.out.println("cardID: " + hand.get(j).getCardID());
+                    //System.out.println("cardID: " + hand.get(j).getCardID());
                     selected = true;
                     selectedCard = hand.get(j);
                     hand.remove(j);
@@ -120,7 +120,7 @@ public class AiPlayer extends Player{
         for(int i = 0; i < super.hand.size() ; i++){
             cards = cards + ", " + hand.get(i).getName();
             if( getPlayerOnePoints() + table.tryCard(hand.get(i),1) > getPlayerTwoPoints() && hand.get(i).getCardID() < unitCard){
-                System.out.println("cardID: " + hand.get(i).getCardID());
+                //System.out.println("cardID: " + hand.get(i).getCardID());
                 bigger = true;
                 if(getValue(hand.get(i)) < selectedValue){
                     selected = i;
@@ -135,7 +135,7 @@ public class AiPlayer extends Player{
             return null;
         }
         
-        System.out.println("selected: " + hand.get(selected).getName());
+        //System.out.println("selected: " + hand.get(selected).getName());
         
         Card selectedCard = hand.get(selected);
         hand.remove(selected);
@@ -199,7 +199,7 @@ public class AiPlayer extends Player{
             */
             }
         }
-        System.out.println("points: " + getPlayerTwoPoints()  + " -- " + getPlayerOnePoints());
+        //System.out.println("points: " + getPlayerTwoPoints()  + " -- " + getPlayerOnePoints());
         
     }
     
@@ -214,7 +214,7 @@ public class AiPlayer extends Player{
         handTable.addCard(card, 1);
         int after = handTable.getPlayerOnePoints();
         int value = after - before;
-        System.out.println(card.getName() + " value:" + value);
+        //System.out.println(card.getName() + " value:" + value);
         return value;
     }
    
