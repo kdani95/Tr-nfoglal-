@@ -10,16 +10,15 @@ import javax.swing.JOptionPane;
 public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private boolean started = false;
     private String name;
+
     public Tronfoglalo() {
-        initComponents();
-    }
-    
-    public Tronfoglalo(String name) {
-        this.name = name;
+        JOptionPane login = new JOptionPane("Login");
+        this.name = login.showInputDialog(this, "Player Name");
+        System.out.println(this.name);
         
-        List<Card> cards = Cards.getCards("mycards");
-        List<Card> deck = Cards.getCards("deck");
-        
+        List<Card> cards = Cards.getCards(this.name,"mycards");
+        List<Card> deck = Cards.getCards(this.name,"deck");
+        Cards.initPlayer(name);
         Controller.addGUI(this,cards,deck,name);
         initComponents();
         table1.setMyName(name);

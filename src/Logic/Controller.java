@@ -136,21 +136,21 @@ public class Controller {
             deckAI.add(Cards.getCard(i));
         }
         
-        tronfoglalo.startGame("SinglePlayer",Cards.getCards("deck"));
+        tronfoglalo.startGame("SinglePlayer",Cards.getCards(name,"deck"));
         tronfoglalo.startAI(deckAI);
     }
 
     public static void startMultiPlayer() {
-        tronfoglalo.startGame("MultiPlayer",Cards.getCards("deck"));
+        tronfoglalo.startGame("MultiPlayer",Cards.getCards(name,"deck"));
     }
     
     public static void joinMultiPlayer() {
-        tronfoglalo.joinMultiPlayer(12345,"localhost",Cards.getCards("deck"));
+        tronfoglalo.joinMultiPlayer(12345,"localhost",Cards.getCards(name,"deck"));
     }
 
     public static void editDeck() {
-        myCards = Cards.getCards("mycards");
-        deck = Cards.getCards("deck");
+        myCards = Cards.getCards(name,"mycards");
+        deck = Cards.getCards(name,"deck");
         tronfoglalo.editDeck();
     }
     
@@ -184,7 +184,7 @@ public class Controller {
     public static void showWinner(int playerOneLives, int playerTwoLives) {
         if(playerOneLives > playerTwoLives && map > -1){
             for(int i: prize[map]){
-                Cards.insertIntoMyCards(i);
+                Cards.insertIntoMyCards(name,i);
             }
             if(Save.getSave(name)+1 >= prize.length){
                 Save.refreshSave(name, 0);
@@ -196,19 +196,21 @@ public class Controller {
             Random r = new Random();
             if(myCards.size() > 0){
                 int i = r.nextInt(myCards.size());
-                Cards.deleteFromMycards(myCards.get(i).getID());
+                Cards.deleteFromMycards(name,myCards.get(i).getID());
             }else if(deck.size() > 0){
                 int i = r.nextInt(deck.size());
-                Cards.deleteFromDeck(deck.get(i).getID());
+                Cards.deleteFromDeck(name,deck.get(i).getID());
             }
         }
         tronfoglalo.showWinner(playerOneLives,playerTwoLives);
+        deck = Cards.getCards(name, "deck");
+        myCards = Cards.getCards(name, "myCards");
         if(deck.size() + myCards.size() < 20){
+            System.out.println("LOST");
             InitDatabase.resetCardsAndSaves(name);
-            myCards = Cards.getCards(name);
             
-            myCards = Cards.getCards("mycards");
-            deck = Cards.getCards("deck");
+            myCards = Cards.getCards(name,"mycards");
+            deck = Cards.getCards(name,"deck");
             
             tronfoglalo.cardNumberCheck();
             

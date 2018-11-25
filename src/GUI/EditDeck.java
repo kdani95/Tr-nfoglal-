@@ -154,7 +154,7 @@ public class EditDeck extends javax.swing.JPanel {
         Card selected = cardsRow.getSelected();
         if(selected != null){
             Controller.addToDeck(selected);
-            Cards.Cards.moveToDeck(selected.getID());
+            Cards.Cards.moveToDeck(Controller.getName(),selected.getID());
             //Controller.removeFromDeck(selected);
             deckRow.refresh(Controller.getDeck());
             deckRow.setEnabled();
@@ -177,7 +177,7 @@ public class EditDeck extends javax.swing.JPanel {
         Card selected = deckRow.getSelected();
         if(selected != null){
             Controller.removeFromDeck(selected);
-            Cards.Cards.moveToMycards(selected.getID());
+            Cards.Cards.moveToMycards(Controller.getName(),selected.getID());
             deckRow.refresh(Controller.getDeck());
             deckRow.setEnabled();
             cardsRow.refresh(Controller.getCards());

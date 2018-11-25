@@ -10,7 +10,7 @@ public class Start {
             name = args[0];
         }
         //InitDatabase.main(args);
-        Thread GUI = new Thread(new Tronfoglalo(name) );
+        Thread GUI = new Thread(new Tronfoglalo() );
         GUI.start();
 
     }

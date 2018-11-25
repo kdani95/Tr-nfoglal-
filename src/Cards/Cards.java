@@ -32,11 +32,13 @@ public class Cards {
         
         String deleteDeck = "DROP TABLE IF EXISTS deck;";
         String sqlDeck = "CREATE TABLE IF NOT EXISTS deck ("+
+                         "playerName text NOT NULL," +
                          "id integer PRIMARY KEY," +
                          "cardID integer NOT NULL);";
         
         String deleteCards = "DROP TABLE IF EXISTS mycards;";
         String sqlCards = "CREATE TABLE IF NOT EXISTS mycards ("+
+                          "playerName text NOT NULL," +
                           "id integer PRIMARY KEY," +
                           "cardID integer NOT NULL);";
         
@@ -90,40 +92,43 @@ public class Cards {
         }
     }
     
-    public static void insertIntoMyCards(int cardID){
-        String sql = "INSERT INTO mycards(cardID) VALUES (?)";
+    public static void insertIntoMyCards(String name,int cardID){
+        String sql = "INSERT INTO mycards(playername,cardID) VALUES (?,?)";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, cardID);
+                pstmt.setString(1, name);
+                pstmt.setInt(2, cardID);
                 pstmt.executeUpdate();
         }catch (SQLException ex) {
             Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static void insertIntoDeck(int cardID){
+    public static void insertIntoDeck(String name,int cardID){
         
-        String sql = "INSERT INTO deck(cardID) VALUES (?)";
+        String sql = "INSERT INTO deck(playername,cardID) VALUES (?,?)";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, cardID);
+                pstmt.setString(1, name);
+                pstmt.setInt(2, cardID);
                 pstmt.executeUpdate();
         }catch (SQLException ex) {
             Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static void moveToDeck(int id){
-        String sqlDelete = "DELETE FROM mycards WHERE id="+id+";";
-        String sqlGet = "SELECT * FROM mycards WHERE id="+id+";";
-        String sql = "INSERT INTO deck(cardID) VALUES (?);";
+    public static void moveToDeck(String name,int id){
+        String sqlDelete = "DELETE FROM mycards WHERE id="+id+" and playerName=\"" +name+"\";";
+        String sqlGet = "SELECT * FROM mycards WHERE id="+id+" and playerName=\"" +name+"\";";
+        String sql = "INSERT INTO deck(playername,cardID) VALUES (?,?);";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlGet)){
                 if(rs.next()){
                     int cardID = rs.getInt("cardID");
-                    pstmt.setInt(1, cardID);
+                    pstmt.setString(1, name);
+                    pstmt.setInt(2, cardID);
                     pstmt.executeUpdate();
                     stmt.execute(sqlDelete);
                 }       
@@ -132,8 +137,8 @@ public class Cards {
         }
     }
     
-    public static void deleteFromDeck(int id){
-        String sqlDelete = "DELETE FROM deck WHERE id="+id+";";
+    public static void deleteFromDeck(String name,int id){
+        String sqlDelete = "DELETE FROM deck WHERE id="+id+" and playerName=\"" +name+"\";";
         try(Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement()){
                 stmt.execute(sqlDelete);     
@@ -142,17 +147,30 @@ public class Cards {
         }
     }
     
-    public static void moveToMycards(int id) {
-        String sqlDelete = "DELETE FROM deck WHERE id="+id+";";
-        String sqlGet = "SELECT * FROM deck WHERE id="+id+";";
-        String sql = "INSERT INTO mycards(cardID) VALUES (?);";
+    public static void resetPlayer(String name){
+        String sqlDelete = "DELETE FROM deck WHERE playerName=\"" +name+"\";";
+        String sqlDelete2 = "DELETE FROM myCards WHERE playerName=\"" +name+"\";";
+        try(Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement()){
+                stmt.execute(sqlDelete);
+                stmt.execute(sqlDelete2); 
+        }catch (SQLException ex) {
+            Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void moveToMycards(String name,int id) {
+        String sqlDelete = "DELETE FROM deck WHERE id="+id+" and playerName=\"" +name+"\";";
+        String sqlGet = "SELECT * FROM deck WHERE id="+id+" and playerName=\"" +name+"\";";
+        String sql = "INSERT INTO myCards(playername,cardID) VALUES (?,?);";
         try(Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlGet)){
                 if(rs.next()){
                     int cardID = rs.getInt("cardID");
-                    pstmt.setInt(1, cardID);
+                     pstmt.setString(1, name);
+                    pstmt.setInt(2, cardID);
                     pstmt.executeUpdate();
                     stmt.execute(sqlDelete);
                 }       
@@ -161,8 +179,8 @@ public class Cards {
         }
     }
     
-    public static void deleteFromMycards(int id){
-        String sqlDelete = "DELETE FROM mycards WHERE id="+id+";";
+    public static void deleteFromMycards(String name,int id){
+        String sqlDelete = "DELETE FROM mycards WHERE id="+id+" and playerName=\"" +name+"\";";
         try(Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement()){
                 stmt.execute(sqlDelete);     
@@ -197,6 +215,18 @@ public class Cards {
         return null;
     } 
     
+    public static void initPlayer(String name){
+        
+        if( getCards(name,"deck").size() == 0 && getCards(name,"myCards").size() == 0){        
+            int cards[] = {1,1,2,2,2,4,5,5,5,6,8,8,8,9,9,9,10,10,11,12,13};
+            for(int i : cards){
+                insertIntoMyCards(name,i);
+            }
+        }
+        
+        
+    }
+    
     public static void init(){
         createDatabase();
         insertNewCard("Knight", 6, "knight.png", 0, 0);
@@ -212,16 +242,10 @@ public class Cards {
         insertNewCard("Plague", 0, "plague.png", 0, 10, "plague");
         insertNewCard("Frost", 0, "frost.png", 0, 10, "frost");
         insertNewCard("Fog", 0, "fog.png", 0, 10, "fog");
-        //knights
-        
-        int cards[] = {1,1,2,2,2,4,5,5,5,6,8,8,8,9,9,9,10,10,11,12,13};
-        for(int i : cards){
-            insertIntoMyCards(i);
-        }
     }
     
-    public static List<Card> getCards(String table){
-        String sql = "SELECT * FROM cards INNER JOIN " + table + " ON cards.cardID= " + table + ".cardID;";
+    public static List<Card> getCards(String playername,String table){
+        String sql = "SELECT * FROM cards INNER JOIN " + table + " ON cards.cardID= " + table + ".cardID WHERE playerName=\"" +playername+"\";";
         ArrayList<Card> cards = new ArrayList<Card>();
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt  = conn.createStatement();

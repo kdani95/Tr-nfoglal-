@@ -8,12 +8,18 @@ public class InitDatabase {
     
     public static void main(String[] args){
         Cards.init();
-        Stats.init();
+        //Stats.init();
         Save.init();
     }
     
     public static void resetCardsAndSaves(String name){
-        Cards.init();
+        Cards.resetPlayer(name);
+        Cards.initPlayer(name);
+        Save.reset(name);
+    }
+    
+     public static void init(String name){
+        Cards.initPlayer(name);
         Save.reset(name);
     }
 }
