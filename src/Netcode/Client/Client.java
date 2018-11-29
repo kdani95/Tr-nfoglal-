@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.event.EventListenerList;
 import Logic.Controller;
 
 public class Client implements Runnable{
@@ -22,7 +21,6 @@ public class Client implements Runnable{
     private Player.Player player;
     private String msg = "";
     private boolean AI = false;
-    private EventListenerList listeners = new EventListenerList();
     
     public Client(String address,int PORT, String name, String type, List<Card> deck){
          this.name = name;
@@ -117,7 +115,9 @@ public class Client implements Runnable{
                                 break;
                 
                 case "GO" : 
-                                if(!AI){Controller.enableHand();}else{
+                                if(!AI){
+                                    Controller.enableHand();
+                                }else{
                                     sendCard(player.getCard());
                                 }
                                 break;
@@ -148,14 +148,13 @@ public class Client implements Runnable{
                                 receiveMsg();
                                 break;
                                 
-                case "GETLIFES":   
+                case "GETLIVES":   
                                 pw.println(player.getLives());
                                 pw.flush();
                                 receiveMsg();
                                 break;
                                 
-                case "SETLIFES":
-                                //System.out.println("SETLIFES");
+                case "SETLIVES":
                                 if(!AI){
                                     Controller.setEnemyLifes(sc.nextLine());
                                     Controller.setMyLifes();

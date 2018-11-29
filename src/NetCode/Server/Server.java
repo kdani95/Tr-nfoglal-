@@ -83,10 +83,10 @@ public class Server implements Runnable{
     private void sendPlayersLives(){
         LOG("SETTING LIVES");
         
-        players.get(0).send("SETLIFES");
+        players.get(0).send("SETLIVES");
         players.get(0).send(players.get(1).getLifes()+"");
         
-        players.get(1).send("SETLIFES");
+        players.get(1).send("SETLIVES");
         players.get(1).send(players.get(0).getLifes()+"");
         
     }

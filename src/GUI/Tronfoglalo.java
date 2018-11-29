@@ -16,9 +16,10 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.name = login.showInputDialog(this, "Player Name");
         System.out.println(this.name);
         
+        Cards.initPlayer(name);
         List<Card> cards = Cards.getCards(this.name,"mycards");
         List<Card> deck = Cards.getCards(this.name,"deck");
-        Cards.initPlayer(name);
+        
         Controller.addGUI(this,cards,deck,name);
         initComponents();
         table1.setMyName(name);

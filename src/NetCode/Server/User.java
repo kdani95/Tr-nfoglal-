@@ -62,11 +62,11 @@ public class User {
         int lifes = 0;
         if(!s.isClosed()){
             try {
-                pw.println("GETLIFES");
+                pw.println("GETLIVES");
                 pw.flush();
               
                 lifes = Integer.parseInt(sc.nextLine());
-                LOG("LIFES: " + lifes);
+                LOG("LIVES: " + lifes);
             } catch (Exception e) {
                 System.err.println("Error at sending: " + e.toString());
             }  

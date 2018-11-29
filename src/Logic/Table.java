@@ -27,11 +27,6 @@ public class Table {
         return rows[2].getPoints() + rows[3].getPoints();
     }
     
-    /*
-        4 4 6 6 8 8 8  = 44
-        5 5 7 7 9 9 9 10 = 
-    */
-    
     public int tryCard(Card card, int p){
         Table temp = new Table(this);
         int diff = temp.getPlayerOnePoints() - temp.getPlayerTwoPoints();

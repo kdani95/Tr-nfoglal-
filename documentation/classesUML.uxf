@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>153</x>
+      <y>36</y>
+      <w>414</w>
+      <h>954</h>
+    </coordinates>
+    <panel_attributes>GUI::Table
+--
+-p = 0: int
++enabled = false: boolean
+-sb = new StringBuilder(): StringBuilder
+-PlayerCards: javax.swing.JLabel
+-PlayerCards1: javax.swing.JLabel
+-enemyBackPoint: javax.swing.JLabel
+-enemyBackRow: GUI.RowGui
+-enemyCards: javax.swing.JLabel
+-enemyFrontPoint: javax.swing.JLabel
+-enemyFrontRow: GUI.RowGui
+-enemyLifes: javax.swing.JLabel
+-enemyName: javax.swing.JLabel
+-enemyPoints: javax.swing.JLabel
+-exitButton: javax.swing.JButton
+-handRow: GUI.RowGui
+-logPane: javax.swing.JPanel
+-logScrollPane: javax.swing.JScrollPane
+-logTextPane: javax.swing.JTextPane
+-myBackPoint: javax.swing.JLabel
+-myBackRow: GUI.RowGui
+-myCards: javax.swing.JLabel
+-myFrontPoint: javax.swing.JLabel
+-myFrontRow: GUI.RowGui
+-myLifes: javax.swing.JLabel
+-myName: javax.swing.JLabel
+-myPoints: javax.swing.JLabel
+-passButton: javax.swing.JButton
+-placeButton: javax.swing.JButton
+-playerLifes: javax.swing.JLabel
+-playerLifes1: javax.swing.JLabel
+-playerName: javax.swing.JLabel
+-playerName1: javax.swing.JLabel
+-playerOnePanel: javax.swing.JPanel
+-playerPoints: javax.swing.JLabel
+-playerPoints1: javax.swing.JLabel
+-playerTwoPanel: javax.swing.JPanel
+-weatherRow: GUI.RowGui
+--
++Table(): ctor
++setMyName(String name): void
++getMyName(): String
++getEnemyName(): String
+-initComponents(): void
+-exitButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-passButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-formComponentResized(java.awt.event.ComponentEvent evt): void
+-placeButtonActionPerformed(java.awt.event.ActionEvent evt): void
++refreshHandRow(): void
++refreshRow(List&lt;Card&gt; cards, int row, int points): void
++enableHand(): void
++disableHand(): void
++setEnemyName(String name): void
+~setEnemyCards(String cards): void
+~setEnemyLifes(String lifes): void
+~setMyCards(String size): void
+~setMyLifes(String string): void
+~setPoints(int myPoints, int enemyPoints): void
+~enemyPassed(): void
+~resetEnemyPassed(): void
+~passed(): void
+~resetPassed(): void
++log(String text): void
+~clearLog(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>927</x>
+      <y>9</y>
+      <w>702</w>
+      <h>801</h>
+    </coordinates>
+    <panel_attributes>Logic::Controller
+--
+-tronfoglalo: GUI.Tronfoglalo
+-client: Client
+-deck = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+-myCards = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+-enemyPassed = false: boolean
+-difficulty = 3: int
+-map = -1: int
+-prize = { { 4, 6 }, { 3, 1 }, { 7, 3 } }: int[][]
+-name: String
+-decks = { { 5, 5, 5, 2, 2, 2, 1, 1, 3, 4, 7, 8, 8, 9, 9, 10, 10, 11, 12, 13 }, //{1,1,2,2,3,4,5,5,6,6,7,9,9,11,12,13},&#13;
+{ 1, 1, 1, 2, 2, 2, 3, 3, 5, 5, 5, 9, 9, 9, 10, 10, 10, 11, 12, 13 }, { 1, 1, 1, 2, 2, 2, 3, 3, 4, 5, 5, 6, 6, 6, 7, 9, 9, 11, 12, 13 } }: int[][]
+--
++addGUI(GUI.Tronfoglalo tronfoglalo, List&lt;Card&gt; cards, List&lt;Card&gt; deck, String name): void
++addClient(Client client): void
++refresh(): void
++refreshRow(int r): void
++refreshHandRow(): void
++sendCard(Card card): void
++getHand(): List&lt;Card&gt;
++getRow(int i): Row
++removeCard(Card card): void
++disableHand(): void
++enableHand(): void
++addToTable(Card c, int p): void
++setEnemyName(String name): void
++getEnemyName(): String
++setEnemyCards(String cards): void
++setEnemyLifes(String lifes): void
++setMyCards(): void
++setMyLifes(): void
++reset(): void
++setPoints(): void
++startServer(int PORT): void
++openMap(): void
++closeMap(): void
++startSinglePlayer(): void
++startMultiPlayer(): void
++joinMultiPlayer(): void
++editDeck(): void
++editDeckBack(): void
++saveDeck(List&lt;Card&gt; cards): void
++getDeck(): List&lt;Card&gt;
++getCards(): List&lt;Card&gt;
++addToDeck(Card selected): void
++removeFromDeck(Card selected): void
++showWinner(int playerOneLives, int playerTwoLives): void
++passed(int from): void
++getEnemyPassed(): boolean
++log(String text): void
++getDifficulty(): int
++setDifficulty(int d): void
++exitGame(): void
++exit(): void
++getName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1638</x>
+      <y>0</y>
+      <w>648</w>
+      <h>666</h>
+    </coordinates>
+    <panel_attributes>GUI::Tronfoglalo
+--
+-started = false: boolean
+-name: String
+-editDeck1: GUI.EditDeck
+-mainMenu1: GUI.MainMenu
+-map1: GUI.Map
+-table1: GUI.Table
+--
++Tronfoglalo(): ctor
++openMap(): void
++closeMap(): void
++startGame(String mode, List&lt;Card&gt; deck): void
++startAI(List&lt;Card&gt; deck): void
++joinMultiPlayer(int PORT, String IP, List&lt;Card&gt; deck): void
+-initComponents(): // &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;//GEN-BEGIN:initComponents&#13;
+void
+-formComponentResized(java.awt.event.ComponentEvent evt): void
++setMyName(String name): void
++setEnemyName(String name): void
++setEnemyCards(String cards): void
++refreshHandRow(): void
++getTable(): Table
++refreshRow(List&lt;Card&gt; cards, int row, int points): void
++run(): void
++disableHand(): void
++enableHand(): void
++setEnemyLifes(String lifes): void
++setMyCards(String size): void
++setMyLifes(String string): void
++setPoints(int myPoints, int enemyPoints): void
++editDeck(): void
++editDeckBack(): void
++enemyPassed(): void
++showWinner(int playerOneLives, int playerTwoLives): void
++resetEnemyPassed(): void
++resetPassed(): void
++log(String text): void
++getEnemyName(): String
++gameExit(): void
++exit(): void
++showGameLost(): void
++cardNumberCheck(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2295</x>
+      <y>0</y>
+      <w>261</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes>/Player::Player/
+--
+#name: String
+#frontPoits: int
+#backPoints: int
+#points: int
+#lives = 2: int
+#enemyLives = 2: int
+#deck = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+#hand = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+#table: Table
+#enemyPassed = false: boolean
+-cards = 15: int
+--
++Player(String name, List&lt;Card&gt; deck): ctor
+#drawToHand(int num): void
++enemyPassed(): void
++addCard(Card c): void
++getCard(): Card
++getHand(): List&lt;Card&gt;
++getRow(int r): Row
++addToTable(Card card, int player): void
++getPlayerOnePoints(): int
++getPlayerTwoPoints(): int
++getEnemyLives(): int
++getLives(): int
++removeLife(String p): void
++reset(): void
++getDeck(): List&lt;Card&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>1026</y>
+      <w>603</w>
+      <h>432</h>
+    </coordinates>
+    <panel_attributes>Cards::Card
+--
+-name: String
+-strength: int
+-id: int
+-baseStregth: int
+-pictureLoc: String
+-row: int
+-power: int
+-powerState: int
+-cardID: int
+-ability: String
+--
++Card(Card card): ctor
++Card(int id, int cardID, String name, int strength, String pictureLoc, int power, int row, String ability): ctor
++getName(): String
++getCardID(): int
++getID(): int
++getAbility(): String
++getStrength(): int
++getPictureLoc(): String
++getPower(): int
++SetPowerState(int power): void
++getRow(): int
++toString(): String
++getColor(): Color
++getValue(): int
++equals(Card c): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>882</x>
+      <y>1026</y>
+      <w>477</w>
+      <h>432</h>
+    </coordinates>
+    <panel_attributes>Netcode.Client::Client
+--
+-s: Socket
+-sc: Scanner
+-pw: PrintWriter
+-name: String
+-address: String
+-PORT: int
+-player: Player.Player
+-msg = "": String
+-AI = false: boolean
+--
++Client(String address, int PORT, String name, String type, List&lt;Card&gt; deck): ctor
++getName(): String
++connect(): void
++receiveMsg(): void
++getRow(int i): Row
++getHand(): List&lt;Card&gt;
++addToTable(Card c, int p): void
++getLifes(): int
++sendCard(Card card): void
++run(): void
+-received(String msg): void
++reset(): void
++getMyPoints(): int
++getEnemyPoints(): int
++getDeck(): List&lt;Card&gt;
++sendExit(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1368</x>
+      <y>1026</y>
+      <w>405</w>
+      <h>387</h>
+    </coordinates>
+    <panel_attributes>GUI::Map
+--
+~p1 = new JLabel(): JLabel
+~p2 = new JLabel(): JLabel
+~p3 = new JLabel(): JLabel
+-backButton: javax.swing.JButton
+-diff1: javax.swing.JRadioButton
+-diff2: javax.swing.JRadioButton
+-diff3: javax.swing.JRadioButton
+-difficultyButtons: javax.swing.ButtonGroup
+-difficultyLabel: javax.swing.JLabel
+-jPanel1: javax.swing.JPanel
+-sector1: javax.swing.JPanel
+-sector2: javax.swing.JPanel
+-sector3: javax.swing.JPanel
+-startButton: javax.swing.JButton
+--
++Map(): ctor
++display(): void
+-getScaledImage(Image srcImg, int w, int h): Image
+-initComponents(): void
+-formComponentResized(java.awt.event.ComponentEvent evt): void
+-backButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-startButtonActionPerformed(java.awt.event.ActionEvent evt): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2025</x>
+      <y>1026</y>
+      <w>180</w>
+      <h>369</h>
+    </coordinates>
+    <panel_attributes>Netcode.Server::User
+--
+-playerNo = 0: int
+-name: String
+-s: Socket
+-sc: Scanner
+-pw: PrintWriter
+-notDone = true: boolean
+-LOG = false: boolean
+--
++User(ServerSocket ss): ctor
+-LOG(String log): void
++getName(): String
++getCards(): String
++getLifes(): int
++send(String msg): void
++receive(): String
+~notDone(): boolean
+~isConnected(): boolean
+~isDone(): void
+~getPoints(): int
+~removeLife(String p): void
+~restart(): void
+~disconnected(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2214</x>
+      <y>1026</y>
+      <w>513</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>Statistics::Stat
+--
+-name: String
+-avg: double
+-min: int
+-max: int
+-samples: int
+-exp: double
+-mult: double
+--
++Stat(String name, double avg, int max, int min, int smpls, double mult, double exp): ctor
++getChance(int points): double
++calcFunction(): void
++addStat(int p): void
+-Function(double m, double e, double p): double
+~getName(): String
++getAvg(): double
++getMax(): int
++getMin(): int
+~getSmpls(): int
+~getMult(): double
+~getExp(): double
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2736</x>
+      <y>1026</y>
+      <w>540</w>
+      <h>324</h>
+    </coordinates>
+    <panel_attributes>Cards::Cards
+--
+-cards = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+-url = "jdbc:sqlite:data/cards.db": String
+-userName = "root": String
+-password = "root": String
+--
++createDatabase(): void
+-insertNewCard(String name, int strength, String picture, int power, int row, String ability): void
+-insertNewCard(String name, int strength, String picture, int power, int row): void
++insertIntoMyCards(String name, int cardID): void
++insertIntoDeck(String name, int cardID): void
++moveToDeck(String name, int id): void
++deleteFromDeck(String name, int id): void
++resetPlayer(String name): void
++moveToMycards(String name, int id): void
++deleteFromMycards(String name, int id): void
++getCard(int ID): Card
++initPlayer(String name): void
++init(): void
++getCards(String playername, String table): List&lt;Card&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>1467</y>
+      <w>576</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>GUI::RowGui
+--
+~card: Card
+-buttons = new ArrayList&lt;Mybutton&gt;(): List&lt;Mybutton&gt;
+-assignedButton: JButton
+-cardDisplay: javax.swing.ButtonGroup
+--
++RowGui(JButton button): ctor
++RowGui(): ctor
++setCard(Card card): void
++getCard(): Card
+-getScaledImage(Image srcImg, int w, int h): Image
++setDisabled(): void
++setEnabled(): void
++addCard(Card card): void
++refresh(List&lt;Card&gt; cards): void
+-initComponents(): // &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;                          &#13;
+void
++getSelected(): Card
++getCards(): List&lt;Card&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>855</x>
+      <y>1467</y>
+      <w>297</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>Netcode.Server::Server
+--
+-PORT = 0: int
+-ss: ServerSocket
+-players = new ArrayList&lt;User&gt;(): ArrayList&lt;User&gt;
+-LOG = false: boolean
+--
++Server(int port): ctor
++Server(): ctor
+-LOG(String log): void
+-waitForPlayers(): void
+-sendPlayersWait(): boolean
+-sendPlayersEnded(): void
+-sendPlayerGo(int p): void
+-receivePlayer(int p): String
+-sendPlayersCard(String card, int from): void
+-sendPlayersLives(): void
+-sendPlayersName(): void
+-sendPlayersCardsNo(): void
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1161</x>
+      <y>1467</y>
+      <w>396</w>
+      <h>297</h>
+    </coordinates>
+    <panel_attributes>GUI::EditDeck
+--
+-inMenu = false: boolean
+-addButton: javax.swing.JButton
+-backButton: javax.swing.JButton
+-cardsNO: javax.swing.JLabel
+-cardsRow: GUI.RowGui
+-deckNO: javax.swing.JLabel
+-deckRow: GUI.RowGui
+-removeButton: javax.swing.JButton
+--
++EditDeck(): ctor
++init(): void
+-initComponents(): void
+-formComponentResized(java.awt.event.ComponentEvent evt): void
+-addButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-backButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-removeButtonActionPerformed(java.awt.event.ActionEvent evt): void
+-resized(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1683</x>
+      <y>1467</y>
+      <w>423</w>
+      <h>261</h>
+    </coordinates>
+    <panel_attributes>GUI::MainMenu
+--
+-editDeck: javax.swing.JButton
+-exit: javax.swing.JButton
+-joinMultiPlayer: javax.swing.JButton
+-startMultiPlayer: javax.swing.JButton
+-startSinglePlayer: javax.swing.JButton
+--
++MainMenu(): ctor
+-initComponents(): void
+-startSinglePlayerActionPerformed(java.awt.event.ActionEvent evt): void
+-startMultiPlayerActionPerformed(java.awt.event.ActionEvent evt): void
+-joinMultiPlayerActionPerformed(java.awt.event.ActionEvent evt): void
+-editDeckActionPerformed(java.awt.event.ActionEvent evt): void
+-exitActionPerformed(java.awt.event.ActionEvent evt): void
++cardNumberCheck(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2223</x>
+      <y>1467</y>
+      <w>225</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>Logic::Table
+--
+-rows = new Row[5]: Row[]
+--
++Table(): ctor
++Table(Table that): ctor
++getPlayerOnePoints(): int
++getPlayerTwoPoints(): int
++tryCard(Card card, int p): int
++addCard(Card card, int player): void
++removeCard(Card card): void
++getRow(int r): Row
++reset(): void
+-deleteWeakest(): void
+-applyFrost(): void
+-applyFog(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2457</x>
+      <y>1467</y>
+      <w>261</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Logic::Row
+--
+-points: int
+-cards = new ArrayList&lt;Card&gt;(): List&lt;Card&gt;
+-powerState: int
+--
++Row(): ctor
++Row(Row that): ctor
++addCard(Card card): void
++removeCard(Card card): void
++powerChange(int change): void
++getCards(): List&lt;Card&gt;
+-pointsUpdate(): void
++getPoints(): int
++reset(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>1791</y>
+      <w>270</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Player::AiPlayer
+--
+-playSmallCards = false: boolean
+-startHandSize: int
+-placedCards = 0: int
+-handTable: Logic.Table
+-unitCard = 11: int
+--
++AiPlayer(String name, List&lt;Card&gt; deck): ctor
++addCard(Card c): void
++getCard(): Card
++getHand(): List&lt;Card&gt;
++getRow(int r): Row
++addToTable(Card card, int player): void
+-getValue(Card card): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>549</x>
+      <y>1791</y>
+      <w>243</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>Logic::Save
+--
+-stats = new ArrayList&lt;Stat&gt;(): List&lt;Stat&gt;
+-url = "jdbc:sqlite:data/saves.db": String
+-userName = "root": String
+-password = "root": String
+-name: String
+--
++createDatabase(): void
++init(): void
++reset(String name): void
++refreshSave(String name, int map): void
++addNewSave(String name): void
++getSave(String name): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>801</x>
+      <y>1791</y>
+      <w>567</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>Statistics::Stats
+--
+-stats = new ArrayList&lt;Stat&gt;(): List&lt;Stat&gt;
+-url = "jdbc:sqlite:data/stats.db": String
+-userName = "root": String
+-password = "root": String
+--
++createDatabase(): void
++init(): void
+-insertNewStat(String name, double avg, int max, int min, int smpls, double mult, double exp): void
++getStat(String name): Stat
+~refreshStat(Stat s): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1377</x>
+      <y>1791</y>
+      <w>306</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>Player::HumanPlayer
+--
+--
++HumanPlayer(String name, List&lt;Card&gt; deck): ctor
++addCard(Card c): void
++getCard(): Card
++getHand(): List&lt;Card&gt;
++getRow(int r): Row
++addToTable(Card card, int player): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1692</x>
+      <y>1791</y>
+      <w>252</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>tronfoglalo::InitDatabase
+--
+--
++main(String[] args): void
++resetCardsAndSaves(String name): void
++init(String name): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1953</x>
+      <y>1791</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>tronfoglalo::NewClass
+--
+--
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2124</x>
+      <y>1791</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>tronfoglalo::Start
+--
+--
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

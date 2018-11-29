@@ -22,7 +22,7 @@ public class Save {
         String delete = "DROP TABLE IF EXISTS saves;";
         String sql = "CREATE TABLE IF NOT EXISTS saves ("+
                      "name text PRIMARY KEY," +
-                     "map float NOT NULL);";
+                     "map integer NOT NULL);";
         
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) { 
