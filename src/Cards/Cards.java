@@ -157,6 +157,7 @@ public class Cards {
         }catch (SQLException ex) {
             Logger.getLogger(Cards.class.getName()).log(Level.SEVERE, null, ex);
         }
+        initPlayer(name);
     }
     
     public static void moveToMycards(String name,int id) {

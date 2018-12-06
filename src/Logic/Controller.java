@@ -33,6 +33,8 @@ public class Controller {
     
     public static void addClient(Client client){
         Controller.client= client;
+        reset();
+        refresh();
     }
     
     public static void refresh(){

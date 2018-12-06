@@ -21,9 +21,7 @@ public class EditDeck extends javax.swing.JPanel {
         deckNO.setText("" + deckRow.getCards().size());
         deckRow.setEnabled();
         cardsRow.setEnabled();
-        if(Controller.getDeck().size() < 20){
-            backButton.setEnabled(false);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -163,9 +161,6 @@ public class EditDeck extends javax.swing.JPanel {
             cardsNO.setText("" + cardsRow.getCards().size());
             deckNO.setText("" + deckRow.getCards().size());
 
-            if(Controller.getDeck().size() >= 20){
-                backButton.setEnabled(true);
-            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -185,9 +180,6 @@ public class EditDeck extends javax.swing.JPanel {
             cardsNO.setText("" + cardsRow.getCards().size());
             deckNO.setText("" + deckRow.getCards().size());
 
-            if(Controller.getDeck().size() < 20){
-                backButton.setEnabled(false);
-            }
         }
     }//GEN-LAST:event_removeButtonActionPerformed
    

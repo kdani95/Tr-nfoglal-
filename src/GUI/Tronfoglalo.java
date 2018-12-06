@@ -12,9 +12,22 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     private String name;
 
     public Tronfoglalo() {
-        JOptionPane login = new JOptionPane("Login");
-        this.name = login.showInputDialog(this, "Player Name");
-        System.out.println(this.name);
+        this.name = "";
+        boolean noName = true;
+        while(noName){
+            JOptionPane login = new JOptionPane("Login");
+            try{
+                this.name = login.showInputDialog(this, "Player Name");
+            }catch( Exception e){
+                System.err.println("Error at login: " + e.toString());
+                return;
+            }
+            if(this.name != null){
+                noName = this.name.length() < 2;
+            }else{
+                exit();
+            }
+        }
         
         Cards.initPlayer(name);
         List<Card> cards = Cards.getCards(this.name,"mycards");
@@ -40,6 +53,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     }
     
     public void startGame(String mode,List<Card> deck){  
+        setPoints(0, 0);
         this.add(table1);
         this.table1.resetEnemyPassed();
         this.table1.resetPassed();
@@ -73,6 +87,7 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
     }
     
     public void joinMultiPlayer(int PORT,String IP,List<Card> deck){
+        setPoints(0, 0);
         this.add(table1);
         this.table1.resetEnemyPassed();
         this.table1.resetPassed();

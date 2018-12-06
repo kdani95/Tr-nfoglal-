@@ -21,12 +21,12 @@ public class Stat{
         this.exp = exp;
     }
     
-    public double getChance(int points){
+    public double getChance(double points){
         //System.out.println("avg: " + this.avg + " min:" + this.min + " max:" + this.max);
         if(samples < 4){
             return 0.0;
         }
-        int p = points -min;
+        double p = points -min;
         if(p < 0){
             return -0.1;
         }else if(p > max-min){

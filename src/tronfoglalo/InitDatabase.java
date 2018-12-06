@@ -14,7 +14,6 @@ public class InitDatabase {
     
     public static void resetCardsAndSaves(String name){
         Cards.resetPlayer(name);
-        Cards.initPlayer(name);
         Save.reset(name);
     }
     
