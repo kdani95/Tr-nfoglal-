@@ -94,6 +94,8 @@ public class Tronfoglalo extends javax.swing.JFrame implements Runnable{
         this.table1.setSize(this.getWidth(), this.getHeight());
         this.table1.clearLog();
         Client client = new Client(IP, PORT, this.name , "HUMAN", deck);
+        
+        
         Controller.addClient(client);
         
         Thread clientThread = new Thread(client);

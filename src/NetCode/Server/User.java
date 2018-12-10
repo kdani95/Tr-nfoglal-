@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
 
 public class User {
     private static int playerNo = 0;
@@ -15,6 +18,8 @@ public class User {
     private PrintWriter pw;
     private boolean notDone = true;
     private boolean LOG = false;
+    public boolean connected = false;
+    
     private void LOG(String log){
         if(LOG){
             System.out.println("SERVER LOG: " + log);
@@ -40,19 +45,25 @@ public class User {
     public User(ServerSocket ss){
     try {
             LOG("Accepting client");
+            ss.setSoTimeout(500);
             this.s = ss.accept();
-            this.sc = new Scanner(s.getInputStream());
-            this.pw = new PrintWriter(s.getOutputStream());
-            if(sc.hasNextLine()){
-                this.name = sc.nextLine();
+            if(s.isConnected()){
+                this.connected = true;
+                this.sc = new Scanner(s.getInputStream());
+                this.pw = new PrintWriter(s.getOutputStream());
+                if(sc.hasNextLine()){
+                    this.name = sc.nextLine();
+                }
+                else{
+                    ++playerNo;
+                    this.name = "User"+playerNo;
+                }
+
+                LOG(this.name + " has connected"); 
             }
-            else{
-                ++playerNo;
-                this.name = "User"+playerNo;
-            }
-            
-            LOG(this.name + " has connected");
-            
+             
+        } catch (SocketTimeoutException ex){
+            LOG("Timeout at client connecting: " + ex.toString());
         } catch (IOException ex) {
             System.err.println("Error at client connecting: " + ex.toString());
         }

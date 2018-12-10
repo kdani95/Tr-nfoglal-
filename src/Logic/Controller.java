@@ -19,6 +19,7 @@ public class Controller {
     private static int map = -1;
     private static int[][] prize = { {4,6},{3,1},{7,3}};
     private static String name;
+    private static Server server;
     private static int[][] decks = { {5,5,5,2,2,2,1,1,3,4,7,8,8,9,9,10,10,11,12,13},
                                      //{1,1,2,2,3,4,5,5,6,6,7,9,9,11,12,13},
                                      {1,1,1,2,2,2,3,3,5,5,5,9,9,9,10,10,10,11,12,13},
@@ -118,8 +119,9 @@ public class Controller {
     }
     
     public static void startServer(int PORT){
-        Thread server = new Thread(new Server(PORT));
-        server.start();
+        server = new Server(PORT);
+        Thread serverThread = new Thread(server);
+        serverThread.start();
     }
     
     public static void openMap(){
@@ -251,7 +253,12 @@ public class Controller {
     }
 
     public static void exitGame() {
-        client.sendExit();
+        if(client.getSuccess()){
+            client.sendExit();
+        }
+        if(server != null){
+            server.stop();
+        }
         tronfoglalo.gameExit();
     }
 

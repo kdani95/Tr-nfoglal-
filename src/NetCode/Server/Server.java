@@ -11,6 +11,7 @@ public class Server implements Runnable{
     private int PORT = 0;
     private ServerSocket ss;
     private ArrayList<User> players = new ArrayList<User>();
+    private boolean stopped = false;
     private boolean LOG = false;
     
     private void LOG(String log){
@@ -37,10 +38,14 @@ public class Server implements Runnable{
     }
     
     private void waitForPlayers(){
-        LOG("Waiting for playres");
-        while (players.size() < 2){
-            players.add(new User(ss));
+        LOG("Waiting for players");
+        while (players.size() < 2 && !stopped){
+            User user = new User(ss);
+            if(user.connected){
+                players.add(user);
+            }
         }
+
     }
     
     private boolean sendPlayersWait(){
@@ -55,8 +60,10 @@ public class Server implements Runnable{
     
     private void sendPlayersEnded(){
         LOG("Sending players ENDED"); 
-        players.get(0).send("ENDED");
-        players.get(1).send("ENDED");
+        for(User u: players){
+            u.send("ENDED");
+        }
+        
     }
     
     private void sendPlayerGo(int p){
@@ -113,6 +120,20 @@ public class Server implements Runnable{
         
         waitForPlayers();
         
+        if(stopped){
+            sendPlayersEnded();
+            
+            try {
+            ss.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ss=null;
+            LOG("SERVER ENDED");
+            
+            return;
+        }
+        
         sendPlayersName();
 
         LOG("Players connected");
@@ -124,7 +145,7 @@ public class Server implements Runnable{
             sendPlayersLives();
     
             while ( (players.get(0).notDone() || players.get(1).notDone() ) &&
-                    (players.get(0).isConnected() && players.get(1).isConnected() ) )
+                    (players.get(0).isConnected() && players.get(1).isConnected() ))
             {
                 if(players.get(i).notDone()){
                     LOG("Player" + i);
@@ -190,6 +211,7 @@ public class Server implements Runnable{
         for(User user : players){
             user = null;
         }
+        
         try {
             ss.close();
         } catch (IOException ex) {
@@ -197,6 +219,11 @@ public class Server implements Runnable{
         }
         ss=null;
         LOG("SERVER ENDED");
+    }
+
+    public void stop() {
+        this.stopped = true;
+        LOG("STOPPED");
     }
     
 }

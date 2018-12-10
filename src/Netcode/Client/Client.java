@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 import Logic.Controller;
+import java.util.NoSuchElementException;
 
 public class Client implements Runnable{
     private Socket s;
@@ -21,11 +22,13 @@ public class Client implements Runnable{
     private Player.Player player;
     private String msg = "";
     private boolean AI = false;
+    private boolean success = false;
     
     public Client(String address,int PORT, String name, String type, List<Card> deck){
          this.name = name;
          this.PORT = PORT;
          this.address = address;
+         this.success = false;
          if(type.equals("HUMAN")){
              this.player = new HumanPlayer(name, deck);
          }else{
@@ -39,8 +42,13 @@ public class Client implements Runnable{
         return this.name;
     }
     
+    public boolean getSuccess(){
+        return this.success;
+    }
+    
     public void connect(){
         try {
+            success = true;
             s   = new Socket(this.address, this.PORT);
             sc  = new Scanner(s.getInputStream(), "utf-8");
             pw  = new PrintWriter(s.getOutputStream());
@@ -55,6 +63,7 @@ public class Client implements Runnable{
             }
            
         }catch(Exception e ){
+            success = false;
             System.err.println("Error at client: " + e.toString());
         }
     }
@@ -63,8 +72,14 @@ public class Client implements Runnable{
     public void receiveMsg(){
         
         Thread receive = new Thread( () -> {
+            try{
             String msg = sc.nextLine();
             received(msg);
+            }catch(NoSuchElementException ex){
+                
+            }catch(IllegalStateException ex){
+                
+            }
         });
         
         receive.start(); 
@@ -101,7 +116,13 @@ public class Client implements Runnable{
     @Override
     public void run() {
         connect();
-        receiveMsg();
+        if(s != null){
+            receiveMsg();
+        }
+        else{
+            Controller.exitGame();
+            return;
+        }
     }
     
     private void received(String msg){
