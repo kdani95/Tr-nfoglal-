@@ -29,7 +29,7 @@ public class Stat{
         double p = points -min;
         if(p < 0){
             return -0.1;
-        }else if(p > max-min){
+        }else if(p >= max-min){
             return 1.0;
         }
         
@@ -45,28 +45,31 @@ public class Stat{
         double e = 1;
         double m = 1;
         double step = 0;
-        if(pAvg < pMax/2)
-            step = 0.1;
-        else
-            step = -0.1;
-        while (!fit) {
-            e = e - step;
-            m = 1 / Function(1, e, pMax);
-            if(Function(m, e, pAvg) > 0.5+pErr){
-                if(step > 0)
-                    step = -Math.abs(step / 2);
-                else
-                    step = -Math.abs(step);
-            }else if(Function(m, e, pAvg) < 0.5-pErr){
-                if(step < 0)
-                    step = Math.abs(step / 2);
-                else
-                    step = Math.abs(step);
-            }else{
-                fit = true;
+        
+        if(avg != min && min != max && avg != max){
+            if(pAvg < pMax/2)
+                step = 0.1;
+            else
+                step = -0.1;
+            while (!fit) {
+                e = e - step;
+                m = 1 / Function(1, e, pMax);
+                if(Function(m, e, pAvg) > 0.5+pErr){
+                    if(step > 0)
+                        step = -Math.abs(step / 2);
+                    else
+                        step = -Math.abs(step);
+                }else if(Function(m, e, pAvg) < 0.5-pErr){
+                    if(step < 0)
+                        step = Math.abs(step / 2);
+                    else
+                        step = Math.abs(step);
+                }else{
+                    fit = true;
+                }
+                this.mult = m;
+                this.exp = e;
             }
-            this.mult = m;
-            this.exp = e;
         }
         
     }

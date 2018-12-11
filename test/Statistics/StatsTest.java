@@ -90,4 +90,18 @@ public class StatsTest {
         assertEquals( 0.5, stat.getChance(4.5), 0.1 );
     }
     
+    @Test
+    public void f_fourSameStatTest(){
+        Stats.init();
+        stat = Stats.getStat("Frost");
+        stat.addStat(6);
+        stat.addStat(6);
+        stat.addStat(6);
+        stat.addStat(6);
+        Stats.refreshStat(stat);
+        assertEquals( 1.0, stat.getChance(10), 0.1 );
+        assertEquals( 0.0, stat.getChance(5), 0.1 );
+        assertEquals( 1.0, stat.getChance(6), 0.1 );
+    }
+    
 }
